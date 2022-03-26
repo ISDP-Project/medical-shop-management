@@ -28,7 +28,7 @@ Proper segregation of code must be ensured by everyone.
     - `widgets` for self-contained UI componenets' code
     - `models` for the data models, i.e. classes
     - `utils` for utility classes and/or modules
-- For bloc naming conventions refer to the <a href="https://bloclibrary.dev/#/blocnamingconventions">official</a> docs for bloc.
+- For bloc naming conventions refer to the <a href="https://bloclibrary.dev/#/blocnamingconventions">official docs</a> for bloc.
 
 
 ## Constants & Theming
@@ -45,7 +45,7 @@ Proper segregation of code must be ensured by everyone.
 ## Strict Separation of UI & Logic
 Under no circumstance should intermingling of UI code and logic code may be permitted. This can lead to a boat full of bugs, and if indulged in consistently may require a complete rewrite of the app in the later stages of development. I repeat, DO NOT let this happen at ANY COST. This is the single most important item in this checklist.
 
-Use a state management library like <a href="https://bloclibrary.dev/">Bloc</a>, and the design patterns which come along with it.
+Use a state management library like <a href="https://bloclibrary.dev/">Bloc</a>, and the design patterns which come along with it. Bloc will make separation of UI & logic trivial.
 
 
 ## Imports & Exports
