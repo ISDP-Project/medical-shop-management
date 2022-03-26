@@ -23,7 +23,7 @@ Proper segregation of code must be ensured by everyone.
     - `widgets` for self-contained UI componenets' code
     - `models` for the data models, i.e. classes
     - `utils` for utility classes and/or modules
-- For bloc naming conventions refer to the <a href="https://bloclibrary.dev/#/blocnamingconventions">official</a> docs for bloc.
+- For bloc naming conventions refer to the <a href="https://bloclibrary.dev/#/blocnamingconventions">official docs</a> for bloc.
 
 
 ## Constants & Theming
