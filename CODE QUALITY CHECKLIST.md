@@ -1,5 +1,5 @@
-# Code Quality
-Everyone contributing to this process must adhere to the code quality guidlines as provided by this document. If sub-par quality code is contributed then you would be asked to refactor your code and/or your commit may be deleted.
+# Code Quality Guidelines
+Everyone contributing to this project must adhere to the code quality guidlines as provided by this document. If sub-par quality code is contributed then you would be asked to refactor your code and/or your commit may be deleted. This may lead to significant delays in the development process, so adhere to these guidelines.
 
 This is necessary as a team of 10+ members will be working on this project.
 
