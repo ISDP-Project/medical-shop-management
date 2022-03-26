@@ -12,6 +12,11 @@ As per Dart/Flutter standards:
 - `_underscore_at_begining` for private variables. Do not have unnecessary private variables.
 - Prefer short variables over longer ones. But DO NOT compromise on giving meaningful names. Remember a longer descript variable name is always better than a shorter non-descript variable name.
 
+## Comments
+Write comments explaining what your function, method, or class does only when it is necessary to do. But also keep in mind that you must write comments, and not shy away from them, when it is necessary to do so.
+
+Just remember that good code is self-documenting, but this does not mean that you should never comment your code.
+
 
 ## Folder Structure
 Proper segregation of code must be ensured by everyone.
