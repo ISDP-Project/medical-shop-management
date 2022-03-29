@@ -1,0 +1,11 @@
+name: masterDB_repository
+description: repository managing all the functions related to the masterDB (which has information of all the medicines)
+
+publish_to: none
+
+environment: 
+  sdk: ">=2.16.1 <3.0.0"
+
+dependencies:
+  supabase: ^0.2.15
+  s
