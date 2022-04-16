@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../constant/constant.dart';
 
 class SignupPage extends StatelessWidget {
   @override
@@ -10,13 +11,11 @@ class SignupPage extends StatelessWidget {
         elevation: 0,
         brightness: Brightness.light,
         backgroundColor: Colors.white,
-        leading: IconButton(
+        leading: IconButton(icon: Constant.arrow,
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(Icons.arrow_back_ios,
-            size: 20,
-            color: Colors.black,),
+          
 
 
         ),
