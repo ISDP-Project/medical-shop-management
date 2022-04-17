@@ -24,17 +24,28 @@ class AuthenticationRepository {
 
     if (res.error == null) {
       _controller.add(AuthenticationStatus.authenticated);
+    } else {
+      _controller.add(AuthenticationStatus.unauthenticated);
     }
   }
 
   Future<void> signUp({
     required String email,
     required String password,
+    required String name,
   }) async {
-    final res = await _supabase.auth.signUp(email, password);
+    final res = await _supabase.auth.signUp(
+      email,
+      password,
+      userMetadata: {
+        'name': name,
+      },
+    );
 
     if (res.error == null) {
       _controller.add(AuthenticationStatus.authenticated);
+    } else {
+      _controller.add(AuthenticationStatus.unauthenticated);
     }
   }
 

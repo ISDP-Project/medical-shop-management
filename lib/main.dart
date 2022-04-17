@@ -13,7 +13,9 @@ void main() async {
 
     AuthenticationRepository _authenticationRepository =
         AuthenticationRepository(_supabase);
-    // TODO: Dependency Injection
-    runApp(const App());
+
+    runApp(App(
+      authenticationRepository: _authenticationRepository,
+    ));
   });
 }

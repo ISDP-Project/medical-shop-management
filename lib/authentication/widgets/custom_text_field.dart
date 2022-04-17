@@ -6,10 +6,12 @@ class CustomTextField extends StatelessWidget {
   const CustomTextField({
     Key? key,
     required this.label,
+    required this.controller,
     this.obscureText = false,
   }) : super(key: key);
 
   final String label;
+  final TextEditingController controller;
   final bool obscureText;
 
   @override
@@ -27,8 +29,11 @@ class CustomTextField extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyText2,
           ),
         ),
-        TextField(
+        TextFormField(
           obscureText: obscureText,
+          style: Theme.of(context).textTheme.bodyText1,
+          controller: controller,
+          autocorrect: false,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(
               horizontal: kDefaultPadding,

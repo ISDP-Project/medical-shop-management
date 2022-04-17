@@ -1,11 +1,18 @@
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pharmacy_app/authentication/bloc/authentication_bloc.dart';
+
 import '../widgets/widgets.dart';
-import '../../routes.dart';
 import '../../constants/constants.dart';
 
 class SignupPage extends StatelessWidget {
-  const SignupPage({Key? key}) : super(key: key);
+  SignupPage({Key? key}) : super(key: key);
+
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -41,17 +48,37 @@ class SignupPage extends StatelessWidget {
                 ),
               ),
               Expanded(
-                flex: 4,
+                flex: 5,
                 child: Column(
-                  children: const [
+                  children: [
+                    BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                        builder: (context, state) {
+                      if (state.showError ?? false) {
+                        return Text(
+                          SignupPageConstants.errorMessage,
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    color: Theme.of(context).colorScheme.error,
+                                  ),
+                        );
+                      }
+                      return const SizedBox();
+                    }),
                     CustomTextField(
                       label: SignupPageConstants.usernameTextFieldLabel,
+                      controller: _nameController,
                     ),
+                    const Padding(
+                        padding: EdgeInsets.only(top: kDefaultPadding)),
                     CustomTextField(
                       label: SignupPageConstants.emailTextFieldLabel,
+                      controller: _emailController,
                     ),
+                    const Padding(
+                        padding: EdgeInsets.only(top: kDefaultPadding)),
                     CustomTextField(
                       label: SignupPageConstants.passTextFieldLabel,
+                      controller: _passwordController,
                       obscureText: true,
                     )
                   ],
@@ -62,8 +89,13 @@ class SignupPage extends StatelessWidget {
                 child: SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    // TODO
-                    onPressed: () {},
+                    onPressed: () {
+                      context.read<AuthenticationRepository>().signUp(
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                            name: _nameController.text,
+                          );
+                    },
                     child: Text(
                       SignupPageConstants.buttonText,
                       style: Theme.of(context).textTheme.button!.copyWith(
@@ -83,8 +115,11 @@ class SignupPage extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                     TextButton(
-                      onPressed: () =>
-                          Navigator.popAndPushNamed(context, Routes.loginPage),
+                      onPressed: () {
+                        context
+                            .read<AuthenticationBloc>()
+                            .add(AuthenticationTypeChangeRequested());
+                      },
                       child: Text(
                         SignupPageConstants.loginButtonText,
                         style: Theme.of(context).textTheme.button,

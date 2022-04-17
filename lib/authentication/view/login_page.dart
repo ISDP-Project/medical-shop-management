@@ -1,11 +1,17 @@
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pharmacy_app/authentication/bloc/authentication_bloc.dart';
+
 import '../../constants/constants.dart';
-import '../../routes.dart';
 import '../widgets/widgets.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  LoginPage({Key? key}) : super(key: key);
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +48,29 @@ class LoginPage extends StatelessWidget {
               Expanded(
                 flex: 3,
                 child: Column(
-                  children: const [
+                  children: [
+                    BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                        builder: (context, state) {
+                      if (state.showError ?? false) {
+                        return Text(
+                          LoginPageConstants.errorMessage,
+                          style:
+                              Theme.of(context).textTheme.bodyText1!.copyWith(
+                                    color: Theme.of(context).colorScheme.error,
+                                  ),
+                        );
+                      }
+                      return const SizedBox();
+                    }),
                     CustomTextField(
                       label: LoginPageConstants.emailTextFieldLabel,
+                      controller: _emailController,
                     ),
+                    const Padding(
+                        padding: EdgeInsets.only(top: kDefaultPadding)),
                     CustomTextField(
                       label: LoginPageConstants.passTextFieldLabel,
+                      controller: _passwordController,
                       obscureText: true,
                     )
                   ],
@@ -58,8 +81,12 @@ class LoginPage extends StatelessWidget {
                 child: SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    // TODO
-                    onPressed: () {},
+                    onPressed: () {
+                      context.read<AuthenticationRepository>().logIn(
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                          );
+                    },
                     child: Text(
                       LoginPageConstants.buttonText,
                       style: Theme.of(context).textTheme.button!.copyWith(
@@ -79,9 +106,11 @@ class LoginPage extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                     TextButton(
-                      // TODO
-                      onPressed: () =>
-                          Navigator.popAndPushNamed(context, Routes.signupPage),
+                      onPressed: () {
+                        context
+                            .read<AuthenticationBloc>()
+                            .add(AuthenticationTypeChangeRequested());
+                      },
                       child: Text(
                         LoginPageConstants.signupButtonText,
                         style: Theme.of(context).textTheme.button,
