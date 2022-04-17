@@ -5,10 +5,11 @@ import 'package:bloc/bloc.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 
 import './app.dart';
-import 'login_signup.dart';
-import './homepage.dart';
+import '../homepage/homepage.dart';
+import '../login/login_signup.dart';
 import 'routes.dart';
-import 'signup.dart';
+import '../signup/signup.dart';
+import 'constant/constant.dart';
 
 void main() async {
   return BlocOverrides.runZoned(() async {

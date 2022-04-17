@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'login_signup.dart';
-import "signup.dart";
+import '../login/login_signup.dart';
+import '../signup/signup.dart';
+import '../constant/constant.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -65,10 +66,9 @@ class HomePage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(50)),
                     child: Text(
                       "Login",
-                      style:
-                          TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                      style:Constant.myStyle),
                     ),
-                  ),
+                 
                   // creating the signup button
                   SizedBox(height: 20),
                   MaterialButton(
@@ -85,14 +85,12 @@ class HomePage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(50)),
                     child: Text(
                       "Sign up",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18),
+                      style: Constant.myStyle),
                     ),
-                  )
+                  
                 ],
-              )
+              ),
+              
             ],
           ),
         ),
