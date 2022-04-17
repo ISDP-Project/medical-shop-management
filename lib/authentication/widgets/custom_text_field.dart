@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../constants/constants.dart';
+
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
     Key? key,
@@ -15,27 +17,34 @@ class CustomTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          label,
-          style: TextStyle(
-              fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black87),
-        ),
-        SizedBox(
-          height: 5,
+        Padding(
+          padding: const EdgeInsets.only(
+            top: kDefaultPadding,
+            bottom: kDefaultPadding * 0.5,
+          ),
+          child: Text(
+            label,
+            style: Theme.of(context).textTheme.bodyText2,
+          ),
         ),
         TextField(
           obscureText: obscureText,
           decoration: InputDecoration(
-              contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: kDefaultPadding,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.outline,
               ),
-              border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.grey))),
+            ),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Theme.of(context).colorScheme.outline,
+              ),
+            ),
+          ),
         ),
-        SizedBox(
-          height: 10,
-        )
       ],
     );
   }
