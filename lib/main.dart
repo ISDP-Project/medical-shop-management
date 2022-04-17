@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
-
+// import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase/supabase.dart';
 import 'package:bloc/bloc.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 
 import './app.dart';
+import '../homepage/homepage.dart';
+import '../login/login_signup.dart';
+import 'routes.dart';
+import '../signup/signup.dart';
+import 'constant/constant.dart';
 
 void main() async {
   return BlocOverrides.runZoned(() async {
@@ -17,3 +22,49 @@ void main() async {
     runApp(const App());
   });
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // return MediaQuery(
+    //   data: MediaQueryData(),
+    //   child: MaterialApp(
+    //     theme: ThemeData(
+    //         primarySwatch: Colors.deepPurple,
+    //         // fontFamily: GoogleFonts.lato().fontFamily
+    //         //primaryTextTheme: GoogleFonts.abelTextTheme()
+    //         ),
+    //     themeMode: ThemeMode.light,
+    //     darkTheme: ThemeData(brightness: Brightness.dark),
+    
+    //     routes:{
+    //       "/":(context) => HomePage(),
+    //       MyRoutes.homeRoute: (context) => HomePage()
+    //     }
+    //   ),
+    // );
+ 

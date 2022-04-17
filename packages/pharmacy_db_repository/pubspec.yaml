@@ -1,0 +1,10 @@
+name: pharmacy_db_repository
+description: API to pharmacy database.
+
+publish_to: none
+
+environment:
+  sdk: ">=2.16.1 <3.0.0"
+
+dependencies:
+  supabase: ^0.2.15
