@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
+import './scanner_page/scanner_page.dart';
 
 class App extends StatelessWidget {
-  const App({ Key? key }) : super(key: key);
+  const App({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        
+    return MaterialApp(
+      home: SafeArea(
+        child: ScannerPage(),
       ),
     );
   }
