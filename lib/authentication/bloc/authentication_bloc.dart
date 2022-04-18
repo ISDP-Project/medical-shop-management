@@ -17,6 +17,7 @@ class AuthenticationBloc
         super(const AuthenticationStateUnknown()) {
     on<AuthenticationStatusChanged>(_onAuthenticationStatusChanged);
     on<AuthenticationLogoutRequested>(_onAuthenticationLogoutRequested);
+    on<AuthenticationTypeChangeRequested>(_onAuthenticationTypeChangeRequested);
     _authenticationStatusSubscription = _authenticationRepository.status.listen(
       (status) => add(AuthenticationStatusChanged(status)),
     );
@@ -25,6 +26,8 @@ class AuthenticationBloc
   final AuthenticationRepository _authenticationRepository;
   late StreamSubscription<AuthenticationStatus>
       _authenticationStatusSubscription;
+
+  bool _showError = false;
 
   @override
   Future<void> close() {
@@ -39,14 +42,23 @@ class AuthenticationBloc
   ) async {
     switch (event.status) {
       case AuthenticationStatus.unauthenticated:
-        return emit(const AuthenticationStateUnauthenticated());
+        emit(AuthenticationStateUnauthenticated(
+          showError: _showError,
+          authenticationType:
+              state.authenticationType ?? AuthenticationType.signup,
+        ));
+        if (!_showError) {
+          _showError = true;
+        }
+        break;
       case AuthenticationStatus.authenticated:
-        final user = await _tryGetUser();
-        return emit(user != null
+        final user = await _authenticationRepository.getUser();
+        emit(user != null
             ? AuthenticationStateAuthenticated(user)
             : const AuthenticationStateUnauthenticated());
+        break;
       default:
-        return emit(const AuthenticationStateUnknown());
+        emit(const AuthenticationStateUnknown());
     }
   }
 
@@ -57,7 +69,19 @@ class AuthenticationBloc
     _authenticationRepository.logOut();
   }
 
-  Future<User?> _tryGetUser() async {
-    return await _authenticationRepository.getUser();
+  void _onAuthenticationTypeChangeRequested(
+    AuthenticationTypeChangeRequested event,
+    Emitter<AuthenticationState> emit,
+  ) {
+    // _showError = true;
+    if (state.authenticationType == AuthenticationType.login) {
+      emit(const AuthenticationStateUnauthenticated(
+        authenticationType: AuthenticationType.signup,
+      ));
+    } else {
+      emit(const AuthenticationStateUnauthenticated(
+        authenticationType: AuthenticationType.login,
+      ));
+    }
   }
 }

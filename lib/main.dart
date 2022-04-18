@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-// import 'package:google_fonts/google_fonts.dart';
+
 import 'package:supabase/supabase.dart';
 import 'package:bloc/bloc.dart';
 import 'package:authentication_repository/authentication_repository.dart';
+import 'package:master_db_repository/master_db_repository.dart';
 
 import './app.dart';
-import 'login_signup.dart';
-import './homepage.dart';
-import 'routes.dart';
-import 'signup.dart';
 
 void main() async {
   return BlocOverrides.runZoned(() async {
@@ -17,53 +14,9 @@ void main() async {
 
     AuthenticationRepository _authenticationRepository =
         AuthenticationRepository(_supabase);
-    // TODO: Dependency Injection
-    runApp(const App());
+
+    runApp(App(
+      authenticationRepository: _authenticationRepository,
+    ));
   });
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // return MediaQuery(
-    //   data: MediaQueryData(),
-    //   child: MaterialApp(
-    //     theme: ThemeData(
-    //         primarySwatch: Colors.deepPurple,
-    //         // fontFamily: GoogleFonts.lato().fontFamily
-    //         //primaryTextTheme: GoogleFonts.abelTextTheme()
-    //         ),
-    //     themeMode: ThemeMode.light,
-    //     darkTheme: ThemeData(brightness: Brightness.dark),
-    
-    //     routes:{
-    //       "/":(context) => HomePage(),
-    //       MyRoutes.homeRoute: (context) => HomePage()
-    //     }
-    //   ),
-    // );
- 

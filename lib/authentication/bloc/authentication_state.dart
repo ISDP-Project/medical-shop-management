@@ -1,14 +1,23 @@
 part of 'authentication_bloc.dart';
 
+enum AuthenticationType { login, signup }
+
 @immutable
 abstract class AuthenticationState extends Equatable {
   final AuthenticationStatus status;
   final User? user;
+  final AuthenticationType? authenticationType;
+  final bool? showError;
 
-  const AuthenticationState({required this.status, this.user});
+  const AuthenticationState({
+    required this.status,
+    this.user,
+    this.authenticationType,
+    this.showError,
+  });
 
   @override
-  List<Object?> get props => [status, user];
+  List<Object?> get props => [status, user?.id, authenticationType, showError];
 }
 
 class AuthenticationStateUnknown extends AuthenticationState {
@@ -22,6 +31,12 @@ class AuthenticationStateAuthenticated extends AuthenticationState {
 }
 
 class AuthenticationStateUnauthenticated extends AuthenticationState {
-  const AuthenticationStateUnauthenticated()
-      : super(status: AuthenticationStatus.unauthenticated);
+  const AuthenticationStateUnauthenticated(
+      {AuthenticationType authenticationType = AuthenticationType.signup,
+      bool showError = false})
+      : super(
+          status: AuthenticationStatus.unauthenticated,
+          authenticationType: authenticationType,
+          showError: showError,
+        );
 }
