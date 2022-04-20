@@ -2,7 +2,7 @@ import 'package:supabase/supabase.dart';
 
 class PharmacyDBApi {
   final SupabaseClient _supabaseClient;
-  final String pharmacyUserID;
+  final String pharmacyGSTIN;
   final String entryBarcodeID;
   final String
       exitBarcodeID; // ALL PARAMETERS REQUIRED OR WHAT IF YES THEN PASS INTO FXNS DIRECTLY INSTEAD  (some some to fucntions add some to class)
@@ -10,7 +10,7 @@ class PharmacyDBApi {
   final int
       quantityDeducted; // CHECK IF ALREADY IN DATABASE AND CALL ACCORDINGLY, ADDQUANTITY OR ADDITEM
 
-  PharmacyDBApi(this._supabaseClient, this.pharmacyUserID, this.entryBarcodeID,
+  PharmacyDBApi(this._supabaseClient, this.pharmacyGSTIN, this.entryBarcodeID,
       this.exitBarcodeID, this.quantityAdded, this.quantityDeducted);
 
   createNewPharmacyTable() {}
@@ -18,14 +18,14 @@ class PharmacyDBApi {
   addQuantityToInventory() async {
     // if med already exists in pharmacy database // ON-NEW-PURCHASE
     final curTemp = await _supabaseClient
-        .from(pharmacyUserID)
+        .from(pharmacyGSTIN)
         .select('quantity')          // find quantity us id ka
-        .execute(); // pharmacyUserID = name of table of that pharmacy
+        .execute(); // pharmacyGSTIN = name of table of that pharmacy
     int currentItemQuantity = curTemp.data();
     final finalQuantity = quantityAdded + currentItemQuantity;
 
     await _supabaseClient
-        .from(pharmacyUserID)
+        .from(pharmacyGSTIN)
         .update({
           'quantity': finalQuantity
         }) // if doesnt work, convert finalQuantity to String
@@ -35,14 +35,14 @@ class PharmacyDBApi {
 
   removeQuantityFromInventory() async {
     final curTemp = await _supabaseClient
-        .from(pharmacyUserID)
+        .from(pharmacyGSTIN)
         .select('quantity')
         .execute();
     int currentItemQuantity = curTemp.data();
     final finalQuantity = currentItemQuantity - quantityDeducted;
 
     await _supabaseClient
-        .from(pharmacyUserID)
+        .from(pharmacyGSTIN)
         .update({
           'quantity': finalQuantity
         }) // if doesnt work, convert finalQuantity to String
@@ -53,7 +53,7 @@ class PharmacyDBApi {
   addItemToInventory() async {
     // https://www.youtube.com/watch?v=fqfHEZvQPlY
     // vv if doesnt work then convert quantity to string idk vv
-    await _supabaseClient.from(pharmacyUserID).insert([
+    await _supabaseClient.from(pharmacyGSTIN).insert([
       {'Barcode_ID': entryBarcodeID},
       {'quantity': quantityAdded}
     ]).execute(); // HOW TO ADD TO OTHER FIELDS (cost price also)? (info would be in main database like name etc)
@@ -78,6 +78,8 @@ class PharmacyDBApi {
 
 
 // if not returning enything, do 'return type = void'
+
+// change pharmaUSerID to GSTIN
 
 
 // figure out Barcode_ID table vala thing wit palash main database pe dede id basically aisa kuch
