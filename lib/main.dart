@@ -14,7 +14,7 @@ void main() async {
 
     AuthenticationRepository _authenticationRepository =
         AuthenticationRepository(_supabase);
-    MasterDBHandler masterDBHandler = MasterDBHandler();
+    MasterDBHandler masterDBHandler = MasterDBHandler(_supabase);
     // TODO: Dependency Injection
     runApp(const App());
   });
