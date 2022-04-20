@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:master_db_repository/master_db_repository.dart';
 
 import 'package:supabase/supabase.dart';
 import 'package:bloc/bloc.dart';
 import 'package:authentication_repository/authentication_repository.dart';
-import 'package:master_db_repository/master_db_repository.dart';
+// import 'package:master_db_repository/master_db_repository.dart';
 
 import './app.dart';
 
@@ -14,8 +15,9 @@ void main() async {
 
     AuthenticationRepository _authenticationRepository =
         AuthenticationRepository(_supabase);
-    MasterDBHandler masterDBHandler = MasterDBHandler(_supabase);
-    // TODO: Dependency Injection
-    runApp(const App());
+    MasterDBHandler _masterDbRepository = MasterDBHandler(_supabase);
+    runApp(App(
+      authenticationRepository: _authenticationRepository,
+    ));
   });
 }

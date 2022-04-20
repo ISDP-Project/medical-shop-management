@@ -1,3 +1,6 @@
+import 'dart:html';
+
+// import 'package:flutter/material.dart';
 import 'package:supabase/supabase.dart';
 
 class MasterDBHandler {
@@ -6,7 +9,7 @@ class MasterDBHandler {
 
   MasterDBHandler(this._supabase);
 
-  readMedicine() async {
+  Future<List> readMedicine() async {
     var response = await _supabase.from("Medicine").select().execute();
     print(response);
     final dataList = response.data as List<dynamic>;
