@@ -14,7 +14,8 @@ class HomePage extends StatelessWidget {
         child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
           builder: (context, state) {
             if (state is AuthenticationStateAuthenticated) {
-              return Text('${state.user!.userMetadata}');
+              return Text(
+                  '${state.user?.name} owns the ${state.user?.pharmacyName}');
             }
 
             return Container();

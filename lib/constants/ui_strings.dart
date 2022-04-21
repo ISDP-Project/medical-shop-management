@@ -22,6 +22,8 @@ class SignupPageConstants {
   static const String usernameTextFieldLabel = 'Name';
   static const String emailTextFieldLabel = 'Email';
   static const String passTextFieldLabel = 'Password';
+  static const String pharmacyNameLabel = 'Pharmacy\'s Legal Name';
+  static const String pharmacyGstin = 'GSTIN';
 
   static const String buttonText = 'Sign Up';
   static const String loginText = 'Already have an account?';

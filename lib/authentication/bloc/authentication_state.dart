@@ -5,7 +5,7 @@ enum AuthenticationType { login, signup }
 @immutable
 abstract class AuthenticationState extends Equatable {
   final AuthenticationStatus status;
-  final User? user;
+  final Userr? user;
   final AuthenticationType? authenticationType;
   final bool? showError;
 
@@ -26,7 +26,7 @@ class AuthenticationStateUnknown extends AuthenticationState {
 }
 
 class AuthenticationStateAuthenticated extends AuthenticationState {
-  const AuthenticationStateAuthenticated(User user)
+  const AuthenticationStateAuthenticated(Userr user)
       : super(status: AuthenticationStatus.authenticated, user: user);
 }
 

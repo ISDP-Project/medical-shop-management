@@ -11,6 +11,9 @@ class SignupPage extends StatelessWidget {
   SignupPage({Key? key}) : super(key: key);
 
   final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _pharmacyNameController = TextEditingController();
+  final TextEditingController _pharmacyGstinController =
+      TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -64,23 +67,46 @@ class SignupPage extends StatelessWidget {
                       }
                       return const SizedBox();
                     }),
-                    CustomTextField(
-                      label: SignupPageConstants.usernameTextFieldLabel,
-                      controller: _nameController,
+                    Expanded(
+                      child: Container(
+                        margin:
+                            const EdgeInsets.only(bottom: kDefaultMargin * 2),
+                        child: ListView(
+                          physics: const BouncingScrollPhysics(),
+                          children: [
+                            CustomTextField(
+                              label: SignupPageConstants.usernameTextFieldLabel,
+                              controller: _nameController,
+                            ),
+                            const Padding(
+                                padding: EdgeInsets.only(top: kDefaultPadding)),
+                            CustomTextField(
+                              label: SignupPageConstants.emailTextFieldLabel,
+                              controller: _emailController,
+                            ),
+                            const Padding(
+                                padding: EdgeInsets.only(top: kDefaultPadding)),
+                            CustomTextField(
+                              label: SignupPageConstants.passTextFieldLabel,
+                              controller: _passwordController,
+                              obscureText: true,
+                            ),
+                            const Padding(
+                                padding: EdgeInsets.only(top: kDefaultPadding)),
+                            CustomTextField(
+                              label: SignupPageConstants.pharmacyNameLabel,
+                              controller: _pharmacyNameController,
+                            ),
+                            const Padding(
+                                padding: EdgeInsets.only(top: kDefaultPadding)),
+                            CustomTextField(
+                              label: SignupPageConstants.pharmacyGstin,
+                              controller: _pharmacyGstinController,
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                    const Padding(
-                        padding: EdgeInsets.only(top: kDefaultPadding)),
-                    CustomTextField(
-                      label: SignupPageConstants.emailTextFieldLabel,
-                      controller: _emailController,
-                    ),
-                    const Padding(
-                        padding: EdgeInsets.only(top: kDefaultPadding)),
-                    CustomTextField(
-                      label: SignupPageConstants.passTextFieldLabel,
-                      controller: _passwordController,
-                      obscureText: true,
-                    )
                   ],
                 ),
               ),
@@ -94,6 +120,8 @@ class SignupPage extends StatelessWidget {
                             email: _emailController.text,
                             password: _passwordController.text,
                             name: _nameController.text,
+                            pharmacyName: _pharmacyNameController.text,
+                            pharmacyGstin: _pharmacyGstinController.text,
                           );
                     },
                     child: Text(
