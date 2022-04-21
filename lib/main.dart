@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:master_db_repository/master_db_repository.dart';
 
 import 'package:supabase/supabase.dart';
 import 'package:bloc/bloc.dart';
@@ -14,7 +15,7 @@ void main() async {
 
     AuthenticationRepository _authenticationRepository =
         AuthenticationRepository(_supabase);
-
+    MasterDBHandler _masterDbRepository = MasterDBHandler(_supabase);
     runApp(App(
       authenticationRepository: _authenticationRepository,
     ));

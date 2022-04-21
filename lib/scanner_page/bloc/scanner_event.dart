@@ -7,6 +7,12 @@ abstract class ScannerEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class ScannerEventScanRequested extends ScannerEvent {
-  const ScannerEventScanRequested();
+class ScannerEventScannerToggleRequested extends ScannerEvent {
+  const ScannerEventScannerToggleRequested();
+}
+
+class ScannerEventBarcodeScanned extends ScannerEvent {
+  final String? barcodeId;
+
+  const ScannerEventBarcodeScanned(this.barcodeId);
 }
