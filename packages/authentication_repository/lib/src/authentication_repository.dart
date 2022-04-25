@@ -73,6 +73,7 @@ class AuthenticationRepository {
     final res = await _supabase.auth.signOut();
     if (res.error == null) {
       _controller.add(AuthenticationStatus.unauthenticated);
+      _userr = null;
     }
   }
 
@@ -80,11 +81,6 @@ class AuthenticationRepository {
     if (_userr != null) return _userr;
 
     User? user = await _supabase.auth.user();
-    // final PostgrestResponse response = await _supabase
-    //     .from(SqlNamesUsersTable.tableName)
-    //     .select('${SqlNamesUsersTable.name}, ${SqlNamesUsersTable.pharmacyId}')
-    //     .eq(SqlNamesUsersTable.id, user!.id)
-    //     .execute();
 
     final PostgrestResponse response =
         await _supabase.rpc(SqlNamesRpc.fetchUserProfile).execute();

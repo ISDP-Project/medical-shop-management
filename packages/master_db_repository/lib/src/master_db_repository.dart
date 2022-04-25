@@ -1,10 +1,9 @@
-import 'dart:html';
+// import 'dart:html';
 
 // import 'package:flutter/material.dart';
 import 'package:supabase/supabase.dart';
 
 class MasterDBHandler {
-
   SupabaseClient _supabase;
 
   MasterDBHandler(this._supabase);
@@ -16,8 +15,8 @@ class MasterDBHandler {
     return dataList;
   }
 
-  void addMedicine(int barcodeNumber, String medName, String medType, int medQuantity,
-      int medPrice, String medDescription) async {
+  void addMedicine(int barcodeNumber, String medName, String medType,
+      int medQuantity, int medPrice, String medDescription) async {
     var response = await _supabase.from("Medicine").insert({
       'med_id': barcodeNumber,
       'med_name': medName,
