@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import './authentication/authentication.dart';
 import './routes.dart';
 import './home_page/home_page.dart';
-import './scanner_page/scanner_page.dart';
 
 class App extends StatelessWidget {
   const App(
@@ -89,7 +88,7 @@ class AppView extends StatelessWidget {
               if (authenticationType == AuthenticationType.login) {
                 return LoginPage();
               }
-              return ScannerPage();
+              return SignupPage();
             });
       },
     );

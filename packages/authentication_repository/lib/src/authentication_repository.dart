@@ -1,11 +1,18 @@
 import 'dart:async';
 
+import 'package:uuid/uuid.dart';
 import 'package:supabase/supabase.dart';
+
+import './constants.dart';
+import 'userr.dart';
 
 enum AuthenticationStatus { unknown, authenticated, unauthenticated }
 
 class AuthenticationRepository {
   final _controller = StreamController<AuthenticationStatus>();
+  final _uuid = Uuid();
+
+  Userr? _userr;
   SupabaseClient _supabase;
 
   AuthenticationRepository(this._supabase);
@@ -33,16 +40,29 @@ class AuthenticationRepository {
     required String email,
     required String password,
     required String name,
+    required String pharmacyName,
+    required String pharmacyGstin,
   }) async {
     final res = await _supabase.auth.signUp(
       email,
       password,
-      userMetadata: {
-        'name': name,
-      },
     );
 
     if (res.error == null) {
+      String pharmacyUid = _uuid.v4();
+
+      await _supabase.from(SqlNamesPharmaciesTable.tableName).insert({
+        SqlNamesPharmaciesTable.id: pharmacyUid,
+        SqlNamesPharmaciesTable.legalName: pharmacyName,
+        SqlNamesPharmaciesTable.gstin: pharmacyGstin,
+      }).execute();
+
+      await _supabase.from(SqlNamesUsersTable.tableName).insert({
+        SqlNamesUsersTable.id: res.user!.id,
+        SqlNamesUsersTable.name: name,
+        SqlNamesUsersTable.pharmacyId: pharmacyUid,
+      }).execute();
+
       _controller.add(AuthenticationStatus.authenticated);
     } else {
       _controller.add(AuthenticationStatus.unauthenticated);
@@ -56,8 +76,34 @@ class AuthenticationRepository {
     }
   }
 
-  Future<User?> getUser() async {
-    return _supabase.auth.user();
+  Future<Userr?> getUser() async {
+    if (_userr != null) return _userr;
+
+    User? user = await _supabase.auth.user();
+    // final PostgrestResponse response = await _supabase
+    //     .from(SqlNamesUsersTable.tableName)
+    //     .select('${SqlNamesUsersTable.name}, ${SqlNamesUsersTable.pharmacyId}')
+    //     .eq(SqlNamesUsersTable.id, user!.id)
+    //     .execute();
+
+    final PostgrestResponse response =
+        await _supabase.rpc(SqlNamesRpc.fetchUserProfile).execute();
+
+    if (response.hasError) return null;
+
+    final String name = response.data[SqlNamesUsersTable.name];
+    final String pharmacyId = response.data[SqlNamesUsersTable.pharmacyId];
+    final String pharmacyName =
+        response.data[SqlNamesPharmaciesTable.legalName];
+    final String pharmacyGstin = response.data[SqlNamesPharmaciesTable.gstin];
+
+    return Userr(
+      name: name,
+      pharmacyId: pharmacyId,
+      pharmacyName: pharmacyName,
+      pharmacyGstin: pharmacyGstin,
+      user: user!,
+    );
   }
 
   void dispose() => _controller.close();

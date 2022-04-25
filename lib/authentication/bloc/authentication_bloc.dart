@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
-import 'package:supabase/supabase.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 
 part 'authentication_event.dart';
@@ -19,7 +18,9 @@ class AuthenticationBloc
     on<AuthenticationLogoutRequested>(_onAuthenticationLogoutRequested);
     on<AuthenticationTypeChangeRequested>(_onAuthenticationTypeChangeRequested);
     _authenticationStatusSubscription = _authenticationRepository.status.listen(
-      (status) => add(AuthenticationStatusChanged(status)),
+      (status) => add(
+        AuthenticationStatusChanged(status),
+      ),
     );
   }
 
