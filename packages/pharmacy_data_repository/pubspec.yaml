@@ -1,4 +1,4 @@
-name: pharmacy_db_repository
+name: pharmacy_data_repository
 description: API to pharmacy database.
 
 publish_to: none

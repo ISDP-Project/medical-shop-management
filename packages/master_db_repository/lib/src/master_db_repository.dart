@@ -8,8 +8,9 @@ class MasterDBHandler {
 
   MasterDBHandler(this._supabase);
 
-  Future<List> readMedicine() async {
-    var response = await _supabase.from("Medicine").select().execute();
+  Future<List> getMedicine() async {
+    final PostgrestResponse response =
+        await _supabase.from("Medicine").select().execute();
     print(response);
     final dataList = response.data as List<dynamic>;
     return dataList;
@@ -17,7 +18,7 @@ class MasterDBHandler {
 
   void addMedicine(int barcodeNumber, String medName, String medType,
       int medQuantity, int medPrice, String medDescription) async {
-    var response = await _supabase.from("Medicine").insert({
+    final PostgrestResponse response = await _supabase.from("Medicine").insert({
       'med_id': barcodeNumber,
       'med_name': medName,
       'med_type': medType,
@@ -29,7 +30,7 @@ class MasterDBHandler {
   }
 
   void updateMedicine(int barcodeNumber, int medQuantity, int medPrice) async {
-    var response = _supabase
+    final PostgrestResponse response = await _supabase
         .from("Medicine")
         .update({'med_Quantity': medQuantity, 'med_Price': medPrice})
         .eq('med_id', barcodeNumber)
