@@ -12,7 +12,6 @@ class PharmacyDataRepository {
     required final int quantity,
   }) async {
     // if item already in table: ##########################################
-    print("hello");
     final curTemp = await _supabaseClient
         .from(pharmacyTableName)
         .select('quantity')
@@ -60,8 +59,9 @@ class PharmacyDataRepository {
     final curTemp = await _supabaseClient
         .from(pharmacyTableName)
         .select('quantity')
+        .eq('item_id', itemID)
         .execute();
-    int currentItemQuantity = curTemp.data();
+    int currentItemQuantity = curTemp.data[0]['quantity'];
     final int finalQuantity =
         currentItemQuantity - quantity; // finalQuantity datatype?
 
