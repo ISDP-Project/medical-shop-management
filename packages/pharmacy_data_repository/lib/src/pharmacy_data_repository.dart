@@ -6,54 +6,57 @@ class PharmacyDataRepository {
       pharmacyTableName; // table name: 'gstin_' + pharmacyGSTIN (name: gstin_abc12def345, pharmacyGSTIN: abc12def345)
   PharmacyDataRepository(this._supabaseClient, this.pharmacyTableName);
 
-  addQuantity({
+  void addQuantity({
     // ON-PURCHASE // if item already exists in database, update quantity
-    required final int itemID, // itemID: int
+    required final String itemID, // itemID: int
     required final int quantity,
   }) async {
+    if ((await checkItemExistence(itemID: itemID)) == false) {
+      addNewItem(itemID: itemID, quantity: quantity);
+
+    } else {
+      final curTemp = await _supabaseClient
+          .from(pharmacyTableName)
+          .select('quantity')
+          .eq('item_id', itemID)
+          .execute(); // pharmacyTableName = name of table of that pharmacy
+
+      int currentItemQuantity = curTemp.data[0][
+          'quantity']; // #################### this might be wrong, refer to authentication repository
+      final int finalQuantity = quantity + currentItemQuantity;
+
+      await _supabaseClient
+          .from(pharmacyTableName)
+          .update({
+            'quantity': finalQuantity
+          }) // if doesnt work, convert finalQuantity to String
+          .eq('item_id', itemID)
+          .execute();
+    }
     // if item already in table: ##########################################
-    final curTemp = await _supabaseClient
-        .from(pharmacyTableName)
-        .select('quantity')
-        .eq('item_id', itemID)
-        .execute(); // pharmacyTableName = name of table of that pharmacy
-
-    int currentItemQuantity = curTemp.data[0][
-        'quantity']; // #################### this might be wrong, refer to authentication repository
-    final int finalQuantity = quantity + currentItemQuantity;
-
-    await _supabaseClient
-        .from(pharmacyTableName)
-        .update({
-          'quantity': finalQuantity
-        }) // if doesnt work, convert finalQuantity to String
-        .eq('item_id', itemID)
-        .execute();
-
     // else: addNewItem({itemID, quantity}) ################################
   }
 
-  addMultipleQuantities({required final Map<int, int> items}) async {
+  void addMultipleQuantities({required final Map<int, int> items}) async {
     // ON-PURCHASE // if multiple items scanned together
     // write code here. Do by 2:30 PM meet tomorrow
     // from(pharmacyTableName).up
     // items.update()
   }
 
-  addNewItem({
-    required final int itemID,
+  void addNewItem({
+    required final String itemID,
     required final int quantity,
   }) async {
     // if item not in inventory, call this fxn basically
     await _supabaseClient
         .from(pharmacyTableName)
         .insert({'item_id': itemID, 'quantity': quantity}).execute();
-    // return response;
   }
 
-  removeQuantity({
+  void removeQuantity({
     // ON-SALE
-    required final int itemID,
+    required final String itemID,
     required final int quantity,
   }) async {
     final curTemp = await _supabaseClient
@@ -61,6 +64,9 @@ class PharmacyDataRepository {
         .select('quantity')
         .eq('item_id', itemID)
         .execute();
+
+    print(curTemp.data);
+
     int currentItemQuantity = curTemp.data[0]['quantity'];
     final int finalQuantity =
         currentItemQuantity - quantity; // finalQuantity datatype?
@@ -74,19 +80,30 @@ class PharmacyDataRepository {
         .execute();
   }
 
-  removeMultipleQuantities({required final Map<int, int> items}) async {
+  void removeMultipleQuantities({required final Map<int, int> items}) async {
     // ON-SALE // if multiple items scanned together
     // write code here
   }
+
+  Future<bool> checkItemExistence({required final String itemID}) async {
+    PostgrestResponse<dynamic> response = await _supabaseClient
+        .from(pharmacyTableName)
+        .select('quantity')
+        .eq('item_id', itemID)
+        .execute();
+
+    if (response.data.isEmpty) return false;
+    return true;
+  }
 }
 
-//////////////////////////////
-// addNewItem() async {  // ye fxn nah ihoga, kahi par toh if else karke shit ewjfhgiu
-//   await _supabaseClient.from(pharmacyTableName).insert([
-//     {'item_id': itemID},
-//     {'Quantity': quantity},
-//   ]).execute();
-// }
+
+
+// check item existence
+// multipleAdd
+// mutlipleRemove
+// testing sab functions ki wfjvweyrkwoid,;ekwnifvwehn
+
 
 /////////////////////////////
 
