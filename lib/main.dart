@@ -1,4 +1,4 @@
-// import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:master_db_repository/master_db_repository.dart';
 import 'package:pharmacy_data_repository/pharmacy_data_repository.dart';
 
@@ -22,18 +22,11 @@ void main() async {
     PharmacyDataRepository pharmacyDataRep =
         PharmacyDataRepository(_supabase, 'gstin_he73isbf8');
 
-    pharmacyDataRep.addNewItem(itemID: 12345678, quantity: 100);
-    // runApp(App(
-    //   authenticationRepository: _authenticationRepository,
-    // ));
+    runApp(App(
+      authenticationRepository: _authenticationRepository,
+    ));
   });
 }
 
-    // PharmacyDataRepository _pharmacyDataRepository =
-    //     PharmacyDataRepository(_supabase, 'gstin_he73isbf8');
-    // print('hi');
-    // // _pharmacyDataRepository.addQuantity(itemID: 9837498238, quantity: 50);
-    // // _pharmacyDataRepository.removeQuantity(itemID: 9837498238, quantity: 50);
-    // _pharmacyDataRepository.addNewItem(itemID: 765858858, quantity: 100);
-    // print('dn');
+
 
