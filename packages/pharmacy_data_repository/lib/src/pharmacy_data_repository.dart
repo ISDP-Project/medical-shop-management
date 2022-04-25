@@ -44,10 +44,9 @@ class PharmacyDataRepository {
     required final int quantity,
   }) async {
     // if item not in inventory, call this fxn basically
-    await _supabaseClient.from(pharmacyTableName).insert([
-      {'item_id': itemID},
-      {'quantity': quantity},
-    ]).execute();
+    await _supabaseClient
+        .from(pharmacyTableName)
+        .insert({'item_id': itemID, 'quantity': quantity}).execute();
     // return response;
   }
 
