@@ -30,11 +30,13 @@ class PharmacyDataRepository {
     }
   }
 
-  void addMultipleQuantities({required final Map<int, int> items}) async {
-    // ON-PURCHASE // if multiple items scanned together
-    // write code here. Do by 2:30 PM meet tomorrow
-    // from(pharmacyTableName).up
-    // items.update()
+  void addMultipleQuantities({required final Map<String, int> items}) async {
+    List itemIDList = items.keys.toList(growable: false);
+    List quantityList = items.values.toList(growable: false);
+
+    for (int i = 0; i < itemIDList.length; i++) {
+      addQuantity(itemID: itemIDList[i], quantity: quantityList[i]);
+    }
   }
 
   void addNewItem({
@@ -66,8 +68,13 @@ class PharmacyDataRepository {
         .execute();
   }
 
-  void removeMultipleQuantities({required final Map<int, int> items}) async {
-    // write code here
+  void removeMultipleQuantities({required final Map<String, int> items}) async {
+    List itemIDList = items.keys.toList(growable: false);
+    List quantityList = items.values.toList(growable: false);
+
+    for (int i = 0; i < itemIDList.length; i++) {
+      removeQuantity(itemID: itemIDList[i], quantity: quantityList[i]);
+    }
   }
 
   Future<bool> checkItemExistence({required final String itemID}) async {
@@ -81,8 +88,5 @@ class PharmacyDataRepository {
     return true;
   }
 }
-// addMultipleQuantities
-// removeMultipleQuantities
-// test all functions
 // remind sahej to make a trigger that creates a pharmacy table
 // remind costPrice to sahej during DB work
