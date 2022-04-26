@@ -1,4 +1,4 @@
-name: masterDB_repository
+name: master_db_repository
 description: repository managing all the functions related to the masterDB (which has information of all the medicines)
 
 publish_to: none
@@ -8,4 +8,4 @@ environment:
 
 dependencies:
   supabase: ^0.2.15
-  s
+  

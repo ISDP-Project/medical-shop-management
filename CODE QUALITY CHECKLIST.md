@@ -9,7 +9,7 @@ As per Dart/Flutter standards:
 - `UpperCamelCase` for classes, enums, and typedefs.
 - `lowerCamelCase` for variables, constants, and parameter (named & unnamed).
 - `lower_snake_case` for libraries, packages, folders, and source files.
-- `_underscore_at_begining` for private variables. Do not have unnecessary private variables.
+- `_underscoreAtBegining` for private variables. Do not have unnecessary public variables.
 - Prefer short variables over longer ones. But DO NOT compromise on giving meaningful names. Remember a longer descript variable name is always better than a shorter non-descript variable name.
 
 ## Comments
@@ -63,8 +63,9 @@ Use a state management library like <a href="https://bloclibrary.dev/">Bloc</a>,
 import 'dart:math'; // dart language import. Begining with 'dart:'
                     // empty line
 import 'package:flutter/material.dart'; // flutter modules
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/foundations.dart';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart'; // third party library
 
 import './bloc/feature_bloc.dart'; // local files, NOTE: relative paths
