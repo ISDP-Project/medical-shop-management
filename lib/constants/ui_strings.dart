@@ -34,3 +34,16 @@ class SignupPageConstants {
   static const String loginText = 'Already have an account?';
   static const String loginButtonText = 'Log in';
 }
+
+class HomePageConstants {
+  static const String drawerHeading = 'Drawer Header';
+  static const String home = 'Home';
+  static const String notification = 'Notification';
+  static const String setting = 'Setting';
+  static const String payment = 'Billing Page';
+  static const String user = 'User';
+  static const String help = 'Help';
+
+  static const String billingpage = "BILLING Button";
+  static const String scan = "Scan Button";
+}
