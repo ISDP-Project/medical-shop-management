@@ -88,5 +88,8 @@ class PharmacyDataRepository {
     return true;
   }
 }
-// remind sahej to make a trigger that creates a pharmacy table
-// remind costPrice to sahej during DB work
+
+// TO-DO:
+// 1. add plpgsql funciton to check existence and add/subtract stock of multiple items
+// 2. remind sahej to make a trigger that creates a pharmacy table
+// 3. remind costPrice to sahej during DB work
