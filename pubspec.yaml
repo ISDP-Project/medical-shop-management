@@ -46,6 +46,7 @@ dependencies:
   pharmacy_data_repository:
     path: packages/pharmacy_data_repository
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
