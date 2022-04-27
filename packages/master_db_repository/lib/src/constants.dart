@@ -1,9 +1,10 @@
 class SqlNameMedicineTable {
   static const String tableName = 'Medicine';
-  static const String barcodeNumber = 'med_id';
-  static const String medName = 'med_name';
-  static const String medType = 'med_type';
-  static const String medQuantity = 'med_quantity';
-  static const String medPrice = 'med_price';
-  static const String medDescription = 'med_description';
+  static const String barcodeNumber = 'barcode_number';
+  static const String medSaltName = 'salt_name';
+  static const String medType = 'type';
+  static const String medMrp = 'mrp';
+  static const String manufacturer = 'manufacturer';
+  static const String manufacturingDate = 'mfg_date';
+  static const String expiryDate = 'exp_data';
 }

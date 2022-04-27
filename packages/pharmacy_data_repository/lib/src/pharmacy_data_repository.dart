@@ -1,5 +1,8 @@
 import 'package:supabase/supabase.dart';
 
+import './constants.dart';
+
+
 class PharmacyDataRepository {
   final SupabaseClient _supabaseClient;
   final String
@@ -7,7 +10,7 @@ class PharmacyDataRepository {
   PharmacyDataRepository(this._supabaseClient, this.pharmacyTableName);
 
   void addQuantity({
-    required final String itemID,
+    required final int itemID,
     required final int quantity,
   }) async {
     if ((await checkItemExistence(itemID: itemID)) == false) {
@@ -15,17 +18,17 @@ class PharmacyDataRepository {
     } else {
       final curTemp = await _supabaseClient
           .from(pharmacyTableName)
-          .select('quantity')
-          .eq('item_id', itemID)
+          .select(SqlNamePharmacyTable.quantity)
+          .eq(SqlNamePharmacyTable.itemID, itemID)
           .execute();
 
-      int currentItemQuantity = curTemp.data[0]['quantity'];
+      int currentItemQuantity = curTemp.data[0][SqlNamePharmacyTable.quantity];
       final int finalQuantity = quantity + currentItemQuantity;
 
       await _supabaseClient
           .from(pharmacyTableName)
-          .update({'quantity': finalQuantity})
-          .eq('item_id', itemID)
+          .update({SqlNamePharmacyTable.quantity: finalQuantity})
+          .eq(SqlNamePharmacyTable.itemID, itemID)
           .execute();
     }
   }
@@ -40,12 +43,13 @@ class PharmacyDataRepository {
   }
 
   void addNewItem({
-    required final String itemID,
+    required final int itemID,
     required final int quantity,
   }) async {
-    await _supabaseClient
-        .from(pharmacyTableName)
-        .insert({'item_id': itemID, 'quantity': quantity}).execute();
+    await _supabaseClient.from(pharmacyTableName).insert({
+      SqlNamePharmacyTable.itemID: itemID,
+      SqlNamePharmacyTable.quantity: quantity,
+    }).execute();
   }
 
   void removeQuantity({
@@ -54,17 +58,17 @@ class PharmacyDataRepository {
   }) async {
     final curTemp = await _supabaseClient
         .from(pharmacyTableName)
-        .select('quantity')
-        .eq('item_id', itemID)
+        .select(SqlNamePharmacyTable.quantity)
+        .eq(SqlNamePharmacyTable.itemID, itemID)
         .execute();
 
-    int currentItemQuantity = curTemp.data[0]['quantity'];
+    int currentItemQuantity = curTemp.data[0][SqlNamePharmacyTable.quantity];
     final int finalQuantity = currentItemQuantity - quantity;
 
     await _supabaseClient
         .from(pharmacyTableName)
-        .update({'quantity': finalQuantity})
-        .eq('item_id', itemID)
+        .update({SqlNamePharmacyTable.quantity: finalQuantity})
+        .eq(SqlNamePharmacyTable.itemID, itemID)
         .execute();
   }
 
@@ -77,11 +81,11 @@ class PharmacyDataRepository {
     }
   }
 
-  Future<bool> checkItemExistence({required final String itemID}) async {
+  Future<bool> checkItemExistence({required final int itemID}) async {
     PostgrestResponse<dynamic> response = await _supabaseClient
         .from(pharmacyTableName)
-        .select('quantity')
-        .eq('item_id', itemID)
+        .select(SqlNamePharmacyTable.quantity)
+        .eq(SqlNamePharmacyTable.itemID, itemID)
         .execute();
 
     if (response.data.isEmpty) return false;
