@@ -65,6 +65,7 @@ class LoginPage extends StatelessWidget {
                     CustomTextField(
                       label: LoginPageConstants.emailTextFieldLabel,
                       controller: _emailController,
+                      textInputType: TextInputType.emailAddress,
                     ),
                     const Padding(
                         padding: EdgeInsets.only(top: kDefaultPadding)),
@@ -72,6 +73,7 @@ class LoginPage extends StatelessWidget {
                       label: LoginPageConstants.passTextFieldLabel,
                       controller: _passwordController,
                       obscureText: true,
+                      textInputType: TextInputType.visiblePassword,
                     )
                   ],
                 ),

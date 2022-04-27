@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
           builder: (context, state) {
             if (state is AuthenticationStateAuthenticated) {
               return Text(
-                  '${state.user?.name} owns the ${state.user?.pharmacyName}');
+                  '${state.user?.firstName} owns the ${state.user?.pharmacyName}');
             }
 
             return Container();
