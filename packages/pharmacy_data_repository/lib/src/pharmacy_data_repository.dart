@@ -1,115 +1,99 @@
 import 'package:supabase/supabase.dart';
 
+import './constants.dart';
+
+
 class PharmacyDataRepository {
   final SupabaseClient _supabaseClient;
   final String
       pharmacyTableName; // table name: 'gstin_' + pharmacyGSTIN (name: gstin_abc12def345, pharmacyGSTIN: abc12def345)
   PharmacyDataRepository(this._supabaseClient, this.pharmacyTableName);
 
-  addQuantity({
-    // ON-PURCHASE // if item already exists in database, update quantity
-    required final int itemID, // itemID: int
-    required final int quantity,
-  }) async {
-    // if item already in table: ##########################################
-    final curTemp = await _supabaseClient
-        .from(pharmacyTableName)
-        .select('quantity')
-        .eq('item_id', itemID)
-        .execute(); // pharmacyTableName = name of table of that pharmacy
-    int currentItemQuantity = curTemp
-        .data(); // #################### this might be wrong, refer to authentication repository
-    final int finalQuantity = quantity + currentItemQuantity;
-
-    await _supabaseClient
-        .from(pharmacyTableName)
-        .update({
-          'quantity': finalQuantity
-        }) // if doesnt work, convert finalQuantity to String
-        .eq('item_id', itemID)
-        .execute();
-
-    // else: addNewItem({itemID, quantity}) ################################
-  }
-
-  addMultipleQuantities({required final Map<int, int> items}) async {
-    // ON-PURCHASE // if multiple items scanned together
-    // write code here. Do by 2:30 PM meet tomorrow
-    // from(pharmacyTableName).up
-    // items.update()
-  }
-
-  addNewItem({
+  void addQuantity({
     required final int itemID,
     required final int quantity,
   }) async {
-    // if item not in inventory, call this fxn basically
-    await _supabaseClient
-        .from(pharmacyTableName)
-        .insert({'item_id': itemID, 'quantity': quantity}).execute();
-    // return response;
+    if ((await checkItemExistence(itemID: itemID)) == false) {
+      addNewItem(itemID: itemID, quantity: quantity);
+    } else {
+      final curTemp = await _supabaseClient
+          .from(pharmacyTableName)
+          .select(SqlNamePharmacyTable.quantity)
+          .eq(SqlNamePharmacyTable.itemID, itemID)
+          .execute();
+
+      int currentItemQuantity = curTemp.data[0][SqlNamePharmacyTable.quantity];
+      final int finalQuantity = quantity + currentItemQuantity;
+
+      await _supabaseClient
+          .from(pharmacyTableName)
+          .update({SqlNamePharmacyTable.quantity: finalQuantity})
+          .eq(SqlNamePharmacyTable.itemID, itemID)
+          .execute();
+    }
   }
 
-  removeQuantity({
-    // ON-SALE
+  void addMultipleQuantities({required final Map<String, int> items}) async {
+    List itemIDList = items.keys.toList(growable: false);
+    List quantityList = items.values.toList(growable: false);
+
+    for (int i = 0; i < itemIDList.length; i++) {
+      addQuantity(itemID: itemIDList[i], quantity: quantityList[i]);
+    }
+  }
+
+  void addNewItem({
     required final int itemID,
+    required final int quantity,
+  }) async {
+    await _supabaseClient.from(pharmacyTableName).insert({
+      SqlNamePharmacyTable.itemID: itemID,
+      SqlNamePharmacyTable.quantity: quantity,
+    }).execute();
+  }
+
+  void removeQuantity({
+    required final String itemID,
     required final int quantity,
   }) async {
     final curTemp = await _supabaseClient
         .from(pharmacyTableName)
-        .select('quantity')
+        .select(SqlNamePharmacyTable.quantity)
+        .eq(SqlNamePharmacyTable.itemID, itemID)
         .execute();
-    int currentItemQuantity = curTemp.data();
-    final int finalQuantity =
-        currentItemQuantity - quantity; // finalQuantity datatype?
+
+    int currentItemQuantity = curTemp.data[0][SqlNamePharmacyTable.quantity];
+    final int finalQuantity = currentItemQuantity - quantity;
 
     await _supabaseClient
         .from(pharmacyTableName)
-        .update({
-          'quantity': finalQuantity
-        }) // if doesnt work, convert finalQuantity to String
-        .eq('item_id', itemID)
+        .update({SqlNamePharmacyTable.quantity: finalQuantity})
+        .eq(SqlNamePharmacyTable.itemID, itemID)
         .execute();
   }
 
-  removeMultipleQuantities({required final Map<int, int> items}) async {
-    // ON-SALE // if multiple items scanned together
-    // write code here
+  void removeMultipleQuantities({required final Map<String, int> items}) async {
+    List itemIDList = items.keys.toList(growable: false);
+    List quantityList = items.values.toList(growable: false);
+
+    for (int i = 0; i < itemIDList.length; i++) {
+      removeQuantity(itemID: itemIDList[i], quantity: quantityList[i]);
+    }
+  }
+
+  Future<bool> checkItemExistence({required final int itemID}) async {
+    PostgrestResponse<dynamic> response = await _supabaseClient
+        .from(pharmacyTableName)
+        .select(SqlNamePharmacyTable.quantity)
+        .eq(SqlNamePharmacyTable.itemID, itemID)
+        .execute();
+
+    if (response.data.isEmpty) return false;
+    return true;
   }
 }
 
-//////////////////////////////
-// addNewItem() async {  // ye fxn nah ihoga, kahi par toh if else karke shit ewjfhgiu
-//   await _supabaseClient.from(pharmacyTableName).insert([
-//     {'item_id': itemID},
-//     {'Quantity': quantity},
-//   ]).execute();
-// }
-
-/////////////////////////////
-
-// upsert
-// check if item already exists or not
-
-// take a list as well
-
-// run code
-
-// change barcode id to med_id and Quantity to quantity
-
-// DML commands likh, DDL will be done db side pe
-
-// run and test this code?
-// PLPGSQL some shit udyhewaxyru
-// if not returning enything, do 'return type = void'
-// remind costPrice to sahej during DB work
-
-// MAYBE IDK:
-
-//  at login,
-//           can update table via barcode
-
-//  at signup (new user)
-//           creates new table for pharmacy
-
-// palash table med id kya hota hau medicined.id implies id (palashtable colum naming conventions fix)
+// TO-DO:
+// 1. add plpgsql funciton to check existence and add/subtract stock of multiple items
+// 2. remind sahej to make a trigger that creates a pharmacy table
+// 3. remind costPrice to sahej during DB work
