@@ -20,13 +20,10 @@ void main() async {
     MasterDBHandler _masterDbRepository = MasterDBHandler(_supabase);
 
     PharmacyDataRepository pharmacyDataRep =
-        PharmacyDataRepository(_supabase, 'gstin_he73isbf8');
+        PharmacyDataRepository(_supabase, 'pharmacy_he73isbf8');
 
     runApp(App(
       authenticationRepository: _authenticationRepository,
     ));
   });
 }
-
-
-
