@@ -5,6 +5,4 @@ class SqlNameMedicineTable {
   static const String medType = 'type';
   static const String medMrp = 'mrp';
   static const String manufacturer = 'manufacturer';
-  static const String manufacturingDate = 'mfg_date';
-  static const String expiryDate = 'exp_data';
 }

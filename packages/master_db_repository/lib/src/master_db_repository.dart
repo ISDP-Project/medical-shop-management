@@ -45,15 +45,13 @@ class MasterDBHandler {
     return response;
   }
 
-
   void addMedicine(
-      int barcodeNumber,
-      String medSaltName,
-      String medType,
-      int mrp,
-      String manufacturer,
-      DateTime manufacturingDate,
-      DateTime expiryDate) async {
+    int barcodeNumber,
+    String medSaltName,
+    String medType,
+    int mrp,
+    String manufacturer,
+  ) async {
     final PostgrestResponse response =
         await _supabase.from(SqlNameMedicineTable.tableName).insert({
       SqlNameMedicineTable.barcodeNumber: barcodeNumber,
@@ -61,8 +59,6 @@ class MasterDBHandler {
       SqlNameMedicineTable.medType: medType,
       SqlNameMedicineTable.medMrp: mrp,
       SqlNameMedicineTable.manufacturer: manufacturer,
-      SqlNameMedicineTable.manufacturingDate: manufacturingDate,
-      SqlNameMedicineTable.expiryDate: expiryDate,
     }).execute();
     // print(response);
   }
