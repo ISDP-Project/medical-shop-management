@@ -7,7 +7,7 @@ class MasterDBHandler {
 
   MasterDBHandler(this._supabase);
 
-  Future<List> getMedicine() async {
+  Future<List> getMedicineRow() async {
     final PostgrestResponse response =
         await _supabase.from(SqlNameMedicineTable.tableName).select().execute();
     // print(response.data);
@@ -45,25 +45,6 @@ class MasterDBHandler {
     return response;
   }
 
-  Future<PostgrestResponse> getMfgDate(int barcodeNumber) async {
-    final PostgrestResponse<dynamic> response = await _supabase
-        .from(SqlNameMedicineTable.tableName)
-        .select(SqlNameMedicineTable.manufacturingDate)
-        .eq(SqlNameMedicineTable.barcodeNumber, barcodeNumber)
-        .execute();
-    // print(response.data);
-    return response;
-  }
-
-  Future<PostgrestResponse> getExpDate(int barcodeNumber) async {
-    final PostgrestResponse response = await _supabase
-        .from(SqlNameMedicineTable.tableName)
-        .select(SqlNameMedicineTable.expiryDate)
-        .eq(SqlNameMedicineTable.barcodeNumber, barcodeNumber)
-        .execute();
-    // print(response.data);
-    return response;
-  }
 
   void addMedicine(
       int barcodeNumber,
