@@ -29,3 +29,15 @@ class SignupPageConstants {
   static const String loginText = 'Already have an account?';
   static const String loginButtonText = 'Log in';
 }
+
+class BillingPageConstants {
+  static const String billingPage = 'Billing Page';
+  static const String medicalShop = 'Medical Shop Name';
+  static const String date = 'Date: 20-04-2022 ';
+  static const String day = 'Day: Friday ';
+  static const String name = 'Name:';
+  static const String qty = 'Qty.';
+  static const String price = 'Price:';
+  static const String paracetamol = 'Paracetamol';
+  static const String quantityNumber = '0';
+}
