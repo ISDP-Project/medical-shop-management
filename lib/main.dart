@@ -22,11 +22,10 @@ void main() async {
     PharmacyDataRepository pharmacyDataRep =
         PharmacyDataRepository(_supabase, 'gstin_he73isbf8');
 
-    runApp(App(
-      authenticationRepository: _authenticationRepository,
-    ));
+    runApp(
+      App(
+        authenticationRepository: _authenticationRepository,
+      ),
+    );
   });
 }
-
-
-

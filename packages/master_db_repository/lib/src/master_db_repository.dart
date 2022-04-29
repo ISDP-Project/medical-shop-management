@@ -1,40 +1,74 @@
-// import 'dart:html';
-
-// import 'package:flutter/material.dart';
 import 'package:supabase/supabase.dart';
+
+import './constants.dart';
 
 class MasterDBHandler {
   SupabaseClient _supabase;
 
   MasterDBHandler(this._supabase);
 
-  Future<List> getMedicine() async {
+  Future<List> getMedicineRow() async {
     final PostgrestResponse response =
-        await _supabase.from("Medicine").select().execute();
-    print(response);
+        await _supabase.from(SqlNameMedicineTable.tableName).select().execute();
+    // print(response.data);
     final dataList = response.data as List<dynamic>;
     return dataList;
   }
 
-  void addMedicine(int barcodeNumber, String medName, String medType,
-      int medQuantity, int medPrice, String medDescription) async {
-    final PostgrestResponse response = await _supabase.from("Medicine").insert({
-      'med_id': barcodeNumber,
-      'med_name': medName,
-      'med_type': medType,
-      'med_quantity': medQuantity,
-      'med_price': medPrice,
-      'med_description': medDescription
-    }).execute();
-    print(response);
+  Future<PostgrestResponse> getManufaturer(int barcodeNumber) async {
+    final PostgrestResponse response = await _supabase
+        .from(SqlNameMedicineTable.tableName)
+        .select(SqlNameMedicineTable.manufacturer)
+        .eq(SqlNameMedicineTable.barcodeNumber, barcodeNumber)
+        .execute();
+    // print(response.data);
+    return response;
   }
 
-  void updateMedicine(int barcodeNumber, int medQuantity, int medPrice) async {
+  Future<PostgrestResponse> getSaltName(int barcodeNumber) async {
     final PostgrestResponse response = await _supabase
-        .from("Medicine")
-        .update({'med_Quantity': medQuantity, 'med_Price': medPrice})
-        .eq('med_id', barcodeNumber)
+        .from(SqlNameMedicineTable.tableName)
+        .select(SqlNameMedicineTable.medSaltName)
+        .eq(SqlNameMedicineTable.barcodeNumber, barcodeNumber)
         .execute();
-    print(response);
+    // print(response.data);
+    return response;
+  }
+
+  Future<PostgrestResponse> getMrp(int barcodeNumber) async {
+    final PostgrestResponse response = await _supabase
+        .from(SqlNameMedicineTable.tableName)
+        .select(SqlNameMedicineTable.medMrp)
+        .eq(SqlNameMedicineTable.barcodeNumber, barcodeNumber)
+        .execute();
+    // print(response.data);
+    return response;
+  }
+
+  void addMedicine(
+    int barcodeNumber,
+    String medSaltName,
+    String medType,
+    int mrp,
+    String manufacturer,
+  ) async {
+    final PostgrestResponse response =
+        await _supabase.from(SqlNameMedicineTable.tableName).insert({
+      SqlNameMedicineTable.barcodeNumber: barcodeNumber,
+      SqlNameMedicineTable.medSaltName: medSaltName,
+      SqlNameMedicineTable.medType: medType,
+      SqlNameMedicineTable.medMrp: mrp,
+      SqlNameMedicineTable.manufacturer: manufacturer,
+    }).execute();
+    // print(response);
+  }
+
+  void updateMedicine(int barcodeNumber, int medMrp) async {
+    final PostgrestResponse response = await _supabase
+        .from(SqlNameMedicineTable.tableName)
+        .update({SqlNameMedicineTable.medMrp: medMrp})
+        .eq(SqlNameMedicineTable.barcodeNumber, barcodeNumber)
+        .execute();
+    // print(response);
   }
 }
