@@ -29,6 +29,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  syncfusion_flutter_charts: ^19.1.54
+  flutter_speed_dial: ^5.1.0  
 
   supabase_flutter: ^0.2.12
   bloc: ^8.0.3
