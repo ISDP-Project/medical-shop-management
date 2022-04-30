@@ -7,6 +7,7 @@ import 'package:supabase/supabase.dart';
 import 'package:bloc/bloc.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 // import 'package:master_db_repository/master_db_repository.dart';
+// import 'package:analytic'
 
 import './app.dart';
 
@@ -20,10 +21,12 @@ void main() async {
     MasterDBHandler _masterDbRepository = MasterDBHandler(_supabase);
 
     PharmacyDataRepository pharmacyDataRep =
-        PharmacyDataRepository(_supabase, 'pharmacy_he73isbf8');
+        PharmacyDataRepository(_supabase, 'gstin_he73isbf8');
 
-    runApp(App(
-      authenticationRepository: _authenticationRepository,
-    ));
+    runApp(
+      App(
+        authenticationRepository: _authenticationRepository,
+      ),
+    );
   });
 }

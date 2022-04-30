@@ -29,6 +29,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  syncfusion_flutter_charts: ^19.1.54
+  flutter_speed_dial: ^5.1.0  
 
   supabase_flutter: ^0.2.12
   bloc: ^8.0.3
@@ -42,10 +44,12 @@ dependencies:
     path: packages/master_db_repository
   google_fonts: ^2.3.1
   mobile_scanner: ^1.0.0
+  http: ^0.13.4
 
   pharmacy_data_repository:
     path: packages/pharmacy_data_repository
   syncfusion_flutter_datepicker: ^20.1.51
+
 
 dev_dependencies:
   flutter_test:

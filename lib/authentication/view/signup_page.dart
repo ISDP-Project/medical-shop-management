@@ -10,12 +10,19 @@ import '../../constants/constants.dart';
 class SignupPage extends StatelessWidget {
   SignupPage({Key? key}) : super(key: key);
 
-  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _phoneNoController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _pharmacyNameController = TextEditingController();
   final TextEditingController _pharmacyGstinController =
       TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _pharmacyAddressController =
+      TextEditingController();
+  final TextEditingController _pharmacyCityController = TextEditingController();
+  final TextEditingController _pharmacyPinCodeController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -75,14 +82,31 @@ class SignupPage extends StatelessWidget {
                           physics: const BouncingScrollPhysics(),
                           children: [
                             CustomTextField(
-                              label: SignupPageConstants.usernameTextFieldLabel,
-                              controller: _nameController,
+                              label:
+                                  SignupPageConstants.firstNameTextFieldLabel,
+                              controller: _firstNameController,
+                              textInputType: TextInputType.name,
+                            ),
+                            const Padding(
+                                padding: EdgeInsets.only(top: kDefaultPadding)),
+                            CustomTextField(
+                              label: SignupPageConstants.lastNameTextFieldLabel,
+                              controller: _lastNameController,
+                              textInputType: TextInputType.name,
+                            ),
+                            const Padding(
+                                padding: EdgeInsets.only(top: kDefaultPadding)),
+                            CustomTextField(
+                              label: SignupPageConstants.phoneTextFieldLabel,
+                              controller: _phoneNoController,
+                              textInputType: TextInputType.phone,
                             ),
                             const Padding(
                                 padding: EdgeInsets.only(top: kDefaultPadding)),
                             CustomTextField(
                               label: SignupPageConstants.emailTextFieldLabel,
                               controller: _emailController,
+                              textInputType: TextInputType.emailAddress,
                             ),
                             const Padding(
                                 padding: EdgeInsets.only(top: kDefaultPadding)),
@@ -96,12 +120,35 @@ class SignupPage extends StatelessWidget {
                             CustomTextField(
                               label: SignupPageConstants.pharmacyNameLabel,
                               controller: _pharmacyNameController,
+                              textInputType: TextInputType.name,
                             ),
                             const Padding(
                                 padding: EdgeInsets.only(top: kDefaultPadding)),
                             CustomTextField(
                               label: SignupPageConstants.pharmacyGstin,
                               controller: _pharmacyGstinController,
+                              textInputType: TextInputType.visiblePassword,
+                            ),
+                            const Padding(
+                                padding: EdgeInsets.only(top: kDefaultPadding)),
+                            CustomTextField(
+                              label: SignupPageConstants.pharmacyAddress,
+                              controller: _pharmacyAddressController,
+                              textInputType: TextInputType.streetAddress,
+                            ),
+                            const Padding(
+                                padding: EdgeInsets.only(top: kDefaultPadding)),
+                            CustomTextField(
+                              label: SignupPageConstants.pharmacyCity,
+                              controller: _pharmacyCityController,
+                              textInputType: TextInputType.name,
+                            ),
+                            const Padding(
+                                padding: EdgeInsets.only(top: kDefaultPadding)),
+                            CustomTextField(
+                              label: SignupPageConstants.pharmacyPinCode,
+                              controller: _pharmacyPinCodeController,
+                              textInputType: TextInputType.number,
                             ),
                           ],
                         ),
@@ -119,9 +166,14 @@ class SignupPage extends StatelessWidget {
                       context.read<AuthenticationRepository>().signUp(
                             email: _emailController.text,
                             password: _passwordController.text,
-                            name: _nameController.text,
+                            firstName: _firstNameController.text,
+                            lastName: _lastNameController.text,
+                            phoneNo: _phoneNoController.text,
                             pharmacyName: _pharmacyNameController.text,
                             pharmacyGstin: _pharmacyGstinController.text,
+                            pharmacyAddress: _pharmacyAddressController.text,
+                            pharmacyCity: _pharmacyCityController.text,
+                            pharmacyPinCode: _pharmacyPinCodeController.text,
                           );
                     },
                     child: Text(
