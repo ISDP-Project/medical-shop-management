@@ -8,6 +8,7 @@ import '../data/medicines.dart';
 import '../models/medicine.dart';
 
 class Lowstock extends StatefulWidget {
+  Lowstock() : super();
   final String title = 'Low Stock Widget';
   @override
   _LowstockState createState() => _LowstockState();
