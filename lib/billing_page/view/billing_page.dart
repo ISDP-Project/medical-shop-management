@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/widgets.dart';
+import '../../constants/ui_decorations.dart';
+import '../../constants/ui_strings.dart';
 
 class BillingPage extends StatelessWidget {
   const BillingPage({Key? key}) : super(key: key);
@@ -9,7 +10,7 @@ class BillingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Billing Page'),
+        title: const Text(BillingPageConstants.billingPage),
       ),
       body: Column(
         children: [
@@ -17,7 +18,7 @@ class BillingPage extends StatelessWidget {
           Container(
             alignment: Alignment.topCenter,
             child: const Text(
-              "Medical Shop Name",
+              BillingPageConstants.medicalShop,
               style: TextStyle(fontSize: 18),
               textAlign: TextAlign.center,
             ),
@@ -29,7 +30,7 @@ class BillingPage extends StatelessWidget {
                 flex: 15,
               ),
               const Text(
-                "Date: 20-04-2022 ",
+                BillingPageConstants.date,
                 style: TextStyle(fontSize: 18),
               ),
               const Spacer(
@@ -38,7 +39,7 @@ class BillingPage extends StatelessWidget {
               Container(
                 alignment: Alignment.topRight,
                 child: const Text(
-                  "Day: Friday ",
+                  BillingPageConstants.day,
                   style: TextStyle(fontSize: 18),
                 ),
               ),
@@ -51,7 +52,7 @@ class BillingPage extends StatelessWidget {
                 flex: 20,
               ),
               const Text(
-                "Name:",
+                BillingPageConstants.name,
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
               const Spacer(
@@ -60,7 +61,7 @@ class BillingPage extends StatelessWidget {
               Container(
                   alignment: Alignment.topRight,
                   child: const Text(
-                    "Qty.",
+                    BillingPageConstants.qty,
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   )),
               const Spacer(
@@ -70,7 +71,7 @@ class BillingPage extends StatelessWidget {
                   alignment: Alignment.topRight,
                   padding: const EdgeInsets.all(50),
                   child: const Text(
-                    "Price:",
+                    BillingPageConstants.price,
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   )),
               const Spacer(flex: 20)
@@ -99,21 +100,25 @@ class BillingPage extends StatelessWidget {
       builder: (ctx) {
         return Padding(
           padding: EdgeInsets.only(
-              top: 0,
-              left: 200,
-              right: 200,
-              bottom: MediaQuery.of(ctx).viewInsets.bottom + 200),
+              left: kDefaultPadding * 25,
+              right: kDefaultPadding * 25,
+              bottom:
+                  MediaQuery.of(ctx).viewInsets.bottom + kDefaultPadding * 25),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+                  margin: const EdgeInsets.symmetric(
+                      horizontal: kDefaultMargin * 3,
+                      vertical: kDefaultMargin * 1.4),
                   decoration: BoxDecoration(
-                      color: Colors.black12,
-                      borderRadius: BorderRadius.circular(25)),
+                    color: Colors.black12,
+                    borderRadius:
+                        BorderRadius.circular(kDefaultBorderRadius * 1.75),
+                  ),
                   child: Row(
                     children: [
                       GestureDetector(
@@ -136,7 +141,7 @@ class BillingPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   const Text(
-                    "Paracetamol",
+                    BillingPageConstants.paracetamol,
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                   const Spacer(flex: 10),
@@ -144,8 +149,10 @@ class BillingPage extends StatelessWidget {
                     height: 35,
                     width: 100,
                     decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(5)),
+                      color: Colors.blue,
+                      borderRadius:
+                          BorderRadius.circular(kDefaultBorderRadius * 3.2),
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: const [
@@ -154,7 +161,7 @@ class BillingPage extends StatelessWidget {
                           color: Colors.white,
                         ),
                         Text(
-                          "0",
+                          BillingPageConstants.quantityNumber,
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 15,
