@@ -13,35 +13,15 @@ import 'package:pharmacy_app/analytics_dashboard/widgets/screens/third_screen.da
 
 // import 'analytics_dashboard/widgets/screens/third_screen.dart';
 
-void main() {
-  runApp(const DASHBOARD());
-}
-
-class DASHBOARD extends StatelessWidget {
-  const DASHBOARD({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+class AnalyticsPage extends StatefulWidget {
+  const AnalyticsPage({Key? key, required this.title}) : super(key: key);
 
   final String title;
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<AnalyticsPage> createState() => _AnalyticsPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _AnalyticsPageState extends State<AnalyticsPage> {
   ValueNotifier<bool> isDialOpen = ValueNotifier(false);
 
   @override
