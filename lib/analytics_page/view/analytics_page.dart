@@ -13,26 +13,31 @@ class AnalyticsPage extends StatelessWidget {
           PopupMenuButton<int>(
             onSelected: (item) => onSelected(context, item),
             itemBuilder: (context) => [
+
               const PopupMenuItem(
                 value: 0,
                 child: Text('Today'),
-                
               ),
               
               const PopupMenuItem<int>(
                 value: 1,
                 child: Text('Last 7 Days'),
               ),
+              
               const PopupMenuItem<int>(
                 value: 2,
                 child: Text('Last 30 Days'),
               ),
+              
               const PopupMenuItem<int>(
                 value: 3,
                 child: Text('Last 365 Days'),
               ),
+              
               const PopupMenuItem<int>(
-                  value: 4, child: Text('Custom Range...')),
+                  value: 4, 
+                  child: Text('Custom Range...')
+              ),
             ],
           ),
         ],
@@ -51,19 +56,19 @@ class AnalyticsPage extends StatelessWidget {
     switch (item) {
       case 0:
         startDate = endDate.subtract(const Duration(hours: 24));
-        debugPrint('The selected range of date is: $endDate to $startDate');
+        debugPrint('The selected range of date is: $startDate to $endDate');
         break;
       case 1:
         startDate = endDate.subtract(const Duration(days: 7));
-        debugPrint('The selected range of date is: $endDate to $startDate');
+        debugPrint('The selected range of date is: $startDate to $endDate');
         break;
       case 2:
         startDate = endDate.subtract(const Duration(days: 30));
-        debugPrint('The selected range of date is: $endDate to $startDate');
+        debugPrint('The selected range of date is: $startDate to $endDate');
         break;
       case 3:
         startDate = endDate.subtract(const Duration(days: 365));
-        debugPrint('The selected range of date is: $endDate to $startDate');
+        debugPrint('The selected range of date is: $startDate to $endDate');
         break;
       case 4:
         Navigator.push(

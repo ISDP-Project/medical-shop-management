@@ -7,7 +7,6 @@ import './authentication/authentication.dart';
 import './routes.dart';
 import './home_page/home_page.dart';
 
-
 class App extends StatelessWidget {
   const App(
       {Key? key, required AuthenticationRepository authenticationRepository})
