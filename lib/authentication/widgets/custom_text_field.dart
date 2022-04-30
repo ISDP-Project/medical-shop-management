@@ -8,11 +8,13 @@ class CustomTextField extends StatelessWidget {
     required this.label,
     required this.controller,
     this.obscureText = false,
+    this.textInputType = TextInputType.text,
   }) : super(key: key);
 
   final String label;
   final TextEditingController controller;
   final bool obscureText;
+  final TextInputType textInputType;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,7 @@ class CustomTextField extends StatelessWidget {
           style: Theme.of(context).textTheme.bodyText1,
           controller: controller,
           autocorrect: false,
+          keyboardType: textInputType,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(
               horizontal: kDefaultPadding,

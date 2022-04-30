@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pharmacy_app/billing_page/billing_page.dart';
 
 import './authentication/authentication.dart';
 import './routes.dart';
 import './home_page/home_page.dart';
-import './scanner_page/scanner_page.dart';
 
 class App extends StatelessWidget {
   const App(
@@ -89,7 +89,8 @@ class AppView extends StatelessWidget {
               if (authenticationType == AuthenticationType.login) {
                 return LoginPage();
               }
-              return ScannerPage();
+              // return SignupPage();
+              return const BillingPage();
             });
       },
     );
