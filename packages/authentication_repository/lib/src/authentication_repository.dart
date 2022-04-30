@@ -54,7 +54,7 @@ class AuthenticationRepository {
 
     if (signUpResponse.error != null) {
       _controller.add(AuthenticationStatus.unauthenticated);
-      log('SIGNUP ERROR: ${signUpResponse.error}');
+      print('SIGNUP ERROR: ${signUpResponse.error}');
       return;
     }
     // String pharmacyUid = _uuid.v4();
@@ -84,7 +84,7 @@ class AuthenticationRepository {
 
     if (rpcResponse.error != null) {
       _controller.add(AuthenticationStatus.unauthenticated);
-      log('PHARMACY ERROR: ${rpcResponse.error}');
+      print('PHARMACY ERROR: ${rpcResponse.error}');
       return;
     }
 
@@ -100,7 +100,7 @@ class AuthenticationRepository {
 
     if (rpcResponse.error != null) {
       _controller.add(AuthenticationStatus.unauthenticated);
-      log('PROFILE ERROR: ${rpcResponse.error}');
+      print('PROFILE ERROR: ${rpcResponse.error}');
       return;
     }
     _controller.add(AuthenticationStatus.authenticated);

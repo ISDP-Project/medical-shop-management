@@ -38,6 +38,8 @@ class ScannerPageView extends StatelessWidget {
                 builder: (context, showScanner) {
                   if (showScanner) {
                     return Expanded(
+
+                      
                       flex: 45,
                       child: SizedBox(
                         height: double.infinity,
@@ -51,6 +53,7 @@ class ScannerPageView extends StatelessWidget {
                           onDetect: (barcode, args) {
                             context.read<ScannerBloc>().add(
                                 ScannerEventBarcodeScanned(barcode.rawValue));
+
                             debugPrint('Barcode found! ${barcode.rawValue}');
                           },
                         ),
