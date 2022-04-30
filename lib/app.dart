@@ -89,8 +89,7 @@ class AppView extends StatelessWidget {
               if (authenticationType == AuthenticationType.login) {
                 return LoginPage();
               }
-              // return SignupPage();
-              return const BillingPage();
+              return SignupPage();
             });
       },
     );
