@@ -48,6 +48,9 @@ class BillingPageConstants {
 }
 
 class HomePageConstants {
+  static const String replace = '_';
+  static const String appBarGreeting = 'Welcome $replace!';
+
   static const String drawerHeading = 'Drawer Header';
   static const String home = 'Home';
   static const String notification = 'Notification';
@@ -56,7 +59,6 @@ class HomePageConstants {
   static const String user = 'User';
   static const String help = 'Help';
 
-  static const String billingpage = "BILLING Button";
-  static const String scan = "Scan Button";
-// >>>>>>> a48c326fed7b4c5b332410e331252fcb9e065ff5
+  static const String billiingPageButtonLabel = "Bill";
+  static const String scanPageButtonLabel = "Scan";
 }

@@ -1,50 +1,38 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-// show
-//     AppBar,
-//     BoxDecoration,
-//     BuildContext,
-//     ButtonStyle,
-//     Center,
-//     Column,
-//     Container,
-//     Drawer,
-//     DrawerHeader,
-//     ElevatedButton,
-//     Key,
-//     ListTile,
-//     ListView,
-//     MainAxisSize,
-//     Navigator,
-//     SafeArea,
-//     Scaffold,
-//     SizedBox,
-//     StatelessWidget,
-//     Text,
-//     TextStyle,
-//     Widget;
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../widgets/widgets.dart';
+import '../../routes.dart';
 import '../../authentication/authentication.dart';
 import '../../constants/constants.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
-  get pageOptions => null;
-
-  get selectedMenuItem => null;
-
   @override
   Widget build(BuildContext context) {
-    final ButtonStyle style =
-        ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20));
+    log('built homepage');
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        elevation: 0,
+        title: Row(
+          children: [
+            Text(
+              HomePageConstants.appBarGreeting.replaceFirst(
+                HomePageConstants.replace,
+                context.read<AuthenticationBloc>().state.user!.firstName,
+              ),
+            ),
+          ],
+        ),
+      ),
       drawer: Drawer(
         child: ListView(
-          children: <Widget>[
+          children: [
             const DrawerHeader(
               child: Text(HomePageConstants.drawerHeading),
               decoration: BoxDecoration(),
@@ -53,8 +41,6 @@ class HomePage extends StatelessWidget {
               title: const Text(HomePageConstants.home),
               onTap: () {
                 Navigator.of(context);
-                // ignore: unnecessary_new
-
                 Navigator.pop(context);
               },
             ),
@@ -62,8 +48,6 @@ class HomePage extends StatelessWidget {
               title: const Text(HomePageConstants.notification),
               onTap: () {
                 Navigator.of(context);
-                // ignore: unnecessary_new
-
                 Navigator.pop(context);
               },
             ),
@@ -71,8 +55,6 @@ class HomePage extends StatelessWidget {
               title: const Text(HomePageConstants.setting),
               onTap: () {
                 Navigator.of(context);
-                // ignore: unnecessary_new
-
                 Navigator.pop(context);
               },
             ),
@@ -80,8 +62,6 @@ class HomePage extends StatelessWidget {
               title: const Text(HomePageConstants.payment),
               onTap: () {
                 Navigator.of(context);
-                // ignore: unnecessary_new
-
                 Navigator.pop(context);
               },
             ),
@@ -89,8 +69,6 @@ class HomePage extends StatelessWidget {
               title: const Text(HomePageConstants.user),
               onTap: () {
                 Navigator.of(context);
-                // ignore: unnecessary_new
-
                 Navigator.pop(context);
               },
             ),
@@ -98,8 +76,6 @@ class HomePage extends StatelessWidget {
               title: const Text(HomePageConstants.help),
               onTap: () {
                 Navigator.of(context);
-                // ignore: unnecessary_new
-
                 Navigator.pop(context);
               },
             ),
@@ -107,30 +83,36 @@ class HomePage extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-          builder: (context, state) {
-            if (state is AuthenticationStateAuthenticated) {
-              return Center(
-                child:
-                    Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        textStyle: const TextStyle(fontSize: 20)),
-                    onPressed: () {},
-                    child: const Text(HomePageConstants.billingpage),
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: kDefaultMargin * 1.25),
+          padding: const EdgeInsets.only(top: kDefaultPadding),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomButton(
+                      icon: Icons.qr_code_scanner_outlined,
+                      label: HomePageConstants.scanPageButtonLabel,
+                      onPressed: () =>
+                          Navigator.pushNamed(context, Routes.scannerPage),
+                    ),
                   ),
-                  const SizedBox(height: 30),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        textStyle: const TextStyle(fontSize: 20)),
-                    onPressed: () {},
-                    child: const Text(HomePageConstants.scan),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: kDefaultMargin),
                   ),
-                ]),
-              );
-            }
-            return Container();
-          },
+                  Expanded(
+                    child: CustomButton(
+                      icon: Icons.receipt_long_rounded,
+                      label: HomePageConstants.billiingPageButtonLabel,
+                      onPressed: () =>
+                          Navigator.pushNamed(context, Routes.billPage),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
