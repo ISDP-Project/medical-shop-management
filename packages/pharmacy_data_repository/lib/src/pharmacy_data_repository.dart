@@ -2,7 +2,6 @@ import 'package:supabase/supabase.dart';
 
 import './constants.dart';
 
-
 class PharmacyDataRepository {
   final SupabaseClient _supabaseClient;
   final String
@@ -12,9 +11,10 @@ class PharmacyDataRepository {
   void addQuantity({
     required final int itemID,
     required final int quantity,
+    required final int costPrice,
   }) async {
     if ((await checkItemExistence(itemID: itemID)) == false) {
-      addNewItem(itemID: itemID, quantity: quantity);
+      addNewItem(itemID: itemID, quantity: quantity, costPrice: costPrice);
     } else {
       final curTemp = await _supabaseClient
           .from(pharmacyTableName)
@@ -27,33 +27,42 @@ class PharmacyDataRepository {
 
       await _supabaseClient
           .from(pharmacyTableName)
-          .update({SqlNamePharmacyTable.quantity: finalQuantity})
+          .update({
+            SqlNamePharmacyTable.quantity: finalQuantity,
+            SqlNamePharmacyTable.costPrice: costPrice
+          })
           .eq(SqlNamePharmacyTable.itemID, itemID)
           .execute();
     }
   }
 
-  void addMultipleQuantities({required final Map<String, int> items}) async {
-    List itemIDList = items.keys.toList(growable: false);
-    List quantityList = items.values.toList(growable: false);
+  // void addMultipleQuantities({required final Map<String, int> items}) async {
+  //   List itemIDList = items.keys.toList(growable: false);
+  //   List quantityList = items.values.toList(growable: false);
+  //   List costPriceList = items.values.toList(growable: false);
+  //   print(costPriceList);
+  //   print(itemIDList);
+  //   print(quantityList);
 
-    for (int i = 0; i < itemIDList.length; i++) {
-      addQuantity(itemID: itemIDList[i], quantity: quantityList[i]);
-    }
-  }
+  // for (int i = 0; i < itemIDList.length; i++) {
+  //   addQuantity(itemID: itemIDList[i], quantity: quantityList[i]);
+  // }
+  // }
 
   void addNewItem({
     required final int itemID,
     required final int quantity,
+    required final int costPrice,
   }) async {
     await _supabaseClient.from(pharmacyTableName).insert({
       SqlNamePharmacyTable.itemID: itemID,
       SqlNamePharmacyTable.quantity: quantity,
+      SqlNamePharmacyTable.costPrice: costPrice,
     }).execute();
   }
 
   void removeQuantity({
-    required final String itemID,
+    required final int itemID,
     required final int quantity,
   }) async {
     final curTemp = await _supabaseClient
@@ -72,14 +81,14 @@ class PharmacyDataRepository {
         .execute();
   }
 
-  void removeMultipleQuantities({required final Map<String, int> items}) async {
-    List itemIDList = items.keys.toList(growable: false);
-    List quantityList = items.values.toList(growable: false);
+  // void removeMultipleQuantities({required final Map<String, int> items}) async {
+  //   List itemIDList = items.keys.toList(growable: false);
+  //   List quantityList = items.values.toList(growable: false);
 
-    for (int i = 0; i < itemIDList.length; i++) {
-      removeQuantity(itemID: itemIDList[i], quantity: quantityList[i]);
-    }
-  }
+  //   for (int i = 0; i < itemIDList.length; i++) {
+  //     removeQuantity(itemID: itemIDList[i], quantity: quantityList[i]);
+  //   }
+  // }
 
   Future<bool> checkItemExistence({required final int itemID}) async {
     PostgrestResponse<dynamic> response = await _supabaseClient
