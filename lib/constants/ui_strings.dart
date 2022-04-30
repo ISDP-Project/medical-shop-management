@@ -35,6 +35,17 @@ class SignupPageConstants {
   static const String loginButtonText = 'Log in';
 }
 
+class BillingPageConstants {
+  static const String billingPage = 'Billing Page';
+  static const String medicalShop = 'Medical Shop Name';
+  static const String date = 'Date: 20-04-2022 ';
+  static const String day = 'Day: Friday ';
+  static const String name = 'Name:';
+  static const String qty = 'Qty.';
+  static const String price = 'Price:';
+  static const String paracetamol = 'Paracetamol';
+  static const String quantityNumber = '0';
+
 class HomePageConstants {
   static const String drawerHeading = 'Drawer Header';
   static const String home = 'Home';
@@ -46,4 +57,5 @@ class HomePageConstants {
 
   static const String billingpage = "BILLING Button";
   static const String scan = "Scan Button";
+>>>>>>> a48c326fed7b4c5b332410e331252fcb9e065ff5
 }
