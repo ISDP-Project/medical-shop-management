@@ -8,3 +8,5 @@ environment:
 
 dependencies:
   supabase: ^0.2.15
+  uuid: ^3.0.6
+  

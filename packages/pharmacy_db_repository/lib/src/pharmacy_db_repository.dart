@@ -1,3 +1,0 @@
-class PharmacyDBApi {
-  // code...
-}
