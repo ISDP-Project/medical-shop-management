@@ -45,6 +45,7 @@ class BillingPageConstants {
   static const String price = 'Price:';
   static const String paracetamol = 'Paracetamol';
   static const String quantityNumber = '0';
+}
 
 class HomePageConstants {
   static const String drawerHeading = 'Drawer Header';
@@ -57,5 +58,5 @@ class HomePageConstants {
 
   static const String billingpage = "BILLING Button";
   static const String scan = "Scan Button";
->>>>>>> a48c326fed7b4c5b332410e331252fcb9e065ff5
+// >>>>>>> a48c326fed7b4c5b332410e331252fcb9e065ff5
 }
