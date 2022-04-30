@@ -48,6 +48,7 @@ dependencies:
 
   pharmacy_data_repository:
     path: packages/pharmacy_data_repository
+  syncfusion_flutter_datepicker: ^20.1.51
 
 
 dev_dependencies:
