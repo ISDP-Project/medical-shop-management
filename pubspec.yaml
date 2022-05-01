@@ -29,25 +29,29 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  syncfusion_flutter_charts: ^19.1.54
-  flutter_speed_dial: ^5.1.0  
 
   supabase_flutter: ^0.2.12
   bloc: ^8.0.3
   flutter_bloc: ^8.0.1
   equatable: ^2.0.3
   supabase: ^0.2.15
+  google_fonts: ^2.3.1
+  mobile_scanner: ^1.0.0
+  http: ^0.13.4
+  flutter_speed_dial: ^5.1.0  
+  syncfusion_flutter_core: ^20.1.51
+  syncfusion_flutter_charts: ^20.1.51
+  syncfusion_flutter_datepicker: ^20.1.51
+  recase: ^4.0.0
+
+  pharmacy_data_repository:
+    path: packages/pharmacy_data_repository
+
   authentication_repository:
     path: packages/authentication_repository
     
   master_db_repository:
     path: packages/master_db_repository
-  google_fonts: ^2.3.1
-  mobile_scanner: ^1.0.0
-  http: ^0.13.4
-
-  pharmacy_data_repository:
-    path: packages/pharmacy_data_repository
 
 
 dev_dependencies:

@@ -48,7 +48,7 @@ class MasterDBHandler {
   void addMedicine(
     int barcodeNumber,
     String medSaltName,
-    String medType,
+    int medType,
     int mrp,
     String manufacturer,
   ) async {

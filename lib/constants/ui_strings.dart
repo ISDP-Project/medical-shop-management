@@ -45,8 +45,12 @@ class BillingPageConstants {
   static const String price = 'Price:';
   static const String paracetamol = 'Paracetamol';
   static const String quantityNumber = '0';
+}
 
 class HomePageConstants {
+  static const String replace = '_';
+  static const String appBarGreeting = 'Welcome $replace!';
+
   static const String drawerHeading = 'Drawer Header';
   static const String home = 'Home';
   static const String notification = 'Notification';
@@ -55,7 +59,17 @@ class HomePageConstants {
   static const String user = 'User';
   static const String help = 'Help';
 
-  static const String billingpage = "BILLING Button";
-  static const String scan = "Scan Button";
->>>>>>> a48c326fed7b4c5b332410e331252fcb9e065ff5
+  static const String billiingPageButtonLabel = "Bill";
+  static const String scanPageButtonLabel = "Scan";
+  static const String lowStockPageLabel = "Stock Notification Settings";
+}
+
+class LowStockPageConstants {
+  static const String appBarTitle = 'Notification Settings';
+  static const String loadErrorMessage =
+      'Error loading preferences. Please check your internet connectivity.';
+
+  static const String replace1 = '_ahfp4h';
+  static const String replace2 = '_h4potiaw';
+  static const String medicineTileHeading = '$replace1 by $replace2';
 }
