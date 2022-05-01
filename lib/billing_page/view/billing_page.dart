@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../constants/ui_decorations.dart';
 import '../../constants/ui_strings.dart';
 
@@ -100,10 +99,10 @@ class BillingPage extends StatelessWidget {
       builder: (ctx) {
         return Padding(
           padding: EdgeInsets.only(
-              left: kDefaultPadding * 25,
-              right: kDefaultPadding * 25,
+              left: kDefaultPadding * 2.6,
+              right: kDefaultPadding * 2.6,
               bottom:
-                  MediaQuery.of(ctx).viewInsets.bottom + kDefaultPadding * 25),
+                  MediaQuery.of(ctx).viewInsets.bottom + kDefaultPadding * 4),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -113,7 +112,7 @@ class BillingPage extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: kDefaultPadding),
                   margin: const EdgeInsets.symmetric(
                       horizontal: kDefaultMargin * 3,
-                      vertical: kDefaultMargin * 1.4),
+                      vertical: kDefaultMargin * 1.4), 
                   decoration: BoxDecoration(
                     color: Colors.black12,
                     borderRadius:
@@ -133,7 +132,7 @@ class BillingPage extends StatelessWidget {
                           child: TextField(
                         decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: "Search medecine"),
+                            hintText: "Search medicine"),
                       ))
                     ],
                   )),
