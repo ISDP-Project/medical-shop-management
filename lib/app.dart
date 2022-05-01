@@ -89,7 +89,7 @@ class App extends StatelessWidget {
             Routes.homePage: (context) => const HomePage(),
             Routes.billPage: (context) => const BillingPage(),
             Routes.scannerPage: (context) => const ScannerPage(),
-            Routes.lowStockManagementPage: (context) => LowStockPage(),
+            Routes.lowStockManagementPage: (context) => const LowStockPage(),
           },
           home: const AppView(),
         ),

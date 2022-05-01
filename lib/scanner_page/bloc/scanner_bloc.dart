@@ -1,9 +1,10 @@
-import 'package:flutter/services.dart';
+import 'dart:developer';
+
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 part 'scanner_event.dart';
 part 'scanner_state.dart';
@@ -27,10 +28,10 @@ class ScannerBloc extends Bloc<ScannerEvent, ScannerState> {
   void _onBarcodeScanned(
       ScannerEventBarcodeScanned event, Emitter<ScannerState> emit) async {
     if (event.barcodeId != null) {
-      print('BARCODE ID: ${event.barcodeId}');
+      log('BARCODE ID: ${event.barcodeId}');
       // String medicineName = await _fetchMedicineName(event.barcodeId ?? '');
       String medicineName = await _fetchMedicineName(event.barcodeId ?? '');
-      print('MEDICINE NAME: $medicineName');
+      log('MEDICINE NAME: $medicineName');
       List<String> newList = [...state.items];
 
       newList.add(medicineName);
@@ -50,8 +51,7 @@ class ScannerBloc extends Bloc<ScannerEvent, ScannerState> {
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      return (jsonDecode(response.body)['products'][0]['title'])
-          as String;
+      return (jsonDecode(response.body)['products'][0]['title']) as String;
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
@@ -59,6 +59,3 @@ class ScannerBloc extends Bloc<ScannerEvent, ScannerState> {
     }
   }
 }
-
-
-  
