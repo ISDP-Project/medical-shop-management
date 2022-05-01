@@ -3,22 +3,35 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pharmacy_data_repository/pharmacy_data_repository.dart';
 
 import '../widgets/widgets.dart';
 import '../../routes.dart';
 import '../../authentication/authentication.dart';
 import '../../constants/constants.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    log('built homepage');
+  State<HomePage> createState() => _HomePageState();
+}
 
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    log('built homepage with gst: ${context.read<AuthenticationBloc>().state.user!.pharmacyGstin}');
+    context.read<PharmacyDataRepository>().setPharmacyName(
+          context.read<AuthenticationBloc>().state.user!.pharmacyGstin,
+        );
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
+        elevation: kDefaultAppBarElevation,
         title: Row(
           children: [
             Text(
@@ -85,7 +98,7 @@ class HomePage extends StatelessWidget {
       body: SafeArea(
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: kDefaultMargin * 1.25),
-          padding: const EdgeInsets.only(top: kDefaultPadding),
+          padding: const EdgeInsets.only(top: kDefaultPadding * 2),
           child: Column(
             children: [
               Row(
@@ -107,6 +120,21 @@ class HomePage extends StatelessWidget {
                       label: HomePageConstants.billiingPageButtonLabel,
                       onPressed: () =>
                           Navigator.pushNamed(context, Routes.billPage),
+                    ),
+                  ),
+                ],
+              ),
+              const Padding(padding: EdgeInsets.only(top: kDefaultPadding * 2)),
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomButton(
+                      icon: Icons.notifications_active,
+                      label: HomePageConstants.lowStockPageLabel,
+                      onPressed: () => Navigator.pushNamed(
+                        context,
+                        Routes.lowStockManagementPage,
+                      ),
                     ),
                   ),
                 ],

@@ -42,6 +42,7 @@ dependencies:
   syncfusion_flutter_core: ^20.1.51
   syncfusion_flutter_charts: ^20.1.51
   syncfusion_flutter_datepicker: ^20.1.51
+  recase: ^4.0.0
 
   pharmacy_data_repository:
     path: packages/pharmacy_data_repository

@@ -5,4 +5,5 @@ class Routes {
   static const String scannerPage = "/scanner";
   static const String billPage = "/bill";
   static const String analyticsPage = "/analytics";
+  static const String lowStockManagementPage = "/lowstock";
 }

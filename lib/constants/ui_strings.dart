@@ -61,4 +61,15 @@ class HomePageConstants {
 
   static const String billiingPageButtonLabel = "Bill";
   static const String scanPageButtonLabel = "Scan";
+  static const String lowStockPageLabel = "Stock Notification Settings";
+}
+
+class LowStockPageConstants {
+  static const String appBarTitle = 'Notification Settings';
+  static const String loadErrorMessage =
+      'Error loading preferences. Please check your internet connectivity.';
+
+  static const String replace1 = '_ahfp4h';
+  static const String replace2 = '_h4potiaw';
+  static const String medicineTileHeading = '$replace1 by $replace2';
 }

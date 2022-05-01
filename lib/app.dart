@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:authentication_repository/authentication_repository.dart';
+import 'package:pharmacy_data_repository/pharmacy_data_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import './authentication/authentication.dart';
@@ -8,19 +9,31 @@ import './routes.dart';
 import './home_page/home_page.dart';
 import './scanner_page/scanner_page.dart';
 import './billing_page/billing_page.dart';
+import './low_stock_management_page/low_stock_management.dart';
 
 class App extends StatelessWidget {
-  const App(
-      {Key? key, required AuthenticationRepository authenticationRepository})
-      : _authenticationRepository = authenticationRepository,
+  const App({
+    Key? key,
+    required AuthenticationRepository authenticationRepository,
+    required PharmacyDataRepository pharmacyDataRepository,
+  })  : _authenticationRepository = authenticationRepository,
+        _pharmacyDataRepository = pharmacyDataRepository,
         super(key: key);
 
   final AuthenticationRepository _authenticationRepository;
+  final PharmacyDataRepository _pharmacyDataRepository;
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider.value(
-      value: _authenticationRepository,
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider.value(
+          value: _authenticationRepository,
+        ),
+        RepositoryProvider.value(
+          value: _pharmacyDataRepository,
+        ),
+      ],
       child: BlocProvider(
         create: (context) => AuthenticationBloc(
           authenticationRepository: _authenticationRepository,
@@ -30,6 +43,8 @@ class App extends StatelessWidget {
             backgroundColor: Colors.white,
             colorScheme: const ColorScheme.light().copyWith(
               primary: Colors.blueAccent,
+              primaryContainer: Colors.blueAccent,
+              surface: Colors.grey[200],
               outline: Colors.grey,
             ),
             iconTheme: const IconThemeData(
@@ -74,6 +89,7 @@ class App extends StatelessWidget {
             Routes.homePage: (context) => const HomePage(),
             Routes.billPage: (context) => const BillingPage(),
             Routes.scannerPage: (context) => const ScannerPage(),
+            Routes.lowStockManagementPage: (context) => LowStockPage(),
           },
           home: const AppView(),
         ),
