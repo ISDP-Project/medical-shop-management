@@ -52,6 +52,8 @@ dependencies:
     
   master_db_repository:
     path: packages/master_db_repository
+  firebase_messaging: ^11.2.15
+  firebase_core: ^1.15.0
 
 
 dev_dependencies:
