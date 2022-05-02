@@ -65,6 +65,8 @@ class HomePageConstants {
   static const String billiingPageButtonLabel = "Bill";
   static const String scanPageButtonLabel = "Scan";
   static const String lowStockPageLabel = "Stock Notification Settings";
+
+  static const String logOutButtonLabel = 'Log Out';
 }
 
 class LowStockPageConstants {

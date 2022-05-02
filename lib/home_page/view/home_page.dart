@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -90,6 +91,12 @@ class _HomePageState extends State<HomePage> {
               onTap: () {
                 Navigator.of(context);
                 Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: const Text(HomePageConstants.logOutButtonLabel),
+              onTap: () {
+                context.read<AuthenticationRepository>().logOut();
               },
             ),
           ],
