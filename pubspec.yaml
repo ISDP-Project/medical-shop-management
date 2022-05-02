@@ -48,6 +48,9 @@ dependencies:
 
   pharmacy_data_repository:
     path: packages/pharmacy_data_repository
+  firebase_messaging: ^11.2.15
+  firebase_core: ^1.15.0
+  flutter_local_notifications: ^8.2.0
 
 
 dev_dependencies:

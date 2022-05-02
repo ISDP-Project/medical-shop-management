@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "849573079167",
+    "project_id": "pushcloudmessaging-688c9",
+    "storage_bucket": "pushcloudmessaging-688c9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:849573079167:android:4501e90254dbe4667d374a",
+        "android_client_info": {
+          "package_name": "com.example.pharmacy_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "849573079167-jkn3kok7hburlg0j0ds5iv8utcnslq5k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTVWkV3XAK9Vhdrnu4oLrJ7UaL92Gxkd4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "849573079167-jkn3kok7hburlg0j0ds5iv8utcnslq5k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
