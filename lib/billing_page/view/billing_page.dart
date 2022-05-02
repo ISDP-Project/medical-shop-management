@@ -143,20 +143,39 @@ class BillPageView extends StatelessWidget {
                       selector: (state) => state.itemsInBill,
                       builder: (context, itemsInBill) {
                         return ListView.builder(
-                          itemCount: itemsInBill!.length,
+                          itemCount: itemsInBill!.length + 2,
                           itemBuilder: (context, i) {
+                            if (i == itemsInBill.length) {
+                              return const Divider();
+                            }
+
                             return Container(
                               padding: const EdgeInsets.only(
-                                  top: kDefaultPadding * 0.5),
+                                  top: kDefaultPadding * 1.5),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    '${itemsInBill.keys.elementAt(i).name.titleCase} x${itemsInBill[itemsInBill.keys.elementAt(i)]}',
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        i == itemsInBill.length + 1
+                                            ? BillingPageConstants
+                                                .billTotalLabel
+                                            : '${itemsInBill.keys.elementAt(i).name.titleCase} x${itemsInBill[itemsInBill.keys.elementAt(i)]}',
+                                      ),
+                                      if (i < itemsInBill.length)
+                                        Text(
+                                          '₹${itemsInBill.keys.elementAt(i).mrp}',
+                                        ),
+                                    ],
                                   ),
                                   Text(
-                                    '₹ ${itemsInBill.keys.elementAt(i).mrp.toString()}',
+                                    i == itemsInBill.length + 1
+                                        ? '₹ ${state.totalPrice}'
+                                        : '₹ ${itemsInBill.keys.elementAt(i).mrp * itemsInBill[itemsInBill.keys.elementAt(i)]!}',
                                   ),
                                 ],
                               ),
@@ -183,6 +202,7 @@ class BillPageView extends StatelessWidget {
   }
 
   void _show(BuildContext context) {
+    final bloc = context.read<BillBloc>();
     showModalBottomSheet(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(kDefaultBorderRadius * 0.5),
@@ -192,7 +212,7 @@ class BillPageView extends StatelessWidget {
       context: context,
       builder: (context) {
         return BlocProvider.value(
-          value: context.read<BillBloc>(),
+          value: bloc,
           child: const AddItemBottomSheet(),
         );
       },

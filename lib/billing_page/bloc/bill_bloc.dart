@@ -53,6 +53,7 @@ class BillBloc extends Bloc<BillEvent, BillState> {
         medicines: state.medicines!,
         itemsInBill: state.itemsInBill,
         stagedItems: newStagedItems,
+        totalPrice: state.totalPrice,
       ));
     }
   }
@@ -67,6 +68,7 @@ class BillBloc extends Bloc<BillEvent, BillState> {
         medicines: state.medicines!,
         itemsInBill: state.itemsInBill,
         stagedItems: newStagedItems,
+        totalPrice: state.totalPrice,
       ));
     }
   }
@@ -75,19 +77,22 @@ class BillBloc extends Bloc<BillEvent, BillState> {
       BillEventItemAdditionRequested event, Emitter<BillState> emit) {
     Map<Medicine, int> newItemsInBill = {...?state.itemsInBill};
     Map<Medicine, int> stagedItems = {...?state.stagedItems};
+    double totalPrice = state.totalPrice ?? 0;
     for (final Medicine medicine in state.medicines ?? []) {
       if (stagedItems[medicine] != 0) {
+        totalPrice += stagedItems[medicine]! * medicine.mrp;
+
         newItemsInBill[medicine] =
             (newItemsInBill[medicine] ?? 0) + stagedItems[medicine]!;
 
         stagedItems[medicine] = 0;
       }
     }
-
     emit(BillStateLoaded(
       medicines: state.medicines!,
       stagedItems: stagedItems,
       itemsInBill: newItemsInBill,
+      totalPrice: totalPrice,
     ));
   }
 
@@ -112,6 +117,7 @@ class BillBloc extends Bloc<BillEvent, BillState> {
       medicines: state.medicines,
       itemsInBill: state.itemsInBill,
       stagedItems: state.stagedItems,
+      totalPrice: state.totalPrice,
     ));
 
     try {

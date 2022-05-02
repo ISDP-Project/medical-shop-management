@@ -46,6 +46,8 @@ class BillingPageConstants {
 
   static const String networkErrorMessage =
       'An error occured. Please check your internet connectivity or contact customer support.';
+
+  static const String billTotalLabel = 'Total';
 }
 
 class HomePageConstants {
