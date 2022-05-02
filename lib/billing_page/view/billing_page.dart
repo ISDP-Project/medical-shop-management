@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
@@ -9,8 +7,9 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pharmacy_app/authentication/authentication.dart';
 import 'package:pharmacy_data_repository/pharmacy_data_repository.dart';
 
-import '../../constants/constants.dart';
 import '../bloc/bill_bloc.dart';
+import '../widgets/widgets.dart';
+import '../../constants/constants.dart';
 
 class BillingPage extends StatelessWidget {
   const BillingPage({Key? key}) : super(key: key);
@@ -184,7 +183,6 @@ class BillPageView extends StatelessWidget {
   }
 
   void _show(BuildContext context) {
-    final BillBloc bloc = context.read<BillBloc>();
     showModalBottomSheet(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(kDefaultBorderRadius * 0.5),
@@ -194,183 +192,10 @@ class BillPageView extends StatelessWidget {
       context: context,
       builder: (context) {
         return BlocProvider.value(
-          value: bloc,
-          child: SafeArea(
-            child: DraggableScrollableSheet(
-              expand: false,
-              builder: (context, scrollController) {
-                return Container(
-                  height: MediaQuery.of(context).size.height *
-                      kDefaultBottomModalSheetRatio,
-                  margin: const EdgeInsets.symmetric(
-                      horizontal: kDefaultMargin * 2),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: kDefaultPadding),
-                        margin: const EdgeInsets.symmetric(
-                          vertical: kDefaultMargin * 1.5,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.surface,
-                          borderRadius:
-                              BorderRadius.circular(kDefaultBorderRadius * 0.5),
-                        ),
-                        child: Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () {},
-                              child: Container(
-                                margin: const EdgeInsets.only(
-                                    left: kDefaultMargin * 0.4),
-                                child: Icon(
-                                  Icons.search,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                              ),
-                            ),
-                            const Padding(
-                              padding:
-                                  EdgeInsets.only(left: kDefaultPadding * 0.75),
-                            ),
-                            Expanded(
-                              child: TextField(
-                                style: Theme.of(context).textTheme.bodyText2,
-                                decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: BillingPageConstants
-                                      .bottomSheetSearchBarHintText,
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: BlocBuilder<BillBloc, BillState>(
-                          builder: (context, state) {
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Expanded(
-                                  child: ListView.builder(
-                                    controller: scrollController,
-                                    physics: const BouncingScrollPhysics(),
-                                    itemCount: state.medicines?.length ?? 0,
-                                    itemBuilder: (context, i) {
-                                      return Container(
-                                        padding: const EdgeInsets.only(
-                                            top: kDefaultPadding),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Expanded(
-                                              flex: 2,
-                                              child: Text(
-                                                state.medicines![i].name
-                                                    .titleCase,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyText1
-                                                    ?.copyWith(
-                                                      color: Theme.of(context)
-                                                          .textTheme
-                                                          .bodyText2
-                                                          ?.color,
-                                                    ),
-                                              ),
-                                            ),
-                                            Expanded(
-                                              flex: 1,
-                                              child: MedicineCounterTile(
-                                                  medicine:
-                                                      state.medicines![i]),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    context.read<BillBloc>().add(
-                                          const BillEventItemAdditionRequested(),
-                                        );
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text(
-                                    BillingPageConstants
-                                        .bottomSheetDoneButtonText,
-                                  ),
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-                );
-              },
-            ),
-          ),
+          value: context.read<BillBloc>(),
+          child: const AddItemBottomSheet(),
         );
       },
-    );
-  }
-}
-
-class MedicineCounterTile extends StatelessWidget {
-  const MedicineCounterTile({
-    Key? key,
-    required this.medicine,
-  }) : super(key: key);
-
-  final Medicine medicine;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primary,
-        borderRadius: BorderRadius.circular(
-          kDefaultBorderRadius * 0.5,
-        ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          IconButton(
-            onPressed: () {
-              context
-                  .read<BillBloc>()
-                  .add(BillEventItemStagedDecrement(medicine));
-            },
-            icon: const Icon(Icons.remove),
-          ),
-          Text(
-            '${context.read<BillBloc>().state.stagedItems![medicine]}',
-            style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                  fontWeight: FontWeight.bold,
-                ),
-          ),
-          IconButton(
-            onPressed: () {
-              context
-                  .read<BillBloc>()
-                  .add(BillEventItemStagedIncrement(medicine));
-            },
-            icon: const Icon(Icons.add),
-          ),
-        ],
-      ),
     );
   }
 }
