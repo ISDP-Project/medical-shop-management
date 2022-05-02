@@ -21,6 +21,12 @@ class SqlNamesRpcMethods {
   static const String fetchUserProfile = 'get_user_profile';
   static const String populatePharmacyTable = 'populate_pharmacy';
   static const String populateUserProfileTable = 'populate_user_profile';
+  static const String billsAndSalesForeignKeyCreateConstrant =
+      'add_bills_sales_foreign_key';
+}
+
+class RpcCreateForeignKey {
+  static const String pharmacyGstin = 'v_pharmacy_gstin';
 }
 
 class RpcCreateProfile {

@@ -4,11 +4,12 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:pharmacy_data_repository/pharmacy_data_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import './authentication/authentication.dart';
 import './routes.dart';
 import './home_page/home_page.dart';
+import './constants/constants.dart';
 import './scanner_page/scanner_page.dart';
 import './billing_page/billing_page.dart';
+import './authentication/authentication.dart';
 import './low_stock_management_page/low_stock_management.dart';
 
 class App extends StatelessWidget {
@@ -42,14 +43,14 @@ class App extends StatelessWidget {
           theme: ThemeData.light().copyWith(
             backgroundColor: Colors.white,
             colorScheme: const ColorScheme.light().copyWith(
-              primary: Colors.blueAccent,
-              primaryContainer: Colors.blueAccent,
+              primary: const Color(0xFF0d6efd),
+              primaryContainer: const Color(0xFF0d6efd),
               surface: Colors.grey[200],
               outline: Colors.grey,
             ),
             iconTheme: const IconThemeData(
-              color: Colors.black,
-              size: 32.0,
+              color: Colors.white,
+              size: kDefaultIconSize,
             ),
             textTheme: TextTheme(
               headline1: const TextStyle(
@@ -71,15 +72,22 @@ class App extends StatelessWidget {
                 color: Theme.of(context).colorScheme.primary,
               ),
             ),
-            floatingActionButtonTheme: FloatingActionButtonThemeData(
-              backgroundColor: Theme.of(context).colorScheme.primary,
+            floatingActionButtonTheme: const FloatingActionButtonThemeData(
+              backgroundColor: Color(0xFF0d6efd),
             ),
             elevatedButtonTheme: ElevatedButtonThemeData(
               style: ButtonStyle(
                 textStyle: MaterialStateProperty.all<TextStyle>(
                   const TextStyle(fontSize: 20),
                 ),
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                backgroundColor: MaterialStateProperty.all<Color>(
+                  const Color(0xFF0d6efd),
+                ),
+              ),
+            ),
+            switchTheme: SwitchThemeData(
+              thumbColor: MaterialStateProperty.all<Color>(
+                const Color(0xFF0d6efd),
               ),
             ),
           ),

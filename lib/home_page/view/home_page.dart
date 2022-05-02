@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pharmacy_data_repository/pharmacy_data_repository.dart';
 
-import '../widgets/widgets.dart';
 import '../../routes.dart';
-import '../../authentication/authentication.dart';
+import '../widgets/widgets.dart';
 import '../../constants/constants.dart';
+import '../../authentication/authentication.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

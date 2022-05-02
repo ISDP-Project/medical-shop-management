@@ -19,7 +19,7 @@ class LowStockListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SwitchListTile.adaptive(
+    return SwitchListTile(
         tileColor: Theme.of(context).colorScheme.surface,
         title: Text(
           LowStockPageConstants.medicineTileHeading

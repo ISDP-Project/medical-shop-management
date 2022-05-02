@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pharmacy_data_repository/pharmacy_data_repository.dart';
 
 import '../bloc/lowstock_bloc.dart';
@@ -58,8 +59,11 @@ class LowStockPageView extends StatelessWidget {
               }
 
               if (state is LowStockStateLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
+                return Center(
+                  child: SpinKitDualRing(
+                    color: Theme.of(context).colorScheme.primary,
+                    size: kDefaultLoadingIndicatorSize,
+                  ),
                 );
               }
 

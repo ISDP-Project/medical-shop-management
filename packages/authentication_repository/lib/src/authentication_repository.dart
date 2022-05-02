@@ -84,7 +84,7 @@ class AuthenticationRepository {
 
     if (rpcResponse.error != null) {
       _controller.add(AuthenticationStatus.unauthenticated);
-      print('PHARMACY ERROR: ${rpcResponse.error}');
+      log('PHARMACY ERROR: ${rpcResponse.error}');
       return;
     }
 
@@ -100,9 +100,23 @@ class AuthenticationRepository {
 
     if (rpcResponse.error != null) {
       _controller.add(AuthenticationStatus.unauthenticated);
-      print('PROFILE ERROR: ${rpcResponse.error}');
+      log('PROFILE ERROR: ${rpcResponse.error}');
       return;
     }
+
+    rpcResponse = await _supabase.rpc(
+      SqlNamesRpcMethods.billsAndSalesForeignKeyCreateConstrant,
+      params: {
+        RpcCreateForeignKey.pharmacyGstin: pharmacyGstin,
+      },
+    ).execute();
+
+    if (rpcResponse.error != null) {
+      _controller.add(AuthenticationStatus.unauthenticated);
+      log('FOREIGN ERROR: ${rpcResponse.error}');
+      return;
+    }
+
     _controller.add(AuthenticationStatus.authenticated);
   }
 

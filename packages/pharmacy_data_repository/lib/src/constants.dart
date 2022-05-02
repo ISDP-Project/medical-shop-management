@@ -13,9 +13,25 @@ class SqlNamesPharmacyShipmentsTable {
   static const String medId = 'barcode_id';
 }
 
+class SqlNamesPharmacyBillsTable {
+  static const String id = 'id';
+  static const String date = 'date';
+  static const String totalPrice = 'total_price';
+}
+
+class SqlNamesPharmacySalesTable {
+  static const String id = 'id';
+  static const String billId = 'bill_id';
+  static const String itemId = 'item_id';
+  static const String price = 'price';
+  static const String quantity = 'quantity';
+}
+
 class SqlNamesPrefix {
   static const String stockTable = 'pharmacy_stock_';
   static const String shipmentsTable = 'shipments_';
+  static const String billsTable = 'bills_';
+  static const String salesTable = 'sales_';
 }
 
 class SqlNamesRpc {

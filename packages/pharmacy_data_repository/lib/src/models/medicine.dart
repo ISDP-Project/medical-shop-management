@@ -5,6 +5,7 @@ class Medicine extends Equatable {
   final String name;
   final String manufacturer;
   final int quantity;
+  final double mrp;
   final bool shouldNotify;
 
   @override
@@ -15,6 +16,7 @@ class Medicine extends Equatable {
     required this.name,
     required this.manufacturer,
     required this.quantity,
+    required this.mrp,
     required this.shouldNotify,
   });
 

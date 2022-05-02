@@ -1,13 +1,19 @@
 import 'dart:developer';
 
-import 'package:pharmacy_data_repository/pharmacy_data_repository.dart';
+import 'package:uuid/uuid.dart';
 import 'package:supabase/supabase.dart';
+import 'package:pharmacy_data_repository/pharmacy_data_repository.dart';
 
 import './constants.dart';
 
 class PharmacyDataRepository {
   final SupabaseClient _supabaseClient;
+  final Uuid _uuid = Uuid();
   String? stockTableName = null;
+  String? shipmentsTableName = null;
+  String? billTableName = null;
+  String? salesTableName = null;
+
   PharmacyDataRepository({
     required SupabaseClient supabaseClient,
   }) : this._supabaseClient = supabaseClient;
@@ -15,8 +21,14 @@ class PharmacyDataRepository {
   void setPharmacyName(String? pharmacyGstin) {
     if (stockTableName == null && pharmacyGstin != null) {
       stockTableName = '${SqlNamesPrefix.stockTable}${pharmacyGstin}';
+      shipmentsTableName = '${SqlNamesPrefix.shipmentsTable}${pharmacyGstin}';
+      billTableName = '${SqlNamesPrefix.billsTable}${pharmacyGstin}';
+      salesTableName = '${SqlNamesPrefix.salesTable}${pharmacyGstin}';
     } else {
       stockTableName = null;
+      shipmentsTableName = null;
+      billTableName = null;
+      salesTableName = null;
     }
   }
 
@@ -74,35 +86,73 @@ class PharmacyDataRepository {
     }).execute();
   }
 
-  void removeQuantity({
-    required final int itemID,
-    required final int quantity,
-  }) async {
-    final curTemp = await _supabaseClient
-        .from(stockTableName!)
-        .select(SqlNamesPharmacyStockTable.quantity)
-        .eq(SqlNamesPharmacyStockTable.itemID, itemID)
-        .execute();
+  // void removeQuantity({
+  //   required final int itemID,
+  //   required final int quantity,
+  // }) async {
+  //   final curTemp = await _supabaseClient
+  //       .from(stockTableName!)
+  //       .select(SqlNamesPharmacyStockTable.quantity)
+  //       .eq(SqlNamesPharmacyStockTable.itemID, itemID)
+  //       .execute();
 
-    int currentItemQuantity =
-        curTemp.data[0][SqlNamesPharmacyStockTable.quantity];
-    final int finalQuantity = currentItemQuantity - quantity;
+  //   int currentItemQuantity =
+  //       curTemp.data[0][SqlNamesPharmacyStockTable.quantity];
+  //   final int finalQuantity = currentItemQuantity - quantity;
 
-    await _supabaseClient
-        .from(stockTableName!)
-        .update({SqlNamesPharmacyStockTable.quantity: finalQuantity})
-        .eq(SqlNamesPharmacyStockTable.itemID, itemID)
-        .execute();
-  }
-
-  // void removeMultipleQuantities({required final Map<String, int> items}) async {
-  //   List itemIDList = items.keys.toList(growable: false);
-  //   List quantityList = items.values.toList(growable: false);
-
-  //   for (int i = 0; i < itemIDList.length; i++) {
-  //     removeQuantity(itemID: itemIDList[i], quantity: quantityList[i]);
-  //   }
+  //   await _supabaseClient
+  //       .from(stockTableName!)
+  //       .update({SqlNamesPharmacyStockTable.quantity: finalQuantity})
+  //       .eq(SqlNamesPharmacyStockTable.itemID, itemID)
+  //       .execute();
   // }
+
+  Future<void> removeMultipleQuantities(
+      {required final Map<Medicine, int> items}) async {
+    if (items.isEmpty) return;
+    List<Map<String, dynamic>> stockTableQuery = [];
+    List<Map<String, dynamic>> salesTableQuery = [];
+    String billId = _uuid.v4();
+    double totalPrice = 0;
+
+    items.forEach((medicine, quantitySold) {
+      stockTableQuery.add({
+        SqlNamesPharmacyStockTable.itemID: medicine.barcodeId,
+        SqlNamesPharmacyStockTable.quantity: medicine.quantity - quantitySold,
+      });
+
+      salesTableQuery.add({
+        SqlNamesPharmacySalesTable.id: _uuid.v4(),
+        SqlNamesPharmacySalesTable.billId: billId,
+        SqlNamesPharmacySalesTable.itemId: medicine.barcodeId,
+        SqlNamesPharmacySalesTable.price: quantitySold * medicine.mrp,
+        SqlNamesPharmacySalesTable.quantity: quantitySold,
+      });
+
+      totalPrice += medicine.mrp * quantitySold;
+    });
+
+    PostgrestResponse response = await _supabaseClient
+        .from(stockTableName!)
+        .upsert(stockTableQuery)
+        .execute();
+
+    if (response.hasError) throw 'Quantity Update Error';
+
+    response = await _supabaseClient.from(billTableName!).insert({
+      SqlNamesPharmacyBillsTable.id: billId,
+      SqlNamesPharmacyBillsTable.totalPrice: totalPrice,
+    }).execute();
+
+    if (response.hasError) throw 'Quantity Update Error';
+
+    response = await _supabaseClient
+        .from(salesTableName!)
+        .upsert(salesTableQuery)
+        .execute();
+
+    if (response.hasError) throw 'Quantity Update Error';
+  }
 
   Future<bool> checkItemExistence({required final int itemID}) async {
     PostgrestResponse<dynamic> response = await _supabaseClient
@@ -136,7 +186,7 @@ class PharmacyDataRepository {
     final PostgrestResponse medicinesResponse = await _supabaseClient
         .from(SqlNameMedicineTable.tableName)
         .select(
-          '${SqlNameMedicineTable.barcodeNumber}, ${SqlNameMedicineTable.manufacturer}, ${SqlNameMedicineTable.medSaltName}',
+          '${SqlNameMedicineTable.barcodeNumber}, ${SqlNameMedicineTable.manufacturer}, ${SqlNameMedicineTable.medSaltName}, ${SqlNameMedicineTable.medMrp}',
         )
         .execute();
 
@@ -172,7 +222,7 @@ class PharmacyDataRepository {
       return a[SqlNamesPharmacyStockTable.itemID]
           .compareTo(b[SqlNamesPharmacyStockTable.itemID]);
     });
-
+    // log(filteredMedicines.toString());
     List<Medicine> result = [];
     for (int i = 0; i < stockData.length; i++) {
       result.add(Medicine(
@@ -180,6 +230,8 @@ class PharmacyDataRepository {
           name: filteredMedicines[i][SqlNameMedicineTable.medSaltName],
           manufacturer: filteredMedicines[i][SqlNameMedicineTable.manufacturer],
           quantity: stockData[i][SqlNamesPharmacyStockTable.quantity],
+          mrp: double.parse(
+              filteredMedicines[i][SqlNameMedicineTable.medMrp].toString()),
           shouldNotify: stockData[i][SqlNamesPharmacyStockTable.shouldNotify]));
     }
 

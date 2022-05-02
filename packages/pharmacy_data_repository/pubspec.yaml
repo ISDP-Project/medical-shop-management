@@ -9,3 +9,4 @@ environment:
 dependencies:
   supabase: ^0.2.15
   equatable: ^2.0.3
+  uuid: ^3.0.6

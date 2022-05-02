@@ -36,15 +36,16 @@ class SignupPageConstants {
 }
 
 class BillingPageConstants {
-  static const String billingPage = 'Billing Page';
-  static const String medicalShop = 'Medical Shop Name';
-  static const String date = 'Date: 20-04-2022 ';
-  static const String day = 'Day: Friday ';
-  static const String name = 'Name:';
-  static const String qty = 'Qty.';
-  static const String price = 'Price:';
+  static const String appBarHeading = 'Generate Bill';
+  static const String productName = 'Name';
+  static const String price = 'Price';
   static const String paracetamol = 'Paracetamol';
   static const String quantityNumber = '0';
+  static const String bottomSheetSearchBarHintText = 'Search Medicine';
+  static const String bottomSheetDoneButtonText = 'Add to Bill';
+
+  static const String networkErrorMessage =
+      'An error occured. Please check your internet connectivity or contact customer support.';
 }
 
 class HomePageConstants {
