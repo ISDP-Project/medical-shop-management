@@ -8,6 +8,8 @@ const double kDefaultAppBarElevation = 0;
 const double kDefaultLoadingIndicatorSize = 48.0;
 const double kDefaultBottomModalSheetRatio = 0.618;
 
+const String kDefaultDateFormat = 'd.M.yy';
+
 const Color kDefaultPrimaryLight = Color.fromARGB(255, 91, 178, 249);
 const BoxShadow kDefaultBoxShadow = BoxShadow(
   spreadRadius: 0.25,

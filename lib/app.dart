@@ -20,14 +20,17 @@ class App extends StatelessWidget {
     required AuthenticationRepository authenticationRepository,
     required PharmacyDataRepository pharmacyDataRepository,
     required BarcodeRepository barcodeRepository,
+    required MasterDBHandler masterDBHandler,
   })  : _authenticationRepository = authenticationRepository,
         _pharmacyDataRepository = pharmacyDataRepository,
         _barcodeRepository = barcodeRepository,
+        _masterDBHandler = masterDBHandler,
         super(key: key);
 
   final AuthenticationRepository _authenticationRepository;
   final PharmacyDataRepository _pharmacyDataRepository;
   final BarcodeRepository _barcodeRepository;
+  final MasterDBHandler _masterDBHandler;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +44,9 @@ class App extends StatelessWidget {
         ),
         RepositoryProvider.value(
           value: _barcodeRepository,
+        ),
+        RepositoryProvider.value(
+          value: _masterDBHandler,
         ),
       ],
       child: BlocProvider(

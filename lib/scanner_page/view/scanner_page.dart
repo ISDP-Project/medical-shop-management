@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:master_db_repository/master_db_repository.dart';
 
 import 'package:recase/recase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,19 +24,42 @@ class ScannerPage extends StatelessWidget {
       create: (context) => ScannerBloc(
         barcodeRepository: context.read<BarcodeRepository>(),
         pharmacyDataRepository: context.read<PharmacyDataRepository>(),
+        masterDBHandler: context.read<MasterDBHandler>(),
       ),
-      child: const ScannerPageView(),
+      child: ScannerPageView(),
     );
   }
 }
 
 class ScannerPageView extends StatelessWidget {
-  const ScannerPageView({Key? key}) : super(key: key);
+  DateTime? lastScan;
+  ScannerPageView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Barcode Scanner')),
+      appBar: AppBar(
+        title: const Text(ScannerPageConstants.appBarHeading),
+        elevation: kDefaultAppBarElevation,
+        actions: [
+          IconButton(
+            onPressed: () {
+              try {
+                context
+                    .read<ScannerBloc>()
+                    .add(const ScannerEventAddStockToDatabaseRequested());
+              } catch (error) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(ScannerPageConstants.snackBarErrorMessage),
+                  ),
+                );
+              }
+            },
+            icon: const Icon(Icons.save_sharp),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Container(
           margin: const EdgeInsets.symmetric(
@@ -67,74 +91,11 @@ class ScannerPageView extends StatelessWidget {
                   text: state.inputRequestingItem?.manufacturer ?? '',
                 );
 
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      ScannerPageConstants.editingStateHeading,
-                      style: Theme.of(context).textTheme.headline1,
-                    ),
-                    Text(
-                      ScannerPageConstants.editingStateSubheading,
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
-                    Expanded(
-                      child: ListView(
-                        physics: const BouncingScrollPhysics(),
-                        children: [
-                          CustomTextField(
-                            label:
-                                ScannerPageConstants.barcodeEditingFieldLabel,
-                            controller: _barcodeController,
-                            textInputType: TextInputType.number,
-                          ),
-                          CustomTextField(
-                            label: ScannerPageConstants.nameEditingFieldLabel,
-                            controller: _nameController,
-                          ),
-                          CustomTextField(
-                            label: ScannerPageConstants
-                                .manufacturerEditingFieldLabel,
-                            controller: _manufacturerController,
-                          ),
-                          CustomTextField(
-                            label: ScannerPageConstants.mrpEditingFieldLabel,
-                            controller: _mrpController,
-                            textInputType: TextInputType.number,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: CustomElevatedButton(
-                            onPressed: () {
-                              if (_barcodeController.text.isNotEmpty &&
-                                  _nameController.text.isNotEmpty &&
-                                  _manufacturerController.text.isNotEmpty &&
-                                  _mrpController.text.isNotEmpty) {
-                                context.read<ScannerBloc>().add(
-                                      ScannerEventItemStagingRequested(
-                                        item: ScannedBarcodeItem(
-                                          barcodeId: _barcodeController.text,
-                                          name: _nameController.text,
-                                          manufacturer:
-                                              _manufacturerController.text,
-                                          mrp:
-                                              double.parse(_mrpController.text),
-                                          type: 1,
-                                        ),
-                                      ),
-                                    );
-                              }
-                            },
-                            label: ScannerPageConstants.editingDoneButtonLabel,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                return UserInputForm(
+                  barcodeController: _barcodeController,
+                  nameController: _nameController,
+                  manufacturerController: _manufacturerController,
+                  mrpController: _mrpController,
                 );
               }
 
@@ -153,7 +114,7 @@ class ScannerPageView extends StatelessWidget {
                     builder: (context, showScanner) {
                       if (showScanner) {
                         return Expanded(
-                          // flex: 45,
+                          flex: 45,
                           child: SizedBox(
                             height: double.infinity,
                             child: MobileScanner(
@@ -164,11 +125,16 @@ class ScannerPageView extends StatelessWidget {
                                 torchEnabled: false,
                               ),
                               onDetect: (barcode, args) {
-                                context.read<ScannerBloc>().add(
-                                    ScannerEventBarcodeScanned(
-                                        barcode.rawValue));
-
-                                log('Barcode found! ${barcode.rawValue} of type: ${barcode.rawValue.runtimeType}');
+                                if (lastScan == null ||
+                                    DateTime.now()
+                                        .subtract(const Duration(seconds: 2))
+                                        .isAfter(lastScan!)) {
+                                  lastScan = DateTime.now();
+                                  context.read<ScannerBloc>().add(
+                                      ScannerEventBarcodeScanned(
+                                          barcode.rawValue));
+                                  log('Barcode found! ${barcode.rawValue} of type: ${barcode.rawValue.runtimeType}');
+                                }
                               },
                             ),
                           ),
@@ -178,8 +144,8 @@ class ScannerPageView extends StatelessWidget {
                       return const SizedBox();
                     },
                   ),
-                  const Expanded(
-                    // flex: 55,
+                  Expanded(
+                    flex: 55,
                     child: ScannedItemsListView(),
                   ),
                 ],
@@ -192,7 +158,10 @@ class ScannerPageView extends StatelessWidget {
         builder: (context, state) {
           if (state is ScannerStateNormal || state is ScannerStateInitial) {
             return FloatingActionButton(
-              child: const Icon(Icons.qr_code),
+              child: Icon(
+                Icons.qr_code,
+                color: Theme.of(context).colorScheme.onPrimaryContainer,
+              ),
               onPressed: () {
                 context
                     .read<ScannerBloc>()
@@ -203,6 +172,94 @@ class ScannerPageView extends StatelessWidget {
           return const SizedBox.shrink();
         },
       ),
+    );
+  }
+}
+
+class UserInputForm extends StatelessWidget {
+  const UserInputForm({
+    Key? key,
+    required TextEditingController barcodeController,
+    required TextEditingController nameController,
+    required TextEditingController manufacturerController,
+    required TextEditingController mrpController,
+  })  : _barcodeController = barcodeController,
+        _nameController = nameController,
+        _manufacturerController = manufacturerController,
+        _mrpController = mrpController,
+        super(key: key);
+
+  final TextEditingController _barcodeController;
+  final TextEditingController _nameController;
+  final TextEditingController _manufacturerController;
+  final TextEditingController _mrpController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          ScannerPageConstants.editingStateHeading,
+          style: Theme.of(context).textTheme.headline1,
+        ),
+        Text(
+          ScannerPageConstants.editingStateSubheading,
+          style: Theme.of(context).textTheme.bodyText2,
+        ),
+        Expanded(
+          child: ListView(
+            physics: const BouncingScrollPhysics(),
+            children: [
+              CustomTextField(
+                label: ScannerPageConstants.barcodeEditingFieldLabel,
+                controller: _barcodeController,
+                textInputType: TextInputType.number,
+              ),
+              CustomTextField(
+                label: ScannerPageConstants.nameEditingFieldLabel,
+                controller: _nameController,
+              ),
+              CustomTextField(
+                label: ScannerPageConstants.manufacturerEditingFieldLabel,
+                controller: _manufacturerController,
+              ),
+              CustomTextField(
+                label: ScannerPageConstants.mrpEditingFieldLabel,
+                controller: _mrpController,
+                textInputType: TextInputType.number,
+              ),
+            ],
+          ),
+        ),
+        Row(
+          children: [
+            Expanded(
+              child: CustomElevatedButton(
+                onPressed: () {
+                  if (_barcodeController.text.isNotEmpty &&
+                      _nameController.text.isNotEmpty &&
+                      _manufacturerController.text.isNotEmpty &&
+                      _mrpController.text.isNotEmpty) {
+                    context.read<ScannerBloc>().add(
+                          ScannerEventItemStagingRequested(
+                            item: ScannedBarcodeItem(
+                              barcodeId: _barcodeController.text,
+                              name: _nameController.text,
+                              manufacturer: _manufacturerController.text,
+                              mrp: double.parse(_mrpController.text),
+                              type: 1,
+                            ),
+                          ),
+                        );
+                  }
+                },
+                label: ScannerPageConstants.editingDoneButtonLabel,
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

@@ -75,10 +75,12 @@ class BarcodeRepository {
     final dataList = data[UpcApiResponseNames.itemsList];
 
     for (int i = 0; i < resultsLength; i++) {
-      results.add(ScannedBarcodeItem(
-        name: dataList[i][UpcApiResponseNames.name],
-        barcodeId: barcodeId,
-      ));
+      if (dataList[i][UpcApiResponseNames.name].isNotEmpty) {
+        results.add(ScannedBarcodeItem(
+          name: dataList[i][UpcApiResponseNames.name],
+          barcodeId: barcodeId,
+        ));
+      }
     }
 
     if (results.isEmpty) return null;

@@ -28,3 +28,19 @@ class ScannerEventItemStagingRequested extends ScannerEvent {
 
   const ScannerEventItemStagingRequested({required this.item});
 }
+
+class ScannerEventItemQuantityIncrement extends ScannerEvent {
+  final int changedItemIdx;
+
+  const ScannerEventItemQuantityIncrement({required this.changedItemIdx});
+}
+
+class ScannerEventItemQuantityDecrement extends ScannerEvent {
+  final int changedItemIdx;
+
+  const ScannerEventItemQuantityDecrement({required this.changedItemIdx});
+}
+
+class ScannerEventAddStockToDatabaseRequested extends ScannerEvent {
+  const ScannerEventAddStockToDatabaseRequested();
+}

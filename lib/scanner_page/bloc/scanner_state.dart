@@ -7,7 +7,7 @@ abstract class ScannerState extends Equatable {
     this.inputRequestingItem,
     this.scannedPotentialItems,
   );
-  final List<ScannedBarcodeItem> items;
+  final List<StockItem> items;
   final bool showScannerWidget;
   final ScannedBarcodeItem? inputRequestingItem;
   final List<ScannedBarcodeItem>? scannedPotentialItems;
@@ -22,14 +22,14 @@ class ScannerStateInitial extends ScannerState {
 
 class ScannerStateNormal extends ScannerState {
   const ScannerStateNormal({
-    required List<ScannedBarcodeItem> items,
+    required List<StockItem> items,
     required bool showScannerWidget,
   }) : super(items, showScannerWidget, null, null);
 }
 
 class ScannerStateUserInput extends ScannerState {
   const ScannerStateUserInput({
-    required List<ScannedBarcodeItem> items,
+    required List<StockItem> items,
     required ScannedBarcodeItem inputRequestingItem,
     bool showScannerWidget = false,
   }) : super(items, showScannerWidget, inputRequestingItem, null);
@@ -37,7 +37,7 @@ class ScannerStateUserInput extends ScannerState {
 
 class ScannerStateScannedItemSelector extends ScannerState {
   const ScannerStateScannedItemSelector({
-    required List<ScannedBarcodeItem> items,
+    required List<StockItem> items,
     required List<ScannedBarcodeItem> potentialScannedItems,
     bool showScannerWidget = false,
   }) : super(items, showScannerWidget, null, potentialScannedItems);
@@ -45,7 +45,7 @@ class ScannerStateScannedItemSelector extends ScannerState {
 
 class ScannerStateLoading extends ScannerState {
   const ScannerStateLoading({
-    required List<ScannedBarcodeItem> items,
+    required List<StockItem> items,
     required bool showScannerWidget,
     required ScannedBarcodeItem? inputRequestingItem,
     required List<ScannedBarcodeItem>? scannedPotentialItems,

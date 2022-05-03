@@ -80,6 +80,14 @@ class LowStockPageConstants {
 }
 
 class ScannerPageConstants {
+  static const String appBarHeading = 'Add Stock';
+  static const String snackBarErrorMessage =
+      'Some error occured while pushing to the database';
+
+  static const String mfgDateHintText = 'Mfg.';
+  static const String expDateHintText = 'Exp.';
+  static const String costHintText = 'Cost';
+
   static const String productChoiceHeading = 'Choose the closest medicine';
   static const String productChoiceSubheading =
       'Unable to find exact match for barcode';

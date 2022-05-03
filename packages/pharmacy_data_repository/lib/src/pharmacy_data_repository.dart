@@ -86,6 +86,65 @@ class PharmacyDataRepository {
     }).execute();
   }
 
+  Future<bool> addIncomingStock(
+      Map<Shipment, int> shipmentsWithQuantity) async {
+    List<Map<String, dynamic>> query = [];
+
+    shipmentsWithQuantity.forEach((shipment, quantity) {
+      query.add({
+        SqlNamesPharmacyShipmentsTable.id: _uuid.v4(),
+        SqlNamesPharmacyShipmentsTable.arrivalDate:
+            DateTime.now().toIso8601String(),
+        SqlNamesPharmacyShipmentsTable.expDate:
+            shipment.expDate.toIso8601String(),
+        SqlNamesPharmacyShipmentsTable.mfgDate:
+            shipment.mfgDate.toIso8601String(),
+        SqlNamesPharmacyShipmentsTable.costPrice: shipment.costPrice,
+        SqlNamesPharmacyShipmentsTable.medId: shipment.barcodeId,
+      });
+    });
+    PostgrestResponse response =
+        await _supabaseClient.from(shipmentsTableName!).upsert(query).execute();
+
+    log('SHIPMENT DATA: ${response.data}');
+    log('SHIPMENT ERROR: ${response.error}');
+
+    if (response.hasError) return false;
+
+    final prevStockResponse =
+        await _supabaseClient.from(stockTableName!).select().execute();
+
+    List<Map<String, dynamic>> newStockQuery = [];
+
+    Map<String, int> prevStockQuantities = {};
+    for (int i = 0; i < prevStockResponse.data.length; i++) {
+      prevStockQuantities[prevStockResponse.data[i]
+                  [SqlNamesPharmacyStockTable.itemID]
+              .toString()] =
+          prevStockResponse.data[i][SqlNamesPharmacyStockTable.quantity];
+    }
+
+    shipmentsWithQuantity.forEach((shipment, quantity) {
+      newStockQuery.add({
+        SqlNamesPharmacyStockTable.itemID: shipment.barcodeId,
+        SqlNamesPharmacyStockTable.quantity:
+            (prevStockQuantities[shipment.barcodeId] ?? 0) + quantity,
+      });
+    });
+
+    response = await _supabaseClient
+        .from(stockTableName!)
+        .upsert(newStockQuery)
+        .execute();
+
+    log('STOCK DATA: ${response.data}');
+    log('STOCK ERROR: ${response.error}');
+
+    if (response.hasError) return false;
+
+    return true;
+  }
+
   // void removeQuantity({
   //   required final int itemID,
   //   required final int quantity,
@@ -255,25 +314,6 @@ class PharmacyDataRepository {
 
     final PostgrestResponse response =
         await _supabaseClient.from(stockTableName!).upsert(query).execute();
-  }
-
-  Future<void> addGlobalMedicine({
-    required String barcodeId,
-    required String medSaltName,
-    required int medType,
-    required double mrp,
-    required String manufacturer,
-  }) async {
-    final PostgrestResponse response =
-        await _supabaseClient.from(SqlNameMedicineTable.tableName).insert({
-      SqlNameMedicineTable.barcodeNumber: barcodeId,
-      SqlNameMedicineTable.medSaltName: medSaltName,
-      SqlNameMedicineTable.medType: medType,
-      SqlNameMedicineTable.medMrp: mrp,
-      SqlNameMedicineTable.manufacturer: manufacturer,
-    }).execute();
-    log('PUSH DATA: ${response.data}');
-    log('PUSH ERROR: ${response.error}');
   }
 }
 

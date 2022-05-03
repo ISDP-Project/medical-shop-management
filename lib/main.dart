@@ -23,7 +23,8 @@ void main() async {
     MasterDBHandler _masterDbRepository = MasterDBHandler(_supabase);
 
     BarcodeRepository _barcodeRepository = BarcodeRepository(
-      apiKey: '64663512EB80F6E894AFE6E0987E9233',
+      // apiKey: '64663512EB80F6E894AFE6E0987E9233',
+      apiKey: '92C374E6202EDAB9E6EE118AB51ED9F0',
       supabase: _supabase,
     );
 
@@ -35,6 +36,7 @@ void main() async {
         authenticationRepository: _authenticationRepository,
         pharmacyDataRepository: _pharmacyDataRepository,
         barcodeRepository: _barcodeRepository,
+        masterDBHandler: _masterDbRepository,
       ),
     );
   });

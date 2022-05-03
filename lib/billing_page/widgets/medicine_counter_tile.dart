@@ -18,7 +18,7 @@ class MedicineCounterTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primary,
+        color: Theme.of(context).colorScheme.primaryContainer,
         borderRadius: BorderRadius.circular(
           kDefaultBorderRadius * 0.5,
         ),
