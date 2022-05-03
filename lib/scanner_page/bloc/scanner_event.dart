@@ -17,8 +17,14 @@ class ScannerEventBarcodeScanned extends ScannerEvent {
   const ScannerEventBarcodeScanned(this.barcodeId);
 }
 
-class ScannerBarcodeScannedToInfo extends ScannerEvent {
-  final String? response;
+class ScannerEventMakeChoice extends ScannerEvent {
+  final ScannedBarcodeItem chosenItem;
 
-  const ScannerBarcodeScannedToInfo(this.response);
+  const ScannerEventMakeChoice({required this.chosenItem});
+}
+
+class ScannerEventItemStagingRequested extends ScannerEvent {
+  final ScannedBarcodeItem item;
+
+  const ScannerEventItemStagingRequested({required this.item});
 }

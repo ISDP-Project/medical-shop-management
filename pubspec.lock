@@ -15,6 +15,13 @@ packages:
       relative: true
     source: path
     version: "0.0.0"
+  barcode_repository:
+    dependency: "direct main"
+    description:
+      path: "packages/barcode_repository"
+      relative: true
+    source: path
+    version: "0.0.0"
   bloc:
     dependency: "direct main"
     description:

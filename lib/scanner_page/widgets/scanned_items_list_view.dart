@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:barcode_repository/barcode_repository.dart';
 
 import '../bloc/scanner_bloc.dart';
-
-import '../../constants/ui_decorations.dart';
+import '../../constants/constants.dart';
 
 class ScannedItemsListView extends StatelessWidget {
   const ScannedItemsListView({
@@ -13,7 +14,7 @@ class ScannedItemsListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int _itemCount = 0;
-    return BlocSelector<ScannerBloc, ScannerState, List<String>>(
+    return BlocSelector<ScannerBloc, ScannerState, List<ScannedBarcodeItem>>(
       selector: (state) {
         return state.items;
       },
@@ -35,9 +36,9 @@ class ScannedItemsListView extends StatelessWidget {
                     Container(
                         color: Colors.blue, child: Icon(Icons.medication)),
                     Text(
-                      items[i].length > kMaxTitleLength
-                          ? '${items[i].substring(0, 40)}...'
-                          : items[i],
+                      (items[i].name?.length ?? 0) > kMaxTitleLength
+                          ? '${items[i].name?.substring(0, 40)}...'
+                          : items[i].name ?? '',
                       style: Theme.of(context).textTheme.bodyText2,
                     ),
                     Row(
@@ -54,10 +55,8 @@ class ScannedItemsListView extends StatelessWidget {
                             children: const [
                               Icon(
                                 Icons.remove,
-                            
                                 color: Colors.white,
                               ),
-                              
                               Text("0"),
                               Icon(
                                 Icons.add,

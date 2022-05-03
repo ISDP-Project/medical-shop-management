@@ -1,61 +1,104 @@
 import 'dart:developer';
 
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:barcode_repository/barcode_repository.dart';
+import 'package:pharmacy_data_repository/pharmacy_data_repository.dart';
 
 part 'scanner_event.dart';
 part 'scanner_state.dart';
 
 class ScannerBloc extends Bloc<ScannerEvent, ScannerState> {
-  ScannerBloc() : super(const ScannerState(items: [])) {
+  final PharmacyDataRepository _pharmacyDataRepository;
+  final BarcodeRepository _barcodeRepository;
+  ScannerBloc({
+    required BarcodeRepository barcodeRepository,
+    required PharmacyDataRepository pharmacyDataRepository,
+  })  : _barcodeRepository = barcodeRepository,
+        _pharmacyDataRepository = pharmacyDataRepository,
+        super(const ScannerStateInitial()) {
     on<ScannerEventScannerToggleRequested>(_toggleScanner);
     on<ScannerEventBarcodeScanned>(_onBarcodeScanned);
-    // on<ScannedBarcodeToMedicine>(_finalFetch);
+    on<ScannerEventMakeChoice>(_onChoiceMade);
+    on<ScannerEventItemStagingRequested>(_onStageRequested);
   }
 
   void _toggleScanner(
       ScannerEventScannerToggleRequested event, Emitter<ScannerState> emit) {
-    if (state.showScannerWidget) {
-      emit(ScannerState(items: state.items, showScannerWidget: false));
-    } else {
-      emit(ScannerState(items: state.items, showScannerWidget: true));
-    }
+    emit(ScannerStateNormal(
+      items: state.items,
+      showScannerWidget: !state.showScannerWidget,
+    ));
   }
 
-  void _onBarcodeScanned(
+  Future<void> _onBarcodeScanned(
       ScannerEventBarcodeScanned event, Emitter<ScannerState> emit) async {
     if (event.barcodeId != null) {
-      log('BARCODE ID: ${event.barcodeId}');
-      // String medicineName = await _fetchMedicineName(event.barcodeId ?? '');
-      String medicineName = await _fetchMedicineName(event.barcodeId ?? '');
-      log('MEDICINE NAME: $medicineName');
-      List<String> newList = [...state.items];
-
-      newList.add(medicineName);
-      emit(ScannerState(
-        items: newList,
+      emit(ScannerStateLoading(
+        items: state.items,
         showScannerWidget: state.showScannerWidget,
+        inputRequestingItem: state.inputRequestingItem,
+        scannedPotentialItems: state.scannedPotentialItems,
       ));
+      List<ScannedBarcodeItem>? results =
+          await _barcodeRepository.getItems(event.barcodeId ?? '');
+
+      if (results == null || results.isEmpty) {
+        emit(
+          ScannerStateUserInput(
+            items: state.items,
+            inputRequestingItem:
+                ScannedBarcodeItem(name: null, barcodeId: event.barcodeId),
+          ),
+        );
+      } else if (results.length == 1) {
+        add(ScannerEventMakeChoice(chosenItem: results[0]));
+      } else {
+        emit(ScannerStateScannedItemSelector(
+          items: state.items,
+          potentialScannedItems: results,
+        ));
+      }
     }
   }
 
-  Future<String> _fetchMedicineName(String barcodeId) async {
-    final response = await http.get(Uri.parse(
-        'https://api.barcodelookup.com/v3/products?barcode=$barcodeId&formatted=y&key=wh1xhsh2dnbs4w26bee5j4z1esme5m'));
-
-    print('API RESPONSE: ${response.statusCode}');
-
-    if (response.statusCode == 200) {
-      // If the server did return a 200 OK response,
-      // then parse the JSON.
-      return (jsonDecode(response.body)['products'][0]['title']) as String;
+  void _onChoiceMade(ScannerEventMakeChoice event, Emitter<ScannerState> emit) {
+    if (event.chosenItem.anyNull()) {
+      emit(ScannerStateUserInput(
+        items: state.items,
+        inputRequestingItem: event.chosenItem,
+      ));
     } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      throw Exception('Failed to load');
+      add(ScannerEventItemStagingRequested(item: event.chosenItem));
     }
+  }
+
+  Future<void> _onStageRequested(ScannerEventItemStagingRequested event,
+      Emitter<ScannerState> emit) async {
+    List<ScannedBarcodeItem> newItems = [...state.items];
+    newItems.add(event.item);
+    if (!event.item.foundLocally) {
+      emit(ScannerStateLoading(
+        items: state.items,
+        showScannerWidget: state.showScannerWidget,
+        inputRequestingItem: state.inputRequestingItem,
+        scannedPotentialItems: state.scannedPotentialItems,
+      ));
+
+      await _pharmacyDataRepository.addGlobalMedicine(
+        barcodeId: event.item.barcodeId!,
+        medSaltName: event.item.name!,
+        manufacturer: event.item.manufacturer!,
+        medType: event.item.type!,
+        mrp: event.item.mrp!,
+      );
+
+      _barcodeRepository.addItemToLocalCopy(event.item);
+    }
+
+    emit(ScannerStateNormal(
+      items: newItems,
+      showScannerWidget: state.showScannerWidget,
+    ));
   }
 }

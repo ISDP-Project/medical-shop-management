@@ -78,3 +78,18 @@ class LowStockPageConstants {
   static const String replace2 = '_h4potiaw';
   static const String medicineTileHeading = '$replace1 by $replace2';
 }
+
+class ScannerPageConstants {
+  static const String productChoiceHeading = 'Choose the closest medicine';
+  static const String productChoiceSubheading =
+      'Unable to find exact match for barcode';
+
+  static const String editingStateHeading = 'Scanned Item Details';
+  static const String editingStateSubheading =
+      'Please fill out the missing information';
+  static const String barcodeEditingFieldLabel = 'Barcode';
+  static const String nameEditingFieldLabel = 'Salt Name';
+  static const String manufacturerEditingFieldLabel = 'Company';
+  static const String mrpEditingFieldLabel = 'MRP';
+  static const String editingDoneButtonLabel = 'Done';
+}

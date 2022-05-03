@@ -226,13 +226,14 @@ class PharmacyDataRepository {
     List<Medicine> result = [];
     for (int i = 0; i < stockData.length; i++) {
       result.add(Medicine(
-          barcodeId: stockData[i][SqlNamesPharmacyStockTable.itemID],
-          name: filteredMedicines[i][SqlNameMedicineTable.medSaltName],
-          manufacturer: filteredMedicines[i][SqlNameMedicineTable.manufacturer],
-          quantity: stockData[i][SqlNamesPharmacyStockTable.quantity],
-          mrp: double.parse(
-              filteredMedicines[i][SqlNameMedicineTable.medMrp].toString()),
-          shouldNotify: stockData[i][SqlNamesPharmacyStockTable.shouldNotify]));
+        barcodeId: stockData[i][SqlNamesPharmacyStockTable.itemID],
+        name: filteredMedicines[i][SqlNameMedicineTable.medSaltName],
+        manufacturer: filteredMedicines[i][SqlNameMedicineTable.manufacturer],
+        quantity: stockData[i][SqlNamesPharmacyStockTable.quantity],
+        mrp: double.parse(
+            filteredMedicines[i][SqlNameMedicineTable.medMrp].toString()),
+        shouldNotify: stockData[i][SqlNamesPharmacyStockTable.shouldNotify],
+      ));
     }
 
     return result;
@@ -254,6 +255,25 @@ class PharmacyDataRepository {
 
     final PostgrestResponse response =
         await _supabaseClient.from(stockTableName!).upsert(query).execute();
+  }
+
+  Future<void> addGlobalMedicine({
+    required String barcodeId,
+    required String medSaltName,
+    required int medType,
+    required double mrp,
+    required String manufacturer,
+  }) async {
+    final PostgrestResponse response =
+        await _supabaseClient.from(SqlNameMedicineTable.tableName).insert({
+      SqlNameMedicineTable.barcodeNumber: barcodeId,
+      SqlNameMedicineTable.medSaltName: medSaltName,
+      SqlNameMedicineTable.medType: medType,
+      SqlNameMedicineTable.medMrp: mrp,
+      SqlNameMedicineTable.manufacturer: manufacturer,
+    }).execute();
+    log('PUSH DATA: ${response.data}');
+    log('PUSH ERROR: ${response.error}');
   }
 }
 

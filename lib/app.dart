@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:authentication_repository/authentication_repository.dart';
-import 'package:pharmacy_data_repository/pharmacy_data_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:barcode_repository/barcode_repository.dart';
+import 'package:master_db_repository/master_db_repository.dart';
+import 'package:pharmacy_data_repository/pharmacy_data_repository.dart';
+import 'package:authentication_repository/authentication_repository.dart';
 
 import './routes.dart';
 import './home_page/home_page.dart';
@@ -17,12 +19,15 @@ class App extends StatelessWidget {
     Key? key,
     required AuthenticationRepository authenticationRepository,
     required PharmacyDataRepository pharmacyDataRepository,
+    required BarcodeRepository barcodeRepository,
   })  : _authenticationRepository = authenticationRepository,
         _pharmacyDataRepository = pharmacyDataRepository,
+        _barcodeRepository = barcodeRepository,
         super(key: key);
 
   final AuthenticationRepository _authenticationRepository;
   final PharmacyDataRepository _pharmacyDataRepository;
+  final BarcodeRepository _barcodeRepository;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +38,9 @@ class App extends StatelessWidget {
         ),
         RepositoryProvider.value(
           value: _pharmacyDataRepository,
+        ),
+        RepositoryProvider.value(
+          value: _barcodeRepository,
         ),
       ],
       child: BlocProvider(
@@ -54,9 +62,14 @@ class App extends StatelessWidget {
             ),
             textTheme: TextTheme(
               headline1: const TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
+                fontSize: 24,
+                fontWeight: FontWeight.w500,
                 color: Colors.black,
+              ),
+              headline2: TextStyle(
+                fontSize: 21,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey[700],
               ),
               bodyText1: const TextStyle(
                 fontSize: 16,

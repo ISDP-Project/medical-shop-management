@@ -1,0 +1,11 @@
+name: barcode_repository
+description: Repository managing barcode lookup.
+
+publish_to: none
+
+environment:
+  sdk: ">=2.16.1 <3.0.0"
+
+dependencies:
+  supabase: ^0.2.15
+  
