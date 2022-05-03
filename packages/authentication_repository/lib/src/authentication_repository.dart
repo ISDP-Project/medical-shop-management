@@ -54,7 +54,7 @@ class AuthenticationRepository {
 
     if (signUpResponse.error != null) {
       _controller.add(AuthenticationStatus.unauthenticated);
-      log('SIGNUP ERROR: ${signUpResponse.error}');
+      print('SIGNUP ERROR: ${signUpResponse.error}');
       return;
     }
     // String pharmacyUid = _uuid.v4();
@@ -103,6 +103,20 @@ class AuthenticationRepository {
       log('PROFILE ERROR: ${rpcResponse.error}');
       return;
     }
+
+    rpcResponse = await _supabase.rpc(
+      SqlNamesRpcMethods.billsAndSalesForeignKeyCreateConstrant,
+      params: {
+        RpcCreateForeignKey.pharmacyGstin: pharmacyGstin,
+      },
+    ).execute();
+
+    if (rpcResponse.error != null) {
+      _controller.add(AuthenticationStatus.unauthenticated);
+      log('FOREIGN ERROR: ${rpcResponse.error}');
+      return;
+    }
+
     _controller.add(AuthenticationStatus.authenticated);
   }
 

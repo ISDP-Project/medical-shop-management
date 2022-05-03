@@ -16,3 +16,9 @@ class ScannerEventBarcodeScanned extends ScannerEvent {
 
   const ScannerEventBarcodeScanned(this.barcodeId);
 }
+
+class ScannerBarcodeScannedToInfo extends ScannerEvent {
+  final String? response;
+
+  const ScannerBarcodeScannedToInfo(this.response);
+}
