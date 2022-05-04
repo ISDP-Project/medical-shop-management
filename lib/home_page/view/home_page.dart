@@ -75,8 +75,7 @@ class _HomePageState extends State<HomePage> {
               leading: const Icon(Icons.history),
               title: const Text(HomePageConstants.billHistory),
               onTap: () {
-                Navigator.of(context);
-                Navigator.pop(context);
+                Navigator.of(context).pushNamed(Routes.billHistory);
               },
             ),
             ListTile(
@@ -164,7 +163,27 @@ class _HomePageState extends State<HomePage> {
                         padding: EdgeInsets.only(left: 15, right: 15),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [Text('paracetamol'), Text('22')],
+                          children: [
+                            Text(
+                              'Paracetamol',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2
+                                  ?.copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                  )
+                                  .copyWith(fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              '22',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2
+                                  ?.copyWith(color: Color(0xFFFA8518))
+                                  .copyWith(fontWeight: FontWeight.bold),
+                            )
+                          ],
                         ),
                       ),
                       const Padding(
@@ -176,10 +195,22 @@ class _HomePageState extends State<HomePage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'paracetamol',
-                              style: Theme.of(context).textTheme.bodyText2,
+                              'Dolono',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2
+                                  ?.copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                  )
+                                  .copyWith(fontWeight: FontWeight.bold),
                             ),
-                            Text('22')
+                            Text('65',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2
+                                    ?.copyWith(color: Color(0xFFFA8518))
+                                    .copyWith(fontWeight: FontWeight.bold))
                           ],
                         ),
                       ),
@@ -190,7 +221,25 @@ class _HomePageState extends State<HomePage> {
                         padding: EdgeInsets.only(left: 15, right: 15),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [Text('paracetamol'), Text('22')],
+                          children: [
+                            Text(
+                              'Aspirin',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2
+                                  ?.copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                  )
+                                  .copyWith(fontWeight: FontWeight.bold),
+                            ),
+                            Text('14',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2
+                                    ?.copyWith(color: Color(0xFFFA8518))
+                                    .copyWith(fontWeight: FontWeight.bold))
+                          ],
                         ),
                       ),
                       const Padding(
@@ -200,12 +249,31 @@ class _HomePageState extends State<HomePage> {
                         padding: EdgeInsets.only(left: 15, right: 15),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [Text('paracetamol'), Text('22')],
+                          children: [
+                            Text(
+                              'Easpirin',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2
+                                  ?.copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                  )
+                                  .copyWith(fontWeight: FontWeight.bold),
+                            ),
+                            Text('10',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2
+                                    ?.copyWith(color: Color(0xFFFA8518))
+                                    .copyWith(fontWeight: FontWeight.bold))
+                          ],
                         ),
                       )
                     ]),
                     margin: EdgeInsets.all(10),
                     decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
                         border: Border.all(
                             color: Theme.of(context).colorScheme.outline)),
                   )),
@@ -237,6 +305,7 @@ class _HomePageState extends State<HomePage> {
                     ]),
                     margin: EdgeInsets.all(10),
                     decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
                       border: Border.all(
                           color: Theme.of(context).colorScheme.outline),
                     ),
@@ -259,7 +328,7 @@ class _HomePageState extends State<HomePage> {
                     child: Column(children: [
                       const Padding(
                           padding:
-                              EdgeInsets.only(bottom: kDefaultPadding * 2)),
+                              EdgeInsets.only(bottom: kDefaultPadding * 2.5)),
                       Container(
                           child: Icon(
                         Icons.receipt_long_outlined,
@@ -269,6 +338,9 @@ class _HomePageState extends State<HomePage> {
                             .primary
                             .withAlpha(200),
                       )),
+                      Padding(
+                          padding:
+                              EdgeInsets.only(bottom: kDefaultPadding * 2.5)),
                       Container(
                         child: ElevatedButton(
                             onPressed: () {
@@ -280,6 +352,7 @@ class _HomePageState extends State<HomePage> {
                     ]),
                     margin: EdgeInsets.all(10),
                     decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
                         border: Border.all(
                             color: Theme.of(context).colorScheme.outline)),
                   )),
@@ -289,7 +362,7 @@ class _HomePageState extends State<HomePage> {
                     child: Column(children: [
                       const Padding(
                           padding:
-                              EdgeInsets.only(bottom: kDefaultPadding * 2)),
+                              EdgeInsets.only(bottom: kDefaultPadding * 2.5)),
                       Container(
                           child: Icon(
                         Icons.history,
@@ -299,6 +372,9 @@ class _HomePageState extends State<HomePage> {
                             .primary
                             .withAlpha(200),
                       )),
+                      Padding(
+                          padding:
+                              EdgeInsets.only(bottom: kDefaultPadding * 2.5)),
                       Container(
                         child: ElevatedButton(
                           onPressed: () {
@@ -311,6 +387,7 @@ class _HomePageState extends State<HomePage> {
                     ]),
                     margin: EdgeInsets.all(10),
                     decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
                         border: Border.all(
                             color: Theme.of(context).colorScheme.outline)),
                   ))
