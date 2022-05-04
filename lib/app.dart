@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:barcode_repository/barcode_repository.dart';
 import 'package:master_db_repository/master_db_repository.dart';
+import 'package:pharmacy_app/profile_page/profile_page.dart';
 import 'package:pharmacy_data_repository/pharmacy_data_repository.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 
@@ -56,6 +57,63 @@ class App extends StatelessWidget {
         ),
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
+          darkTheme: ThemeData.dark().copyWith(
+            backgroundColor: Colors.black,
+            colorScheme: const ColorScheme.dark().copyWith(
+              primary: const Color(0xff1f1f1f),
+              primaryContainer: const Color(0xff1f1f1f),
+              onPrimary: Colors.white,
+              surface: const Color(0xff1f1f1f),
+              outline: const Color(0xff1f1f1f),
+            ),
+            iconTheme: const IconThemeData(
+              color: Colors.white,
+              size: kDefaultIconSize,
+            ),
+            textTheme: TextTheme(
+              headline1: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+              ),
+              headline2: TextStyle(
+                fontSize: 21,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+              bodyText1: const TextStyle(
+                fontSize: 16,
+                color: Colors.white,
+              ),
+              bodyText2: TextStyle(
+                fontSize: 15,
+                color: Colors.grey[700],
+              ),
+              button: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 19,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+            floatingActionButtonTheme: const FloatingActionButtonThemeData(
+              backgroundColor: Color(0xff1f1f1f),
+            ),
+            elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ButtonStyle(
+                textStyle: MaterialStateProperty.all<TextStyle>(
+                  const TextStyle(fontSize: 20),
+                ),
+                backgroundColor: MaterialStateProperty.all<Color>(
+                  const Color(0xff086e37),
+                ),
+              ),
+            ),
+            switchTheme: SwitchThemeData(
+              thumbColor: MaterialStateProperty.all<Color>(
+                const Color(0xff1f1f1f),
+              ),
+            ),
+          ),
           theme: ThemeData.light().copyWith(
             backgroundColor: Colors.white,
             colorScheme: const ColorScheme.light().copyWith(
@@ -119,6 +177,7 @@ class App extends StatelessWidget {
             Routes.billPage: (context) => const BillingPage(),
             Routes.scannerPage: (context) => const ScannerPage(),
             Routes.lowStockManagementPage: (context) => const LowStockPage(),
+            Routes.profilePage: (context) => const ProfilePage(),
             Routes.billHistory: (context) => const BillHistory(),
           },
           home: const AppView(),

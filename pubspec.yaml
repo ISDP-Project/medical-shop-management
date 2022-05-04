@@ -90,6 +90,9 @@ flutter:
     - assets/images/login_logo.png
     - assets/images/login.jpg
     - assets/images/welcome.png
+    - assets/images/logo.jpeg
+    - assets/images/QR_Code.png
+    - assets/images/analytic_graph.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

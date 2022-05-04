@@ -31,6 +31,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         elevation: kDefaultAppBarElevation,
         title: Row(
@@ -49,51 +50,76 @@ class _HomePageState extends State<HomePage> {
           children: [
             const DrawerHeader(
               child: Text(HomePageConstants.drawerHeading),
-              decoration: BoxDecoration(),
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(HomePageConstants.logoUrl),
+                      fit: BoxFit.cover)),
             ),
             ListTile(
+              leading: const Icon(Icons.home),
               title: const Text(HomePageConstants.home),
               onTap: () {
+                Navigator.of(context).pushNamed(Routes.homePage);
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.analytics),
+              title: const Text(HomePageConstants.analytics),
+              onTap: () {
                 Navigator.of(context);
                 Navigator.pop(context);
               },
             ),
             ListTile(
+              leading: const Icon(Icons.history),
+              title: const Text(HomePageConstants.billHistory),
+              onTap: () {
+                Navigator.of(context);
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.notifications),
               title: const Text(HomePageConstants.notification),
               onTap: () {
-                Navigator.of(context);
-                Navigator.pop(context);
+                Navigator.of(context).pushNamed(Routes.lowStockManagementPage);
               },
             ),
             ListTile(
-              title: const Text(HomePageConstants.setting),
+              leading: const Icon(Icons.receipt_long_outlined),
+              title: const Text(HomePageConstants.generateBill),
+              onTap: () {
+                Navigator.of(context).pushNamed(Routes.billPage);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.list),
+              title: const Text(HomePageConstants.stockExplorer),
               onTap: () {
                 Navigator.of(context);
                 Navigator.pop(context);
               },
             ),
             ListTile(
-              title: const Text(HomePageConstants.payment),
+              leading: const Icon(Icons.qr_code),
+              title: const Text(HomePageConstants.barcodeScanner),
               onTap: () {
-                Navigator.of(context);
-                Navigator.pop(context);
+                Navigator.of(context).pushNamed(Routes.scannerPage);
               },
             ),
             ListTile(
+              leading: const Icon(Icons.person),
               title: const Text(HomePageConstants.user),
               onTap: () {
-                Navigator.of(context);
-                Navigator.pop(context);
+                Navigator.of(context).pushNamed(Routes.profilePage);
               },
             ),
             ListTile(
-              title: const Text(HomePageConstants.help),
-              onTap: () {
-                Navigator.of(context);
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
+              leading: Icon(
+                Icons.logout,
+                color: Theme.of(context).colorScheme.error,
+              ),
               title: const Text(HomePageConstants.logOutButtonLabel),
               onTap: () {
                 context.read<AuthenticationRepository>().logOut();
@@ -108,72 +134,233 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.only(top: kDefaultPadding * 2),
           child: Column(
             children: [
+              const Text(
+                'Inventory',
+                textAlign: TextAlign.left,
+              ),
               Row(
                 children: [
                   Expanded(
-                    child: CustomButton(
-                      icon: Icons.qr_code_scanner_outlined,
-                      label: HomePageConstants.scanPageButtonLabel,
-                      onPressed: () =>
-                          Navigator.pushNamed(context, Routes.scannerPage),
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: kDefaultMargin),
-                  ),
-                  Expanded(
-                    child: CustomButton(
-                      icon: Icons.receipt_long_rounded,
-                      label: HomePageConstants.billiingPageButtonLabel,
-                      onPressed: () => Navigator.pushNamed(
-                        context,
-                        Routes.billPage,
+                      child: Container(
+                    height: 185,
+                    child: Column(children: [
+                      const Padding(
+                          padding: EdgeInsets.only(top: kDefaultPadding * 1.5)),
+                      Container(
+                        child: Text(
+                          'Stock Explorer',
+                          textAlign: TextAlign.left,
+                          style: Theme.of(context).textTheme.bodyText1,
+                        ),
                       ),
+                      const Padding(
+                          padding:
+                              EdgeInsets.only(bottom: kDefaultPadding * 2)),
+                      Container(
+                        padding: EdgeInsets.only(left: 15, right: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [Text('paracetamol'), Text('22')],
+                        ),
+                      ),
+                      const Padding(
+                          padding:
+                              EdgeInsets.only(bottom: kDefaultPadding * 2)),
+                      Container(
+                        padding: EdgeInsets.only(left: 15, right: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'paracetamol',
+                              style: Theme.of(context).textTheme.bodyText2,
+                            ),
+                            Text('22')
+                          ],
+                        ),
+                      ),
+                      const Padding(
+                          padding:
+                              EdgeInsets.only(bottom: kDefaultPadding * 2)),
+                      Container(
+                        padding: EdgeInsets.only(left: 15, right: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [Text('paracetamol'), Text('22')],
+                        ),
+                      ),
+                      const Padding(
+                          padding:
+                              EdgeInsets.only(bottom: kDefaultPadding * 2)),
+                      Container(
+                        padding: EdgeInsets.only(left: 15, right: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [Text('paracetamol'), Text('22')],
+                        ),
+                      )
+                    ]),
+                    margin: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            color: Theme.of(context).colorScheme.outline)),
+                  )),
+                  Expanded(
+                      child: Container(
+                    height: 185,
+                    child: Column(children: [
+                      const Padding(
+                          padding:
+                              EdgeInsets.only(bottom: kDefaultPadding * 2)),
+                      Container(
+                          child: Icon(
+                        Icons.qr_code_scanner,
+                        size: kDefaultIconSize * 4,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withAlpha(200),
+                      )),
+                      Container(
+                        child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .pushNamed(Routes.scannerPage);
+                            },
+                            child: Text("Scan")),
+                        padding: EdgeInsets.only(bottom: kDefaultPadding * 1.5),
+                      ),
+                    ]),
+                    margin: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          color: Theme.of(context).colorScheme.outline),
                     ),
-                  ),
+                  ))
                 ],
               ),
               const Padding(padding: EdgeInsets.only(top: kDefaultPadding * 2)),
+              Text(
+                'Bills',
+                textAlign: TextAlign.left,
+              ),
               Row(
                 children: [
                   Expanded(
-                    child: CustomButton(
-                      icon: Icons.notifications_active,
-                      label: HomePageConstants.lowStockPageLabel,
-                      onPressed: () => Navigator.pushNamed(
-                        context,
-                        Routes.lowStockManagementPage,
+                      child: Container(
+                    height: 160,
+                    child: Column(children: [
+                      const Padding(
+                          padding:
+                              EdgeInsets.only(bottom: kDefaultPadding * 2)),
+                      Container(
+                          child: Icon(
+                        Icons.receipt_long_outlined,
+                        size: kDefaultIconSize * 2,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withAlpha(200),
+                      )),
+                      Container(
+                        child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).pushNamed(Routes.billPage);
+                            },
+                            child: Text("Generate Bill")),
+                        padding: EdgeInsets.only(bottom: kDefaultPadding * 1.5),
                       ),
-                    ),
-                  ),
+                    ]),
+                    margin: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            color: Theme.of(context).colorScheme.outline)),
+                  )),
+                  Expanded(
+                      child: Container(
+                    height: 160,
+                    child: Column(children: [
+                      const Padding(
+                          padding:
+                              EdgeInsets.only(bottom: kDefaultPadding * 2)),
+                      Container(
+                          child: Icon(
+                        Icons.history,
+                        size: kDefaultIconSize * 2,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withAlpha(200),
+                      )),
+                      Container(
+                        child: ElevatedButton(
+                            onPressed: () {}, child: Text("Bill History")),
+                        padding: EdgeInsets.only(bottom: kDefaultPadding * 1.5),
+                      ),
+                    ]),
+                    margin: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            color: Theme.of(context).colorScheme.outline)),
+                  ))
                 ],
               ),
               const Padding(padding: EdgeInsets.only(top: kDefaultPadding * 2)),
-              Row(
-                children: [
-                  Expanded(
-                    child: CustomButton(
-                      icon: Icons.history,
-                      label: HomePageConstants.billHistoryLabel,
-                      onPressed: () {
-                        Navigator.of(context).pushNamed(Routes.billHistory);
-                      },
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: kDefaultMargin),
-                  ),
-                  Expanded(
-                    child: CustomButton(
-                      label: HomePageConstants.stockExplorerLabel,
-                      onPressed: () {},
-                      icon: Icons.inventory,
-                    ),
-                  ),
-                ],
-              )
+              Text('Analytics Dashboard'),
+              Expanded(
+                flex: 2,
+                child: Container(
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            image:
+                                AssetImage('assets/images/analytic_graph.jpeg'),
+                            fit: BoxFit.contain))),
+              ),
             ],
           ),
+
+          // child: Column(
+          //   children: [
+          //     Row(
+          //       children: [
+          //         Expanded(
+          //           child: CustomButton(
+          //             icon: Icons.qr_code_scanner_outlined,
+          //             label: HomePageConstants.scanPageButtonLabel,
+          //             onPressed: () =>
+          //                 Navigator.pushNamed(context, Routes.scannerPage),
+          //           ),
+          //         ),
+          //         const Padding(
+          //           padding: EdgeInsets.symmetric(horizontal: kDefaultMargin),
+          //         ),
+          //         Expanded(
+          //           child: CustomButton(
+          //             icon: Icons.receipt_long_rounded,
+          //             label: HomePageConstants.billiingPageButtonLabel,
+          //             onPressed: () =>
+          //                 Navigator.pushNamed(context, Routes.billPage),
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //     const Padding(padding: EdgeInsets.only(top: kDefaultPadding * 2)),
+          //     Row(
+          //       children: [
+          //         Expanded(
+          //           child: CustomButton(
+          //             icon: Icons.notifications_active,
+          //             label: HomePageConstants.lowStockPageLabel,
+          //             onPressed: () => Navigator.pushNamed(
+          //               context,
+          //               Routes.lowStockManagementPage,
+          //             ),
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //   ],
+          // ),
         ),
       ),
     );
