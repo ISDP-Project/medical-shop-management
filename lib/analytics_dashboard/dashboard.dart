@@ -14,9 +14,8 @@ import 'package:pharmacy_app/analytics_dashboard/widgets/screens/third_screen.da
 // import 'analytics_dashboard/widgets/screens/third_screen.dart';
 
 class AnalyticsPage extends StatefulWidget {
-  const AnalyticsPage({Key? key, required this.title}) : super(key: key);
+  const AnalyticsPage({Key? key}) : super(key: key);
 
-  final String title;
   @override
   State<AnalyticsPage> createState() => _AnalyticsPageState();
 }

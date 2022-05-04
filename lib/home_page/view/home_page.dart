@@ -67,8 +67,7 @@ class _HomePageState extends State<HomePage> {
               leading: const Icon(Icons.analytics),
               title: const Text(HomePageConstants.analytics),
               onTap: () {
-                Navigator.of(context);
-                Navigator.pop(context);
+                Navigator.of(context).pushNamed(Routes.analyticPage);
               },
             ),
             ListTile(

@@ -9,4 +9,5 @@ class Routes {
   static const String profilePage = "/profile";
   static const String billHistory = "/billhistory";
   static const String currentStock = "/currectstock";
+  static const String analyticPage = "/analytics";
 }
