@@ -63,13 +63,13 @@ class _HomePageState extends State<HomePage> {
             //     Navigator.pop(context);
             //   },
             // ),
-            ListTile(
-              leading: const Icon(Icons.analytics),
-              title: const Text(HomePageConstants.analytics),
-              onTap: () {
-                Navigator.of(context).pushNamed(Routes.analyticPage);
-              },
-            ),
+            // ListTile(
+            //   leading: const Icon(Icons.analytics),
+            //   title: const Text(HomePageConstants.analytics),
+            //   onTap: () {
+            //     Navigator.of(context).pushNamed(Routes.analyticPage);
+            //   },
+            // ),
             ListTile(
               leading: const Icon(Icons.history),
               title: const Text(HomePageConstants.billHistory),
