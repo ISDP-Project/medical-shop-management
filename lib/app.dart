@@ -15,6 +15,7 @@ import './scanner_page/scanner_page.dart';
 import './billing_page/billing_page.dart';
 import './bill_history/bill_history.dart';
 import './authentication/authentication.dart';
+import './analytics_dashboard/dashboard.dart';
 import './low_stock_management_page/low_stock_management.dart';
 
 class App extends StatelessWidget {
@@ -181,6 +182,7 @@ class App extends StatelessWidget {
             Routes.profilePage: (context) => const ProfilePage(),
             Routes.billHistory: (context) => const BillHistory(),
             Routes.currentStock: (context) => const InventoryPage(),
+            Routes.analyticPage: (context) => const AnalyticsPage(),
           },
           home: const AppView(),
         ),

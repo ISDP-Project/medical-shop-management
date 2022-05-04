@@ -55,28 +55,26 @@ class _HomePageState extends State<HomePage> {
                       image: AssetImage(HomePageConstants.logoUrl),
                       fit: BoxFit.cover)),
             ),
-            ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text(HomePageConstants.home),
-              onTap: () {
-                Navigator.of(context).pushNamed(Routes.homePage);
-                Navigator.pop(context);
-              },
-            ),
+            // ListTile(
+            //   leading: const Icon(Icons.home),
+            //   title: const Text(HomePageConstants.home),
+            //   onTap: () {
+            //     Navigator.of(context).pushNamed(Routes.homePage);
+            //     Navigator.pop(context);
+            //   },
+            // ),
             ListTile(
               leading: const Icon(Icons.analytics),
               title: const Text(HomePageConstants.analytics),
               onTap: () {
-                Navigator.of(context);
-                Navigator.pop(context);
+                Navigator.of(context).pushNamed(Routes.analyticPage);
               },
             ),
             ListTile(
               leading: const Icon(Icons.history),
               title: const Text(HomePageConstants.billHistory),
               onTap: () {
-                Navigator.of(context);
-                Navigator.pop(context);
+                Navigator.of(context).pushNamed(Routes.billHistory);
               },
             ),
             ListTile(
@@ -97,8 +95,7 @@ class _HomePageState extends State<HomePage> {
               leading: const Icon(Icons.list),
               title: const Text(HomePageConstants.stockExplorer),
               onTap: () {
-                Navigator.of(context);
-                Navigator.pop(context);
+                Navigator.of(context).pushNamed(Routes.currentStock);
               },
             ),
             ListTile(
@@ -146,75 +143,162 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Expanded(
                       child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pushNamed(Routes.currentStock);
-                    },
-                    child: Container(
-                      height: 185,
-                      child: Column(children: [
-                        const Padding(
-                            padding:
-                                EdgeInsets.only(top: kDefaultPadding * 1.5)),
-                        Container(
-                          child: Text(
-                            'Stock Explorer',
-                            textAlign: TextAlign.left,
-                            style: Theme.of(context).textTheme.bodyText1,
-                          ),
-                        ),
-                        const Padding(
-                            padding:
-                                EdgeInsets.only(bottom: kDefaultPadding * 2)),
-                        Container(
-                          padding: EdgeInsets.only(left: 15, right: 15),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [Text('paracetamol'), Text('22')],
-                          ),
-                        ),
-                        const Padding(
-                            padding:
-                                EdgeInsets.only(bottom: kDefaultPadding * 2)),
-                        Container(
-                          padding: EdgeInsets.only(left: 15, right: 15),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'paracetamol',
-                                style: Theme.of(context).textTheme.bodyText2,
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushNamed(Routes.currentStock);
+                          },
+                          child: Container(
+                            height: 185,
+                            child: Column(children: [
+                              const Padding(
+                                  padding: EdgeInsets.only(
+                                      top: kDefaultPadding * 1.5)),
+                              Container(
+                                child: Text(
+                                  'Stock Explorer',
+                                  textAlign: TextAlign.left,
+                                  style: Theme.of(context).textTheme.bodyText1,
+                                ),
                               ),
-                              Text('22')
-                            ],
-                          ),
-                        ),
-                        const Padding(
-                            padding:
-                                EdgeInsets.only(bottom: kDefaultPadding * 2)),
-                        Container(
-                          padding: EdgeInsets.only(left: 15, right: 15),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [Text('paracetamol'), Text('22')],
-                          ),
-                        ),
-                        const Padding(
-                            padding:
-                                EdgeInsets.only(bottom: kDefaultPadding * 2)),
-                        Container(
-                          padding: EdgeInsets.only(left: 15, right: 15),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [Text('paracetamol'), Text('22')],
-                          ),
-                        )
-                      ]),
-                      margin: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              color: Theme.of(context).colorScheme.outline)),
-                    ),
-                  )),
+                              // ),
+                              const Padding(
+                                  padding: EdgeInsets.only(
+                                      bottom: kDefaultPadding * 2)),
+                              Container(
+                                padding: EdgeInsets.only(left: 15, right: 15),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Paracetamol',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText2
+                                          ?.copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                          )
+                                          .copyWith(
+                                              fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      '22',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText2
+                                          ?.copyWith(color: Color(0xFFFA8518))
+                                          .copyWith(
+                                              fontWeight: FontWeight.bold),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              const Padding(
+                                  padding: EdgeInsets.only(
+                                      bottom: kDefaultPadding * 2)),
+                              Container(
+                                padding: EdgeInsets.only(left: 15, right: 15),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Dolono',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText2
+                                          ?.copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                          )
+                                          .copyWith(
+                                              fontWeight: FontWeight.bold),
+                                    ),
+                                    Text('65',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText2
+                                            ?.copyWith(color: Color(0xFFFA8518))
+                                            .copyWith(
+                                                fontWeight: FontWeight.bold))
+                                  ],
+                                ),
+                              ),
+                              const Padding(
+                                  padding: EdgeInsets.only(
+                                      bottom: kDefaultPadding * 2)),
+                              Container(
+                                padding: EdgeInsets.only(left: 15, right: 15),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Aspirin',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText2
+                                          ?.copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                          )
+                                          .copyWith(
+                                              fontWeight: FontWeight.bold),
+                                    ),
+                                    Text('14',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText2
+                                            ?.copyWith(color: Color(0xFFFA8518))
+                                            .copyWith(
+                                                fontWeight: FontWeight.bold))
+                                  ],
+                                ),
+                              ),
+                              const Padding(
+                                  padding: EdgeInsets.only(
+                                      bottom: kDefaultPadding * 2)),
+                              Container(
+                                padding: EdgeInsets.only(left: 15, right: 15),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Easpirin',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText2
+                                          ?.copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                          )
+                                          .copyWith(
+                                              fontWeight: FontWeight.bold),
+                                    ),
+                                    Text('10',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyText2
+                                            ?.copyWith(color: Color(0xFFFA8518))
+                                            .copyWith(
+                                                fontWeight: FontWeight.bold))
+                                  ],
+                                ),
+                              )
+                            ]),
+                            margin: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all(
+                                    color:
+                                        Theme.of(context).colorScheme.outline)),
+                          ))),
                   Expanded(
                       child: Container(
                     height: 185,
@@ -243,6 +327,7 @@ class _HomePageState extends State<HomePage> {
                     ]),
                     margin: EdgeInsets.all(10),
                     decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
                       border: Border.all(
                           color: Theme.of(context).colorScheme.outline),
                     ),
@@ -265,7 +350,7 @@ class _HomePageState extends State<HomePage> {
                     child: Column(children: [
                       const Padding(
                           padding:
-                              EdgeInsets.only(bottom: kDefaultPadding * 2)),
+                              EdgeInsets.only(bottom: kDefaultPadding * 2.5)),
                       Container(
                           child: Icon(
                         Icons.receipt_long_outlined,
@@ -275,6 +360,9 @@ class _HomePageState extends State<HomePage> {
                             .primary
                             .withAlpha(200),
                       )),
+                      Padding(
+                          padding:
+                              EdgeInsets.only(bottom: kDefaultPadding * 2.5)),
                       Container(
                         child: ElevatedButton(
                             onPressed: () {
@@ -286,6 +374,7 @@ class _HomePageState extends State<HomePage> {
                     ]),
                     margin: EdgeInsets.all(10),
                     decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
                         border: Border.all(
                             color: Theme.of(context).colorScheme.outline)),
                   )),
@@ -295,7 +384,7 @@ class _HomePageState extends State<HomePage> {
                     child: Column(children: [
                       const Padding(
                           padding:
-                              EdgeInsets.only(bottom: kDefaultPadding * 2)),
+                              EdgeInsets.only(bottom: kDefaultPadding * 2.5)),
                       Container(
                           child: Icon(
                         Icons.history,
@@ -305,6 +394,9 @@ class _HomePageState extends State<HomePage> {
                             .primary
                             .withAlpha(200),
                       )),
+                      Padding(
+                          padding:
+                              EdgeInsets.only(bottom: kDefaultPadding * 2.5)),
                       Container(
                         child: ElevatedButton(
                           onPressed: () {
@@ -317,6 +409,7 @@ class _HomePageState extends State<HomePage> {
                     ]),
                     margin: EdgeInsets.all(10),
                     decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
                         border: Border.all(
                             color: Theme.of(context).colorScheme.outline)),
                   ))
