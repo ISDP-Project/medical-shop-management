@@ -12,6 +12,7 @@ import './home_page/home_page.dart';
 import './constants/constants.dart';
 import './scanner_page/scanner_page.dart';
 import './billing_page/billing_page.dart';
+import './bill_history/bill_history.dart';
 import './authentication/authentication.dart';
 import './low_stock_management_page/low_stock_management.dart';
 
@@ -55,6 +56,7 @@ class App extends StatelessWidget {
           authenticationRepository: _authenticationRepository,
         ),
         child: MaterialApp(
+          debugShowCheckedModeBanner: false,
           theme: ThemeData.light().copyWith(
             backgroundColor: Colors.white,
             colorScheme: const ColorScheme.light().copyWith(
@@ -119,6 +121,7 @@ class App extends StatelessWidget {
             Routes.scannerPage: (context) => const ScannerPage(),
             Routes.lowStockManagementPage: (context) => const LowStockPage(),
             Routes.profilePage: (context) => const ProfilePage(),
+            Routes.billHistory: (context) => const BillHistory(),
           },
           home: const AppView(),
         ),

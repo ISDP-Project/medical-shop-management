@@ -1,8 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import 'package:pharmacy_app/widgets/search/tite.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
 
 class Search extends StatefulWidget {
   const Search({Key? key}) : super(key: key);
@@ -63,7 +64,6 @@ class _SearchState extends State<Search> {
     setState(() {
       _input = value;
       if (value.isEmpty) {
-    
         _results = null;
       }
     });
@@ -75,9 +75,7 @@ class _SearchState extends State<Search> {
     });
   }
 
-
   Future<List<String>> _searchUsers(String name) async {
-  
     final result = await Supabase.instance.client
         .from('names')
         .select('fname, lname')
@@ -85,17 +83,14 @@ class _SearchState extends State<Search> {
         .limit(100)
         .execute();
 
-  
     if (result.error != null) {
-      print('error: ${result.error.toString()}');
+      log('error: ${result.error.toString()}');
       return [];
     }
 
     final List<String> names = [];
 
-   
     for (var v in ((result.data ?? []) as List<dynamic>)) {
-    
       names.add("${v['fname']} ${v['lname']}");
     }
     return names;

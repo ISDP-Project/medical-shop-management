@@ -1,13 +1,9 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../doughnut_chart.dart';
 
 // import '../../barchart.dart';
 // import '../../graph_page.dart';
-
 
 class ThirdScreen extends StatelessWidget {
   const ThirdScreen({Key? key}) : super(key: key);
@@ -27,7 +23,7 @@ class ThirdScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => DOUGHNUT()),
+                MaterialPageRoute(builder: (context) => const DOUGHNUT()),
               );
             },
           ),
