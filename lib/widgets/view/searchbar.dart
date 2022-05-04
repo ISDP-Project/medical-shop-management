@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import '../search/search.dart';
 import 'style.dart';
 
-//working perfectly with names table  in supabase 
-
+//working perfectly with names table  in supabase
 
 class Searchbar extends StatelessWidget {
- 
+  const Searchbar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

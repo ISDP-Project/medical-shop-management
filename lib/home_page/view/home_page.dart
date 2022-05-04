@@ -146,6 +146,28 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
+              const Padding(padding: EdgeInsets.only(top: kDefaultPadding * 2)),
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomButton(
+                      icon: Icons.history,
+                      label: HomePageConstants.billHistoryLabel,
+                      onPressed: () {},
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: kDefaultMargin),
+                  ),
+                  Expanded(
+                    child: CustomButton(
+                      label: HomePageConstants.stockExplorerLabel,
+                      onPressed: () {},
+                      icon: Icons.inventory,
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
         ),
