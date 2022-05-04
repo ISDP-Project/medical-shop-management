@@ -130,13 +130,17 @@ class _HomePageState extends State<HomePage> {
       ),
       body: SafeArea(
         child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: kDefaultMargin * 1.25),
+          margin: const EdgeInsets.symmetric(horizontal: kDefaultMargin * 2),
           padding: const EdgeInsets.only(top: kDefaultPadding * 2),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 'Inventory',
                 textAlign: TextAlign.left,
+                style: Theme.of(context).textTheme.headline2?.copyWith(
+                      color: Theme.of(context).textTheme.headline1?.color,
+                    ),
               ),
               Row(
                 children: [
@@ -243,6 +247,9 @@ class _HomePageState extends State<HomePage> {
               Text(
                 'Bills',
                 textAlign: TextAlign.left,
+                style: Theme.of(context).textTheme.headline2?.copyWith(
+                      color: Theme.of(context).textTheme.headline1?.color,
+                    ),
               ),
               Row(
                 children: [
@@ -294,7 +301,11 @@ class _HomePageState extends State<HomePage> {
                       )),
                       Container(
                         child: ElevatedButton(
-                            onPressed: () {}, child: Text("Bill History")),
+                          onPressed: () {
+                            Navigator.of(context).pushNamed(Routes.billHistory);
+                          },
+                          child: Text("Bill History"),
+                        ),
                         padding: EdgeInsets.only(bottom: kDefaultPadding * 1.5),
                       ),
                     ]),
@@ -306,7 +317,12 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               const Padding(padding: EdgeInsets.only(top: kDefaultPadding * 2)),
-              Text('Analytics Dashboard'),
+              Text(
+                'Analytics',
+                style: Theme.of(context).textTheme.headline2?.copyWith(
+                      color: Theme.of(context).textTheme.headline1?.color,
+                    ),
+              ),
               Expanded(
                 flex: 2,
                 child: Container(
