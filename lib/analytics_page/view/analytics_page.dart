@@ -13,31 +13,24 @@ class AnalyticsPage extends StatelessWidget {
           PopupMenuButton<int>(
             onSelected: (item) => onSelected(context, item),
             itemBuilder: (context) => [
-
               const PopupMenuItem(
                 value: 0,
                 child: Text('Today'),
               ),
-              
               const PopupMenuItem<int>(
                 value: 1,
                 child: Text('Last 7 Days'),
               ),
-              
               const PopupMenuItem<int>(
                 value: 2,
                 child: Text('Last 30 Days'),
               ),
-              
               const PopupMenuItem<int>(
                 value: 3,
                 child: Text('Last 365 Days'),
               ),
-              
               const PopupMenuItem<int>(
-                  value: 4, 
-                  child: Text('Custom Range...')
-              ),
+                  value: 4, child: Text('Custom Range...')),
             ],
           ),
         ],
@@ -72,25 +65,25 @@ class AnalyticsPage extends StatelessWidget {
         break;
       case 4:
         Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => SfDateRangePicker(
-          view: DateRangePickerView.month,
-          selectionMode: DateRangePickerSelectionMode.multiRange,
-          showTodayButton: true,
-          showActionButtons: true,
-          controller: _dateRangePickerController,
-          // onSubmit: (Object val) {
-          //   print(val);
-          // },
-          onCancel: () {
-            _dateRangePickerController.selectedRanges = null;
-          },
-        ),
-       ),
-      );
-        
-      break;
+          context,
+          MaterialPageRoute(
+            builder: (context) => SfDateRangePicker(
+              view: DateRangePickerView.month,
+              selectionMode: DateRangePickerSelectionMode.multiRange,
+              showTodayButton: true,
+              showActionButtons: true,
+              controller: _dateRangePickerController,
+              // onSubmit: (Object val) {
+              //   print(val);
+              // },
+              onCancel: () {
+                _dateRangePickerController.selectedRanges = null;
+              },
+            ),
+          ),
+        );
+
+        break;
     }
   }
 }

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:intl/intl.dart';
-
 
 class DOUGHNUT extends StatelessWidget {
   const DOUGHNUT({Key? key}) : super(key: key);
@@ -13,7 +11,10 @@ class DOUGHNUT extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: DoughnutChart(title: 'Bar Chart', chartData: [],),
+      home: const DoughnutChart(
+        title: 'Bar Chart',
+        chartData: [],
+      ),
     );
   }
 }
@@ -56,7 +57,7 @@ class DoughnutChartState extends State<DoughnutChart> {
               dataSource: _chartData,
               xValueMapper: (ChartData data, _) => data.continent,
               yValueMapper: (ChartData data, _) => data.gdp,
-              dataLabelSettings: DataLabelSettings(isVisible: true),
+              dataLabelSettings: const DataLabelSettings(isVisible: true),
               enableTooltip: true)
         ],
       ),

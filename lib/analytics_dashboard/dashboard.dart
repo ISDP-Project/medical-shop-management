@@ -35,12 +35,14 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
             child: const Icon(Icons.bar_chart, color: Colors.green),
             label: 'bar graph',
             onTap: () {
-              Navigator.push(context,
-              MaterialPageRoute(builder: (context)=>const SecondScreen() ),);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SecondScreen()),
+              );
             },
           ),
           SpeedDialChild(
-            child: Icon(Icons.donut_large_sharp, color: Colors.green),
+            child: const Icon(Icons.donut_large_sharp, color: Colors.green),
             label: 'doughnut graph',
             onTap: () {
               Navigator.push(
@@ -50,25 +52,25 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
             },
           ),
           SpeedDialChild(
-              child: Icon(Icons.pie_chart, color: Colors.green),
-              label: 'pie graph',
+            child: const Icon(Icons.pie_chart, color: Colors.green),
+            label: 'pie graph',
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const FifthScreen()),
               );
             },
-              ),
+          ),
           SpeedDialChild(
-              child: Icon(Icons.auto_graph, color: Colors.green),
-              label: 'line graph',
+            child: const Icon(Icons.auto_graph, color: Colors.green),
+            label: 'line graph',
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const FourthScreen()),
               );
-            },              
-              )
+            },
+          )
         ],
       ),
       body: Container(

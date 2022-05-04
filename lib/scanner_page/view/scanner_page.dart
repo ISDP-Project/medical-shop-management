@@ -144,7 +144,7 @@ class ScannerPageView extends StatelessWidget {
                       return const SizedBox();
                     },
                   ),
-                  Expanded(
+                  const Expanded(
                     flex: 55,
                     child: ScannedItemsListView(),
                   ),

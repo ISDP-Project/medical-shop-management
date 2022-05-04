@@ -1,7 +1,4 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 // import '../../barchart.dart';
 import '../bar_chart.dart';
@@ -25,7 +22,7 @@ class SecondScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => BAR()),
+                MaterialPageRoute(builder: (context) => const BAR()),
               );
             },
           ),

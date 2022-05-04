@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
@@ -13,11 +12,13 @@ class BAR extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: BarChart(title: 'Bar Chart', chartData: [],),
+      home: const BarChart(
+        title: 'Bar Chart',
+        chartData: [],
+      ),
     );
   }
 }
-
 
 class BarChart extends StatefulWidget {
   const BarChart({Key? key, required this.title, required this.chartData})
@@ -57,7 +58,7 @@ class BarChartState extends State<BarChart> {
                   dataSource: _chartData,
                   xValueMapper: (ChartData gdp, _) => gdp.continent,
                   yValueMapper: (ChartData gdp, _) => gdp.gdp,
-                  dataLabelSettings: DataLabelSettings(isVisible: true),
+                  dataLabelSettings: const DataLabelSettings(isVisible: true),
                   enableTooltip: true)
             ],
             primaryXAxis: CategoryAxis(),

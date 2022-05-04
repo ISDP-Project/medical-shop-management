@@ -106,8 +106,7 @@ class _HomePageState extends State<HomePage> {
               leading: const Icon(Icons.qr_code),
               title: const Text(HomePageConstants.barcodeScanner),
               onTap: () {
-                Navigator.of(context);
-                Navigator.pop(context);
+                Navigator.of(context).pushNamed(Routes.profilePage);
               },
             ),
             ListTile(

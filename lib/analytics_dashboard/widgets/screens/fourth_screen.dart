@@ -1,7 +1,4 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../line_chart.dart';
 
@@ -27,7 +24,7 @@ class FourthScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LINE()),
+                MaterialPageRoute(builder: (context) => const LINE()),
               );
             },
           ),

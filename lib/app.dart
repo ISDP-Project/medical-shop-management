@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:barcode_repository/barcode_repository.dart';
 import 'package:master_db_repository/master_db_repository.dart';
+import 'package:pharmacy_app/profile_page/profile_page.dart';
 import 'package:pharmacy_data_repository/pharmacy_data_repository.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 
@@ -11,6 +12,7 @@ import './home_page/home_page.dart';
 import './constants/constants.dart';
 import './scanner_page/scanner_page.dart';
 import './billing_page/billing_page.dart';
+import './bill_history/bill_history.dart';
 import './authentication/authentication.dart';
 import './low_stock_management_page/low_stock_management.dart';
 
@@ -54,6 +56,7 @@ class App extends StatelessWidget {
           authenticationRepository: _authenticationRepository,
         ),
         child: MaterialApp(
+          debugShowCheckedModeBanner: false,
           theme: ThemeData.light().copyWith(
             backgroundColor: Colors.white,
             colorScheme: const ColorScheme.light().copyWith(
@@ -117,6 +120,8 @@ class App extends StatelessWidget {
             Routes.billPage: (context) => const BillingPage(),
             Routes.scannerPage: (context) => const ScannerPage(),
             Routes.lowStockManagementPage: (context) => const LowStockPage(),
+            Routes.profilePage: (context) => const ProfilePage(),
+            Routes.billHistory: (context) => const BillHistory(),
           },
           home: const AppView(),
         ),

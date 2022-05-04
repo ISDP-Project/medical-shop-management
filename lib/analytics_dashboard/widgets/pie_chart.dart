@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'package:intl/intl.dart';
 
 class PIE extends StatelessWidget {
   const PIE({Key? key}) : super(key: key);
@@ -12,7 +11,10 @@ class PIE extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: PieChart(title: 'Bar Chart', chartData: [],),
+      home: const PieChart(
+        title: 'Bar Chart',
+        chartData: [],
+      ),
     );
   }
 }
@@ -55,7 +57,7 @@ class PieChartState extends State<PieChart> {
               dataSource: _chartData,
               xValueMapper: (ChartData data, _) => data.continent,
               yValueMapper: (ChartData data, _) => data.gdp,
-              dataLabelSettings: DataLabelSettings(isVisible: true),
+              dataLabelSettings: const DataLabelSettings(isVisible: true),
               enableTooltip: true)
         ],
       ),
