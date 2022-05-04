@@ -7,6 +7,8 @@ class LoginPageConstants {
   static const String emailTextFieldLabel = 'Email';
   static const String passTextFieldLabel = 'Password';
 
+  static const String logoUrl = 'assets/images/logo.jpeg';
+
   static const String buttonText = 'Login';
   static const String signupText = 'Don\'t have an account?';
   static const String signupButtonText = 'Sign up';
@@ -54,13 +56,18 @@ class HomePageConstants {
   static const String replace = '_';
   static const String appBarGreeting = 'Welcome $replace!';
 
-  static const String drawerHeading = 'Drawer Header';
+  static const String drawerHeading = '';
   static const String home = 'Home';
+  static const String billHistory = 'Bill History';
+  static const String analytics = 'Analytics';
   static const String notification = 'Notification';
-  static const String setting = 'Setting';
-  static const String payment = 'Billing Page';
-  static const String user = 'User';
+  static const String generateBill = 'Generate Bill';
+  static const String stockExplorer = 'Stock Explorer';
+  static const String barcodeScanner = 'Barcode Scanner';
+  static const String user = 'Profile';
   static const String help = 'Help';
+
+  static const String logoUrl = 'assets/images/logo.jpeg';
 
   static const String billiingPageButtonLabel = "Bill";
   static const String scanPageButtonLabel = "Scan";
