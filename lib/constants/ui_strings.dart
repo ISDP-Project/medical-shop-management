@@ -36,7 +36,9 @@ class SignupPageConstants {
 }
 
 class BillingPageConstants {
-  static const String appBarHeading = 'Generate Bill';
+  static const String billGenAppBarHeading = 'Generate Bill';
+  static const String billHistoryAppBarHeading = 'Bill History';
+
   static const String productName = 'Name';
   static const String price = 'Price';
   static const String paracetamol = 'Paracetamol';
@@ -48,6 +50,10 @@ class BillingPageConstants {
       'An error occured. Please check your internet connectivity or contact customer support.';
 
   static const String billTotalLabel = 'Total';
+}
+
+class BillHistoryPageConstants {
+  static const String appBarTitle = 'Bill History';
 }
 
 class HomePageConstants {

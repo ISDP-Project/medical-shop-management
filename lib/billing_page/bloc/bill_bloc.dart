@@ -18,6 +18,7 @@ class BillBloc extends Bloc<BillEvent, BillState> {
     on<BillEventItemAdditionRequested>(_onItemAdditionToBillRequested);
     on<BillEventClearBillRequested>(_onBillClearRequested);
     on<BillEventBillGenerationRequested>(_onBillGenerationRequested);
+    on<BillEventInitializeFromBillObject>(_onInitializeFromBillObject);
   }
 
   Future<void> _onLoadRequested(
@@ -128,5 +129,23 @@ class BillBloc extends Bloc<BillEvent, BillState> {
     } catch (error) {
       emit(const BillStateError());
     }
+  }
+
+  void _onInitializeFromBillObject(
+      BillEventInitializeFromBillObject event, Emitter<BillState> emit) {
+    List<Medicine> medicines = [];
+    Map<Medicine, int> itemsInBill = {};
+    double totalPrice = 0;
+
+    for (Sale sale in event.bill.sales) {
+      medicines.add(sale.medicine);
+      itemsInBill[sale.medicine] = (itemsInBill[sale.medicine] ?? 0) + sale.quantity;
+      totalPrice += sale.price;
+    }
+    emit(BillStateLoaded(
+      medicines: medicines,
+      itemsInBill: itemsInBill,
+      totalPrice: totalPrice,
+    ));
   }
 }

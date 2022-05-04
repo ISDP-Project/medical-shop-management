@@ -32,3 +32,8 @@ class BillEventClearBillRequested extends BillEvent {
 class BillEventBillGenerationRequested extends BillEvent {
   const BillEventBillGenerationRequested();
 }
+
+class BillEventInitializeFromBillObject extends BillEvent {
+  final Bill bill;
+  const BillEventInitializeFromBillObject(this.bill);
+}

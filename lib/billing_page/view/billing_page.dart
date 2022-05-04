@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
@@ -16,45 +18,66 @@ class BillingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Bill? bill = (ModalRoute.of(context)?.settings.arguments as Bill?);
+
     return BlocProvider(
       create: (context) => BillBloc(
         pharmacyDataRepository: context.read<PharmacyDataRepository>(),
-      )..add(const BillEventLoadRequested()),
-      child: const BillPageView(),
+      )..add(bill == null
+          ? const BillEventLoadRequested()
+          : BillEventInitializeFromBillObject(bill)),
+      child: BillPageView(
+        bill: bill,
+      ),
     );
   }
 }
 
 class BillPageView extends StatelessWidget {
-  const BillPageView({Key? key}) : super(key: key);
+  const BillPageView({
+    Key? key,
+    Bill? bill,
+  })  : _bill = bill,
+        super(key: key);
+  final Bill? _bill;
 
   @override
   Widget build(BuildContext context) {
+    log(_bill.toString());
+
     return Scaffold(
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
-          children: const [
-            Text(BillingPageConstants.appBarHeading),
+          children: [
+            Text(
+              _bill != null
+                  ? BillingPageConstants.billHistoryAppBarHeading
+                  : BillingPageConstants.billGenAppBarHeading,
+            ),
           ],
         ),
         elevation: kDefaultAppBarElevation,
-        actions: [
-          IconButton(
-            onPressed: () {
-              context.read<BillBloc>().add(const BillEventClearBillRequested());
-            },
-            icon: const Icon(Icons.replay),
-          ),
-          IconButton(
-            onPressed: () {
-              context
-                  .read<BillBloc>()
-                  .add(const BillEventBillGenerationRequested());
-            },
-            icon: const Icon(Icons.done),
-          ),
-        ],
+        actions: _bill != null
+            ? null
+            : [
+                IconButton(
+                  onPressed: () {
+                    context
+                        .read<BillBloc>()
+                        .add(const BillEventClearBillRequested());
+                  },
+                  icon: const Icon(Icons.replay),
+                ),
+                IconButton(
+                  onPressed: () {
+                    context
+                        .read<BillBloc>()
+                        .add(const BillEventBillGenerationRequested());
+                  },
+                  icon: const Icon(Icons.done),
+                ),
+              ],
       ),
       body: SafeArea(
         child: BlocBuilder<BillBloc, BillState>(
@@ -102,7 +125,11 @@ class BillPageView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        DateFormat('d.M.y').format(DateTime.now().toLocal()),
+                        DateFormat(kDefaultDateFormat).format(
+                          _bill == null
+                              ? DateTime.now().toLocal()
+                              : _bill!.date,
+                        ),
                         style: Theme.of(context).textTheme.bodyText2,
                       ),
                       Text(
@@ -191,13 +218,15 @@ class BillPageView extends StatelessWidget {
           },
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(
-          Icons.add,
-          color: Theme.of(context).iconTheme.color,
-        ),
-        onPressed: () => _show(context),
-      ),
+      floatingActionButton: _bill != null
+          ? null
+          : FloatingActionButton(
+              child: Icon(
+                Icons.add,
+                color: Theme.of(context).iconTheme.color,
+              ),
+              onPressed: () => _show(context),
+            ),
     );
   }
 

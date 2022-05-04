@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:uuid/uuid.dart';
+import 'package:intl/intl.dart';
 import 'package:supabase/supabase.dart';
 import 'package:pharmacy_data_repository/pharmacy_data_repository.dart';
 
@@ -314,6 +315,90 @@ class PharmacyDataRepository {
 
     final PostgrestResponse response =
         await _supabaseClient.from(stockTableName!).upsert(query).execute();
+  }
+
+  Future<List<Bill>?> getAllBills() async {
+    final PostgrestResponse medicinesResponse = await _supabaseClient
+        .from(SqlNameMedicineTable.tableName)
+        .select(
+          '${SqlNameMedicineTable.barcodeNumber}, ${SqlNameMedicineTable.manufacturer}, ${SqlNameMedicineTable.medSaltName}, ${SqlNameMedicineTable.medMrp}, ${SqlNameMedicineTable.medType}',
+        )
+        .execute();
+
+    // log('MED RESPONSE : ${medicinesResponse.data}');
+    // log('MED ERROR : ${medicinesResponse.error}');
+
+    if (medicinesResponse.hasError) return null;
+
+    List<Medicine> medicines = [];
+
+    for (int i = 0; i < medicinesResponse.data.length; i++) {
+      medicines.add(Medicine(
+        barcodeId: medicinesResponse.data[i][SqlNameMedicineTable.barcodeNumber],
+        name: medicinesResponse.data[i][SqlNameMedicineTable.medSaltName],
+        manufacturer: medicinesResponse.data[i]
+            [SqlNameMedicineTable.manufacturer],
+        quantity: -1,
+        mrp: double.parse(
+            medicinesResponse.data[i][SqlNameMedicineTable.medMrp].toString()),
+        shouldNotify: false,
+      ));
+    }
+
+    final PostgrestResponse billsResponse =
+        await _supabaseClient.from(billTableName!).select().execute();
+
+    // log('BILLS RESPONSE : ${billsResponse.data}');
+    // log('BILLS ERROR : ${billsResponse.error}');
+
+    if (billsResponse.hasError) return null;
+
+    final PostgrestResponse salesResponse =
+        await _supabaseClient.from(salesTableName!).select().execute();
+
+    // log('SALES RESPONSE : ${salesResponse.data}');
+    // log('SALES ERROR : ${salesResponse.error}');
+
+    if (salesResponse.hasError) return null;
+
+    List<Bill> bills = [];
+    for (int i = 0; i < billsResponse.data.length; i++) {
+      List<Sale> sales = [];
+
+      for (int j = 0; j < salesResponse.data.length; j++) {
+        if (salesResponse.data[j][SqlNamesPharmacySalesTable.billId] ==
+            billsResponse.data[i][SqlNamesPharmacyBillsTable.id]) {
+          sales.add(Sale(
+            uid: salesResponse.data[j][SqlNamesPharmacySalesTable.id],
+            medicine: medicines.firstWhere(
+              (element) =>
+                  element.barcodeId ==
+                  
+                      salesResponse.data[j][SqlNamesPharmacySalesTable.itemId],
+            ),
+            price: double.parse(
+                salesResponse.data[j][SqlNamesPharmacySalesTable.price].toString()),
+            quantity: int.parse(
+                salesResponse.data[j][SqlNamesPharmacySalesTable.quantity].toString()),
+          ));
+        }
+      }
+
+      if (sales.isNotEmpty) {
+        bills.add(
+          Bill(
+            sales,
+            DateFormat('yyyy-MM-dd')
+                .parse(billsResponse.data[i][SqlNamesPharmacyBillsTable.date]),
+            billsResponse.data[i][SqlNamesPharmacyBillsTable.id],
+          ),
+        );
+      } else {
+        log('THE DB DESIGN JUST BROKE DOWN');
+      }
+    }
+
+    return bills;
   }
 }
 

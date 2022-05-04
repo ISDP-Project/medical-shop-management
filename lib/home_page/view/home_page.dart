@@ -125,8 +125,10 @@ class _HomePageState extends State<HomePage> {
                     child: CustomButton(
                       icon: Icons.receipt_long_rounded,
                       label: HomePageConstants.billiingPageButtonLabel,
-                      onPressed: () =>
-                          Navigator.pushNamed(context, Routes.billPage),
+                      onPressed: () => Navigator.pushNamed(
+                        context,
+                        Routes.billPage,
+                      ),
                     ),
                   ),
                 ],
@@ -153,7 +155,9 @@ class _HomePageState extends State<HomePage> {
                     child: CustomButton(
                       icon: Icons.history,
                       label: HomePageConstants.billHistoryLabel,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(Routes.billHistory);
+                      },
                     ),
                   ),
                   const Padding(
