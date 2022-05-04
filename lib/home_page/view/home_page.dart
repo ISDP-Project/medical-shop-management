@@ -82,8 +82,7 @@ class _HomePageState extends State<HomePage> {
             ListTile(
               title: const Text(HomePageConstants.user),
               onTap: () {
-                Navigator.of(context);
-                Navigator.pop(context);
+                Navigator.of(context).pushNamed(Routes.profilePage);
               },
             ),
             ListTile(
