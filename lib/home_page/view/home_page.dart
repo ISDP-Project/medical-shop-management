@@ -145,69 +145,75 @@ class _HomePageState extends State<HomePage> {
               Row(
                 children: [
                   Expanded(
-                      child: Container(
-                    height: 185,
-                    child: Column(children: [
-                      const Padding(
-                          padding: EdgeInsets.only(top: kDefaultPadding * 1.5)),
-                      Container(
-                        child: Text(
-                          'Stock Explorer',
-                          textAlign: TextAlign.left,
-                          style: Theme.of(context).textTheme.bodyText1,
+                      child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(Routes.currentStock);
+                    },
+                    child: Container(
+                      height: 185,
+                      child: Column(children: [
+                        const Padding(
+                            padding:
+                                EdgeInsets.only(top: kDefaultPadding * 1.5)),
+                        Container(
+                          child: Text(
+                            'Stock Explorer',
+                            textAlign: TextAlign.left,
+                            style: Theme.of(context).textTheme.bodyText1,
+                          ),
                         ),
-                      ),
-                      const Padding(
-                          padding:
-                              EdgeInsets.only(bottom: kDefaultPadding * 2)),
-                      Container(
-                        padding: EdgeInsets.only(left: 15, right: 15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [Text('paracetamol'), Text('22')],
+                        const Padding(
+                            padding:
+                                EdgeInsets.only(bottom: kDefaultPadding * 2)),
+                        Container(
+                          padding: EdgeInsets.only(left: 15, right: 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [Text('paracetamol'), Text('22')],
+                          ),
                         ),
-                      ),
-                      const Padding(
-                          padding:
-                              EdgeInsets.only(bottom: kDefaultPadding * 2)),
-                      Container(
-                        padding: EdgeInsets.only(left: 15, right: 15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'paracetamol',
-                              style: Theme.of(context).textTheme.bodyText2,
-                            ),
-                            Text('22')
-                          ],
+                        const Padding(
+                            padding:
+                                EdgeInsets.only(bottom: kDefaultPadding * 2)),
+                        Container(
+                          padding: EdgeInsets.only(left: 15, right: 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'paracetamol',
+                                style: Theme.of(context).textTheme.bodyText2,
+                              ),
+                              Text('22')
+                            ],
+                          ),
                         ),
-                      ),
-                      const Padding(
-                          padding:
-                              EdgeInsets.only(bottom: kDefaultPadding * 2)),
-                      Container(
-                        padding: EdgeInsets.only(left: 15, right: 15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [Text('paracetamol'), Text('22')],
+                        const Padding(
+                            padding:
+                                EdgeInsets.only(bottom: kDefaultPadding * 2)),
+                        Container(
+                          padding: EdgeInsets.only(left: 15, right: 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [Text('paracetamol'), Text('22')],
+                          ),
                         ),
-                      ),
-                      const Padding(
-                          padding:
-                              EdgeInsets.only(bottom: kDefaultPadding * 2)),
-                      Container(
-                        padding: EdgeInsets.only(left: 15, right: 15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [Text('paracetamol'), Text('22')],
-                        ),
-                      )
-                    ]),
-                    margin: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                            color: Theme.of(context).colorScheme.outline)),
+                        const Padding(
+                            padding:
+                                EdgeInsets.only(bottom: kDefaultPadding * 2)),
+                        Container(
+                          padding: EdgeInsets.only(left: 15, right: 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [Text('paracetamol'), Text('22')],
+                          ),
+                        )
+                      ]),
+                      margin: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Theme.of(context).colorScheme.outline)),
+                    ),
                   )),
                   Expanded(
                       child: Container(
@@ -326,11 +332,13 @@ class _HomePageState extends State<HomePage> {
               Expanded(
                 flex: 2,
                 child: Container(
-                    decoration: const BoxDecoration(
-                        image: DecorationImage(
-                            image:
-                                AssetImage('assets/images/analytic_graph.jpeg'),
-                            fit: BoxFit.contain))),
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/analytic_graph.jpeg'),
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

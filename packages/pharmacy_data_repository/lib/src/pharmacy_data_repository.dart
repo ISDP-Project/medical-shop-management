@@ -400,6 +400,37 @@ class PharmacyDataRepository {
 
     return bills;
   }
+
+  Future< List<Medicine>? > getAllMedicines() async {
+    final PostgrestResponse medicinesResponse = await _supabaseClient
+        .from(SqlNameMedicineTable.tableName)
+        .select(
+          '${SqlNameMedicineTable.barcodeNumber}, ${SqlNameMedicineTable.manufacturer}, ${SqlNameMedicineTable.medSaltName}, ${SqlNameMedicineTable.medMrp}, ${SqlNameMedicineTable.medType}',
+        )
+        .execute();
+
+    // log('MED RESPONSE : ${medicinesResponse.data}');
+    // log('MED ERROR : ${medicinesResponse.error}');
+
+    if (medicinesResponse.hasError) return null;
+
+    List<Medicine> medicines = [];
+
+    for (int i = 0; i < medicinesResponse.data.length; i++) {
+      medicines.add(Medicine(
+        barcodeId: medicinesResponse.data[i][SqlNameMedicineTable.barcodeNumber],
+        name: medicinesResponse.data[i][SqlNameMedicineTable.medSaltName],
+        manufacturer: medicinesResponse.data[i]
+            [SqlNameMedicineTable.manufacturer],
+        quantity: -1,
+        mrp: double.parse(
+            medicinesResponse.data[i][SqlNameMedicineTable.medMrp].toString()),
+        shouldNotify: false,
+      ));
+    }
+
+    return medicines;
+  }
 }
 
 // TODO:

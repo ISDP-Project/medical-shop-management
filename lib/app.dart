@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:barcode_repository/barcode_repository.dart';
 import 'package:master_db_repository/master_db_repository.dart';
+import 'package:pharmacy_app/inventory/inventory.dart';
 import 'package:pharmacy_app/profile_page/profile_page.dart';
 import 'package:pharmacy_data_repository/pharmacy_data_repository.dart';
 import 'package:authentication_repository/authentication_repository.dart';
@@ -179,6 +180,7 @@ class App extends StatelessWidget {
             Routes.lowStockManagementPage: (context) => const LowStockPage(),
             Routes.profilePage: (context) => const ProfilePage(),
             Routes.billHistory: (context) => const BillHistory(),
+            Routes.currentStock: (context) => const InventoryPage(),
           },
           home: const AppView(),
         ),
