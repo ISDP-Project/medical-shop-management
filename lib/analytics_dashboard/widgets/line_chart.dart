@@ -12,11 +12,13 @@ class LINE extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LineChart(title: 'Bar Chart', chartData: [],),
+      home: const LineChart(
+        title: 'Bar Chart',
+        chartData: [],
+      ),
     );
   }
 }
-
 
 class LineChart extends StatefulWidget {
   const LineChart({Key? key, required this.title, required this.chartData})
@@ -41,6 +43,7 @@ class LineChartState extends State<LineChart> {
     _tooltipBehavior = TooltipBehavior(enable: true);
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -55,7 +58,7 @@ class LineChartState extends State<LineChart> {
                 dataSource: _chartData,
                 xValueMapper: (ChartData sales, _) => sales.sales,
                 yValueMapper: (ChartData sales, _) => sales.year,
-                dataLabelSettings: DataLabelSettings(isVisible: true),
+                dataLabelSettings: const DataLabelSettings(isVisible: true),
                 enableTooltip: true)
           ],
           primaryXAxis:

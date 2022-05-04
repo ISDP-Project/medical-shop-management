@@ -1,10 +1,6 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../pie_chart.dart';
-
 
 class FifthScreen extends StatelessWidget {
   const FifthScreen({Key? key}) : super(key: key);
@@ -24,7 +20,7 @@ class FifthScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => PIE()),
+                MaterialPageRoute(builder: (context) => const PIE()),
               );
             },
           ),
