@@ -6,4 +6,5 @@ class Routes {
   static const String billPage = "/bill";
   static const String analyticsPage = "/analytics";
   static const String lowStockManagementPage = "/lowstock";
+  static const String profilePage = "/profile";
 }

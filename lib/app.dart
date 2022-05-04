@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:barcode_repository/barcode_repository.dart';
 import 'package:master_db_repository/master_db_repository.dart';
+import 'package:pharmacy_app/profile_page/profile_page.dart';
 import 'package:pharmacy_data_repository/pharmacy_data_repository.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 
@@ -117,6 +118,7 @@ class App extends StatelessWidget {
             Routes.billPage: (context) => const BillingPage(),
             Routes.scannerPage: (context) => const ScannerPage(),
             Routes.lowStockManagementPage: (context) => const LowStockPage(),
+            Routes.profilePage: (context) => const ProfilePage(),
           },
           home: const AppView(),
         ),
