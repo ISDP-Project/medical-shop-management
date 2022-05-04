@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
               leading: const Icon(Icons.home),
               title: const Text(HomePageConstants.home),
               onTap: () {
-                Navigator.of(context);
+                Navigator.of(context).pushNamed(Routes.homePage);
                 Navigator.pop(context);
               },
             ),
@@ -83,16 +83,14 @@ class _HomePageState extends State<HomePage> {
               leading: const Icon(Icons.notifications),
               title: const Text(HomePageConstants.notification),
               onTap: () {
-                Navigator.of(context);
-                Navigator.pop(context);
+                Navigator.of(context).pushNamed(Routes.lowStockManagementPage);
               },
             ),
             ListTile(
               leading: const Icon(Icons.receipt_long_outlined),
               title: const Text(HomePageConstants.generateBill),
               onTap: () {
-                Navigator.of(context);
-                Navigator.pop(context);
+                Navigator.of(context).pushNamed(Routes.billPage);
               },
             ),
             ListTile(
@@ -107,15 +105,14 @@ class _HomePageState extends State<HomePage> {
               leading: const Icon(Icons.qr_code),
               title: const Text(HomePageConstants.barcodeScanner),
               onTap: () {
-                Navigator.of(context).pushNamed(Routes.profilePage);
+                Navigator.of(context).pushNamed(Routes.scannerPage);
               },
             ),
             ListTile(
               leading: const Icon(Icons.person),
               title: const Text(HomePageConstants.user),
               onTap: () {
-                Navigator.of(context);
-                Navigator.pop(context);
+                Navigator.of(context).pushNamed(Routes.profilePage);
               },
             ),
             ListTile(
@@ -138,7 +135,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             children: [
               const Text(
-                'Something',
+                'Inventory',
                 textAlign: TextAlign.left,
               ),
               Row(
